@@ -1,5 +1,5 @@
 import React from "react";
-import NavLink from "@/components/ui/nav-link";
+import NavLink from "@/components/ui/navigation/nav-link";
 import { logout } from "@/app/actions/logout";
 import { NAV_LINKS } from "./header-nav-links";
 

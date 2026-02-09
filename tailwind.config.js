@@ -17,6 +17,13 @@ const config = {
         accent: "var(--color-accent)",
         "accent-glow": "var(--color-accent-glow)",
         muted: "var(--color-text-muted)",
+        rarity: {
+        1: "#9CA3AF",
+        2: "#10B981",
+        3: "#3B82F6",
+        4: "#A855F7",
+        5: "#D4AF37",
+        }
       },
     },
   },

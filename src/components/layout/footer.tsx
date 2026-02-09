@@ -1,5 +1,5 @@
 import React from "react";
-import NavLink from "../ui/nav-link";
+import NavLink from "../ui/navigation/nav-link";
 
 export default function Footer(): React.JSX.Element {
     return (
