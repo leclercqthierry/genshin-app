@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/lib/utils/cn";
 
 type AppFormActionsProps = {
     children: React.ReactNode;
@@ -19,15 +18,15 @@ const alignStyles = {
 export default function AppFormActions({
     children,
     align = "right",
-    className,
+    className = "",
 }: AppFormActionsProps) {
     return (
         <div
-            className={cn(
-                "flex gap-3 pt-4 border-t border-white/10",
-                alignStyles[align],
-                className
-            )}
+            className={`
+                flex gap-3 pt-4 border-top-gold
+                ${alignStyles[align]}
+                ${className}
+            `}
         >
             {children}
         </div>

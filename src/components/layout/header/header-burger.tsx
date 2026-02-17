@@ -20,7 +20,7 @@ export default function HeaderBurger({
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={2}
-                stroke="var(--color-accent)"
+                stroke="var(--color-gold)"
                 className={`absolute inset-0 w-8 h-8 transition-all duration-300 ${open ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
                     }`}
             >
@@ -32,7 +32,7 @@ export default function HeaderBurger({
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={2}
-                stroke="var(--color-accent)"
+                stroke="var(--color-gold)"
                 className={`absolute inset-0 w-8 h-8 transition-all duration-300 ${open ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
                     }`}
             >

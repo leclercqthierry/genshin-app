@@ -1,24 +1,49 @@
-import "../styles/variables.css";
-import "../styles/animations.css";
 import "./globals.css";
 
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { ReactNode } from "react";
+import { createServerSupabaseReadOnly } from "@/lib/utils/supabase/supabaseServerReadOnly";
+import { getProfile } from "@/services/supabase/user";
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "Genshin App",
     description: "Application pour la gestion des teams du jeu Genshin Impact",
 };
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}): React.JSX.Element {
+/**
+ * Chargement des polices Geist (sans-serif et monospace)
+ * via next/font pour une intégration optimisée.
+ */
+const geistSans = Geist({
+    variable: "--font-geist-sans",
+    subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+    variable: "--font-geist-mono",
+    subsets: ["latin"],
+});
+
+interface RootLayoutProps {
+    children: ReactNode;
+}
+
+export default async function RootLayout({ children }: RootLayoutProps) {
+    const supabase = await createServerSupabaseReadOnly();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    const profile = user ? await getProfile(user.id) : null;
+
     return (
         <html lang="fr">
-            <body className="min-h-screen bg-background text-foreground flex flex-col">
-                <Header />
+            <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background flex flex-col`}>
+
+                <Header user={user} profile={profile} />
 
                 <main className="flex-1 container mx-auto px-4 py-6">
                     {children}

@@ -1,5 +1,5 @@
 import type { User } from "@supabase/supabase-js";
-import type { Profile } from "@/types/Profile";
+import type { Profile } from "@/domain/user/types";
 
 export function useUserRole(user: User | null, profile: Profile | null) {
     const isAdmin = profile?.role === "admin";

@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/lib/utils/cn";
 
-type CardVariant = "default" | "accent" | "ghost";
+type CardVariant = "default" | "gold" | "ghost";
 type CardSize = "sm" | "md" | "lg";
 
 interface AppCardProps {
@@ -17,9 +16,9 @@ interface AppCardProps {
 
 const variantStyles: Record<CardVariant, string> = {
     default:
-        "bg-primary-60 border border-accent shadow-accent-glow hover:shadow-accent-glow/80",
-    accent:
-        "bg-accent text-black border border-black/20 shadow-accent-glow hover:shadow-accent-glow/80",
+        "bg-primary-60 border border-gold shadow-gold-glow hover:shadow-gold-glow/80",
+    gold:
+        "bg-gold text-black border border-black/20 shadow-gold-glow hover:shadow-gold-glow/80",
     ghost:
         "bg-transparent border border-white/10 hover:bg-white/5 shadow-none",
 };
@@ -40,16 +39,17 @@ export default function AppCard({
 }: AppCardProps) {
     const Wrapper = href ? "a" : "div";
 
+    const baseClasses = "group transition-all duration-300 ease-out";
+    const variantClass = variantStyles[variant];
+    const sizeClass = sizeStyles[size];
+    const floatClass = disableFloat ? "" : "hover:-translate-y-1";
+
+    const finalClassName = `${baseClasses} ${variantClass} ${sizeClass} ${floatClass} ${className ?? ""}`;
+
     return (
         <Wrapper
             {...(href ? { href, role: "link", tabIndex: 0 } : {})}
-            className={cn(
-                "group transition-all duration-300 ease-out",
-                variantStyles[variant],
-                sizeStyles[size],
-                !disableFloat && "hover:-translate-y-1",
-                className
-            )}
+            className={finalClassName}
         >
             {children}
         </Wrapper>

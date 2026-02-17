@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { cn } from "@/lib/utils/cn";
 
-type BasicCardVariant = "default" | "accent" | "ghost";
+type BasicCardVariant = "default" | "gold" | "ghost";
 type BasicCardSize = "compact" | "sm" | "md" | "lg";
 type Rarity = 1 | 2 | 3 | 4 | 5;
 
@@ -19,8 +18,8 @@ interface BasicCardProps {
 }
 
 const variantStyles: Record<BasicCardVariant, string> = {
-    default: "border border-accent shadow-accent-glow",
-    accent: "border border-accent shadow-accent-glow",
+    default: "border border-gold shadow-gold-glow",
+    gold: "border border-gold shadow-gold-glow",
     ghost: "border border-white/10",
 };
 
@@ -58,19 +57,21 @@ export default function BasicCard({
 }: BasicCardProps) {
     const Wrapper = href ? "a" : "div";
 
+    const baseClasses = "flex flex-col items-center text-center transition";
+
+    const rarityClass = rarity ? rarityStyles[rarity] : "bg-primary-60";
+
+    const variantClass = variantStyles[variant];
+
+    const sizeClass = sizeStyles[size];
+
+    const hoverClass = hover ? "hover:-translate-y-1" : "";
+
+    const finalClassName = `${baseClasses} ${rarityClass} ${variantClass} ${sizeClass} ${hoverClass} ${className ?? ""}`;
+
     return (
-        <Wrapper
-            {...(href ? { href } : {})}
-            className={cn(
-                "flex flex-col items-center text-center transition",
-                rarity ? rarityStyles[rarity] : "bg-primary-60",
-                variantStyles[variant],
-                sizeStyles[size],
-                hover && "hover:-translate-y-1",
-                className
-            )}
-        >
-            <div className={cn("relative", imageSizes[size])}>
+        <Wrapper {...(href ? { href } : {})} className={finalClassName}>
+            <div className={`relative ${imageSizes[size]}`}>
                 <Image
                     src={image}
                     alt={title}

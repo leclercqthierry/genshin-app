@@ -1,20 +1,30 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/lib/utils/cn";
 
 type AppFormSectionProps = {
     title?: string;
     children: React.ReactNode;
     variant?: "default" | "subtle" | "ghost";
     size?: "sm" | "md" | "lg";
+    withBorder?: boolean;
     className?: string;
 };
 
 const variantStyles = {
-    default: "bg-primary-60/40 border border-accent/20 shadow-accent-glow/20",
-    subtle: "bg-primary-60/20 border border-white/10",
-    ghost: "bg-transparent border border-transparent",
+    default: `
+        bg-[var(--color-primary-80)]
+        border border-[var(--color-gold)]/20
+        shadow-[0_0_6px_var(--color-gold-glow)]
+    `,
+    subtle: `
+        bg-[var(--color-primary-80)]/40
+        border border-white/10
+    `,
+    ghost: `
+        bg-transparent
+        border border-transparent
+    `,
 } as const;
 
 const sizeStyles = {
@@ -28,19 +38,21 @@ export default function AppFormSection({
     children,
     variant = "default",
     size = "md",
-    className,
+    withBorder = true,
+    className = "",
 }: AppFormSectionProps) {
     return (
         <section
-            className={cn(
-                variantStyles[variant],
-                sizeStyles[size],
-                "transition",
-                className
-            )}
+            className={`
+                ${variantStyles[variant]}
+                ${sizeStyles[size]}
+                transition
+                ${!withBorder ? "border-none shadow-none" : ""}
+                ${className}
+            `}
         >
             {title && (
-                <h3 className="text-white font-semibold text-lg mb-2">
+                <h3 className="text-gold text-glow-gold font-semibold text-lg mb-2">
                     {title}
                 </h3>
             )}

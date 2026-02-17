@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "@/lib/utils/cn";
 
 type QuickLinkCardVariant = "default" | "compact";
 
@@ -22,30 +21,29 @@ export default function QuickLinkCard({
 }: QuickLinkCardProps) {
     const isCompact = variant === "compact";
 
+    const baseClasses =
+        "group bg-primary-60/40 border border-gold rounded-lg transition hover:-translate-y-1 hover:shadow-gold-glow";
+
+    const paddingClass = isCompact ? "p-3" : "p-6";
+
+    const titleClass = isCompact ? "text-base" : "text-xl";
+
+    const descriptionClass = isCompact
+        ? "text-xs leading-tight"
+        : "text-sm";
+
     return (
         <Link
             href={href}
-            className={cn(
-                "group bg-primary-60/40 border border-accent rounded-lg transition hover:-translate-y-1 hover:shadow-accent-glow",
-                isCompact ? "p-3" : "p-6",
-                className
-            )}
+            className={`${baseClasses} ${paddingClass} ${className ?? ""}`}
         >
             <h2
-                className={cn(
-                    "font-semibold text-white group-hover:text-accent group-hover:drop-shadow-accent-glow",
-                    isCompact ? "text-base" : "text-xl"
-                )}
+                className={`font-semibold text-white group-hover:text-gold group-hover:drop-shadow-gold-glow ${titleClass}`}
             >
                 {title}
             </h2>
 
-            <p
-                className={cn(
-                    "text-white/60 mt-2",
-                    isCompact ? "text-xs leading-tight" : "text-sm"
-                )}
-            >
+            <p className={`text-white/60 mt-2 ${descriptionClass}`}>
                 {description}
             </p>
         </Link>

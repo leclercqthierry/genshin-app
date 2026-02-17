@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { logout } from "@/app/actions/logout";
+import { logout } from "@/app/auth/actions/logout";
 import { NAV_LINKS } from "./header-nav-links";
 
 interface HeaderMobileNavProps {
@@ -25,7 +25,7 @@ export default function HeaderMobileNav({
     return (
         <div
             className={`
-        md:hidden flex flex-col bg-primary border-t border-accent p-4 gap-4
+        md:hidden flex flex-col bg-(--color-primary-80) border-top-gold p-4 gap-4
         ${closing ? "animate-fadeSlideOut" : "animate-fadeSlide"}
       `}
         >

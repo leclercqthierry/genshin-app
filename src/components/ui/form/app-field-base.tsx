@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/lib/utils/cn";
 
 type FormElementProps =
     React.InputHTMLAttributes<HTMLInputElement> &
@@ -31,7 +30,7 @@ export default function AppFieldBase({
     const descriptionId = description ? `${name}-description` : undefined;
 
     return (
-        <div className={cn(fullWidth && "w-full", "flex flex-col gap-1")}>
+        <div className={`${fullWidth ? "w-full" : ""} flex flex-col gap-1`}>
             {/* Label */}
             <label
                 htmlFor={name}

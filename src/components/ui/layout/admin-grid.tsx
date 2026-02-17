@@ -1,39 +1,15 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/lib/utils/cn";
 
 type AdminGridVariant = "default" | "compact";
 
 type AdminGridProps = {
     children: React.ReactNode;
-
-    /**
-     * Variante de densité :
-     * - "default" : cartes normales (QuickLinkCard, BasicCard md)
-     * - "compact" : cartes compactes (QuickLinkCard compact, BasicCard compact)
-     */
     variant?: AdminGridVariant;
-
-    /**
-     * Active un mode plus dense :
-     * - réduit le gap
-     * - réduit la hauteur globale de la grille
-     */
     dense?: boolean;
-
-    /**
-     * Permet d’ajuster manuellement le gap (ex: "gap-2", "gap-8").
-     * Si défini, écrase le gap par défaut.
-     */
     gap?: string;
-
-    /**
-     * Permet d’override le nombre de colonnes (ex: 4).
-     * Si défini, écrase totalement la logique responsive.
-     */
     columns?: number;
-
     className?: string;
 };
 
@@ -52,7 +28,7 @@ export default function AdminGrid({
             ? "gap-3"
             : "gap-6";
 
-    // 2) Gestion des colonnes (override manuel)
+    // 2) Gestion des colonnes
     const columnsClass = columns
         ? `grid grid-cols-${columns}`
         : variant === "compact"
@@ -60,7 +36,9 @@ export default function AdminGrid({
             : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
 
     return (
-        <div className={cn(columnsClass, gapClass, className)}>
+        <div
+            className={`${columnsClass} ${gapClass} ${className ?? ""}`}
+        >
             {children}
         </div>
     );

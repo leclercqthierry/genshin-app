@@ -2,7 +2,6 @@
 
 import { forwardRef } from "react";
 import AppFieldBase from "./app-field-base";
-import { cn } from "@/lib/utils/cn";
 
 // Styles de tailles, cohérents avec AppInput et AppButton
 const sizeStyles = {
@@ -42,6 +41,15 @@ const AppSelect = forwardRef<HTMLSelectElement, AppSelectProps>(
         },
         ref
     ) => {
+        const baseClasses =
+            "w-full rounded bg-primary-60 text-white border transition";
+
+        const borderClasses = error
+            ? "border-red-500 focus-visible:outline-red-500"
+            : "border-gold focus-visible:outline-gold";
+
+        const sizeClass = sizeStyles[size];
+
         return (
             <AppFieldBase
                 label={label}
@@ -51,14 +59,7 @@ const AppSelect = forwardRef<HTMLSelectElement, AppSelectProps>(
             >
                 <select
                     ref={ref}
-                    className={cn(
-                        "w-full rounded bg-primary-60 text-white border transition",
-                        error
-                            ? "border-red-500 focus-visible:outline-red-500"
-                            : "border-accent focus-visible:outline-accent",
-                        sizeStyles[size],
-                        className
-                    )}
+                    className={`${baseClasses} ${borderClasses} ${sizeClass} ${className ?? ""}`}
                     {...rest}
                 >
                     {options.map((opt) => (

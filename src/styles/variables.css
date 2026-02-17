@@ -1,20 +1,13 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050814;          /* fond global très sombre / bleu nuit */
+  --foreground: #ffffff;
 
-  /* Couleurs principales du thème Genshin */
-  --color-primary: #1A2A4E;
-  --color-primary-80: rgba(26, 42, 78, 0.8);
+  --color-primary: #1A2A4E;       /* bleu nuit pour les blocs */
+  --color-primary-80: #15223E;
 
-  --color-accent: #D4AF37;
-  --color-accent-glow: rgba(212, 175, 55, 0.7);
+  --color-gold: #D4AF37;        /* doré */
+  --color-gold-glow: rgba(212, 175, 55, 0.35);
 
-  --color-text-muted: #D1D5DB;
-}
+  --color-text-muted: #9ca3af;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }

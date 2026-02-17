@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import type { User } from "@supabase/supabase-js";
-import type { Profile } from "@/types/Profile";
+import type { Profile } from "@/domain/user/types";
 
 import { useUserRole } from "@/hooks/useUserRole";
 
@@ -35,7 +35,7 @@ export default function Header({ user, profile }: HeaderProps): React.JSX.Elemen
     };
 
     return (
-        <nav className="w-full bg-primary-80 backdrop-blur-md border-b border-accent text-white fixed top-0 left-0 z-50">
+        <nav className="w-full bg-(--color-primary-80) backdrop-blur-md border-bottom-gold text-white fixed top-0 left-0 z-50">
             <div className="container mx-auto flex items-center justify-between h-14 px-6">
 
                 <HeaderLogo />

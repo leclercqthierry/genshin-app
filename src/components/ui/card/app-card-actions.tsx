@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/lib/utils/cn";
 
 type AppCardActionsProps = {
     children: React.ReactNode;
@@ -21,14 +20,11 @@ export default function AppCardActions({
     align = "right",
     className,
 }: AppCardActionsProps) {
+    const baseClasses = "flex gap-2 mt-3";
+    const alignClass = alignStyles[align];
+
     return (
-        <div
-            className={cn(
-                "flex gap-2 mt-3",
-                alignStyles[align],
-                className
-            )}
-        >
+        <div className={`${baseClasses} ${alignClass} ${className ?? ""}`}>
             {children}
         </div>
     );

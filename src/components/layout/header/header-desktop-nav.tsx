@@ -1,6 +1,6 @@
 import React from "react";
 import NavLink from "@/components/ui/navigation/nav-link";
-import { logout } from "@/app/actions/logout";
+import { logout } from "@/app/auth/actions/logout";
 import { NAV_LINKS } from "./header-nav-links";
 
 interface HeaderDesktopNavProps {
@@ -31,10 +31,10 @@ export default function HeaderDesktopNav({
             {!loading && isAuthenticated && (
                 <form action={logout}>
                     <button type="submit" className="relative group">
-                        <span className="transition group-hover:text-accent group-hover:drop-shadow-[0_0_6px_var(--color-accent-glow)]">
+                        <span className="transition group-hover:text-gold group-hover:drop-shadow-[0_0_6px_var(--color-gold-glow)]">
                             Déconnexion
                         </span>
-                        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full"></span>
                     </button>
                 </form>
             )}

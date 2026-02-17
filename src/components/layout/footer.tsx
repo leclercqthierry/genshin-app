@@ -3,7 +3,7 @@ import NavLink from "../ui/navigation/nav-link";
 
 export default function Footer(): React.JSX.Element {
     return (
-        <footer className="w-full h-14 bg-primary-80 backdrop-blur-md border-t border-accent text-white overflow-hidden">
+        <footer className="w-full h-14 bg-(--color-primary-80) border-top-gold backdrop-blur-md text-white overflow-hidden">
             <div className="container mx-auto h-full flex flex-col md:flex-row items-center justify-between px-6 gap-2 md:gap-0">
 
                 <p className="text-sm text-muted">

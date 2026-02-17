@@ -13,8 +13,8 @@ export const NAV_LINKS: HeaderLink[] = [
     { label: "Équipes", href: "/teams" },
 
     // Liens invités
-    { label: "Se connecter", href: "/login", guestOnly: true },
-    { label: "S'inscrire", href: "/register", guestOnly: true },
+    { label: "Se connecter", href: "/auth/login", guestOnly: true },
+    { label: "S'inscrire", href: "/auth/register", guestOnly: true },
 
     // Liens connectés
     { label: "Mon compte", href: "/account", authOnly: true },

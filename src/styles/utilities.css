@@ -1,0 +1,33 @@
+.border-top-gold{
+    border-top: 1px solid var(--color-gold);
+}
+
+.border-bottom-gold{
+    border-bottom: 1px solid var(--color-gold);
+}
+
+.bg-gold {
+  background-color: var(--color-gold) !important;
+}
+
+/* Couleur or */
+.text-gold {
+  color: var(--color-gold);
+}
+
+/* Glow or */
+.text-glow-gold {
+  display: inline-block;
+  filter: drop-shadow(0 0 6px var(--color-gold-glow));
+}
+
+/* Hover du texte */
+.navlink-group:hover .navlink-text {
+  color: var(--color-gold);
+  filter: drop-shadow(0 0 6px var(--color-gold-glow));
+}
+
+/* Hover de la barre */
+.navlink-group:hover .navlink-underline {
+  width: 100%;
+}
