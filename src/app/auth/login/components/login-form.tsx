@@ -45,9 +45,13 @@ export default function LoginForm() {
     // ⭐ Redirection uniquement si le login a réussi
     useEffect(() => {
         if (state.success === true) {
-            router.push("/");
+            if (state.role === "admin") {
+                router.push("/admin");
+            } else {
+                router.push("/"); // plus tard: /mon-compte
+            }
         }
-    }, [state.success, router]);
+    }, [state.success, state.role, router]);
 
     return (
         <AppFormWrapper onSubmit={handleSubmit(onSubmit)} size="md" variant="default">

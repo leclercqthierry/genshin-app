@@ -10,7 +10,7 @@ type AdminHeroProps = {
 
 export default function AdminHero({ title, children, className }: AdminHeroProps) {
     return (
-        <section className={`px-6 py-12 text-center bg-(--color-primary)/40 border-bottom-gold ${className ?? ""}`}>
+        <section className={`p-6 text-center bg-(--color-primary)/40 border-bottom-gold ${className ?? ""}`}>
             <h1 className="text-3xl font-bold text-gold text-glow-gold">
                 {title}
             </h1>

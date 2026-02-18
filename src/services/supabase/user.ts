@@ -1,8 +1,9 @@
 import { createSupabaseServer } from "@/lib/utils/supabase/server";
+import { createSupabaseServerReadOnly } from "@/lib/utils/supabase/serverReadOnly";
 import type { Profile } from "@/domain/user/types";
 
 export async function getProfile(userId: string): Promise<Profile | null> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServerReadOnly();
 
     const { data, error } = await supabase
         .from("profiles")

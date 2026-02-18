@@ -15,12 +15,23 @@ interface AppCardProps {
 }
 
 const variantStyles: Record<CardVariant, string> = {
-    default:
-        "bg-primary-60 border border-gold shadow-gold-glow hover:shadow-gold-glow/80",
-    gold:
-        "bg-gold text-black border border-black/20 shadow-gold-glow hover:shadow-gold-glow/80",
-    ghost:
-        "bg-transparent border border-white/10 hover:bg-white/5 shadow-none",
+    default: `
+    card-bg-primary
+    card-border-gold
+    card-shadow-gold
+    hover:card-shadow-gold
+  `,
+    gold: `
+    card-bg-gold
+    card-border-light
+    card-shadow-gold
+    hover:card-shadow-gold
+  `,
+    ghost: `
+    bg-transparent
+    card-border-light
+    hover:bg-white/5
+  `,
 };
 
 const sizeStyles: Record<CardSize, string> = {

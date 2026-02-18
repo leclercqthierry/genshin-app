@@ -3,6 +3,7 @@
 import { loginSchema } from "@/schemas/loginSchema";
 import { createSupabaseServer } from "@/lib/utils/supabase/server";
 import type { LoginFormState } from "./types";
+import { getProfile } from "@/services/supabase/user"; // ← à adapter selon ton arborescence
 
 export async function handleLogin(
     _prevState: LoginFormState,
@@ -25,12 +26,12 @@ export async function handleLogin(
 
         const supabase = await createSupabaseServer();
 
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
             email: parsed.data.email,
             password: parsed.data.password,
         });
 
-        if (error) {
+        if (error || !data.user) {
             return {
                 success: false,
                 errors: {},
@@ -38,7 +39,14 @@ export async function handleLogin(
             };
         }
 
-        return { success: true, errors: {} };
+        // ⭐ On récupère le profil pour connaître le rôle
+        const profile = await getProfile(data.user.id);
+
+        return {
+            success: true,
+            errors: {},
+            role: profile?.role === "admin" ? "admin" : "user", // ← ajout propre
+        };
     } catch (err) {
         console.error("LOGIN ERROR", err);
         return {

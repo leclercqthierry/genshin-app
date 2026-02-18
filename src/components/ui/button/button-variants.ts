@@ -12,14 +12,14 @@ export const buttonVariantStyles = {
         disabled:bg-white/10 disabled:text-white/40 disabled:border-transparent
     `,
     secondary: `
-        bg-[var(--color-primary-80)]
+        bg-blue-600
         text-white
         border border-white/20
-        hover:bg-[var(--color-primary-80)]/60
+        hover:bg-blue-600/60
         hover:border-white/40
         hover:-translate-y-0.5
         hover:shadow-[0_2px_4px_rgba(0,0,0,0.4)]
-        active:bg-[var(--color-primary-80)]/50
+        active:bg-blue-600/50
         active:translate-y-0
         disabled:bg-[var(--color-primary-80)] disabled:text-white/40 disabled:border-transparent
     `,

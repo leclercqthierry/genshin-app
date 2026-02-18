@@ -37,7 +37,7 @@ export default function AdminGrid({
 
     return (
         <div
-            className={`${columnsClass} ${gapClass} ${className ?? ""}`}
+            className={`${columnsClass} ${gapClass} ${className ?? ""} text-center`}
         >
             {children}
         </div>

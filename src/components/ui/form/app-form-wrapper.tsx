@@ -45,7 +45,7 @@ export default function AppFormWrapper({
         >
             <p className="text-sm text-white/60 flex items-center gap-1">
                 <span className="text-red-400 font-bold">*</span>
-                <span>indique un champ obligatoire</span>
+                <i>indique un champ obligatoire</i>
             </p>
 
             {children}

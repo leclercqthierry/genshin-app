@@ -5,7 +5,7 @@ import Footer from "@/components/layout/footer";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ReactNode } from "react";
-import { createServerSupabaseReadOnly } from "@/lib/utils/supabase/supabaseServerReadOnly";
+import { createSupabaseServerReadOnly } from "@/lib/utils/supabase/serverReadOnly";
 import { getProfile } from "@/services/supabase/user";
 
 export const metadata: Metadata = {
@@ -32,7 +32,7 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-    const supabase = await createServerSupabaseReadOnly();
+    const supabase = await createSupabaseServerReadOnly();
     const {
         data: { user },
     } = await supabase.auth.getUser();
@@ -45,7 +45,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
                 <Header user={user} profile={profile} />
 
-                <main className="flex-1 container mx-auto px-4 py-6">
+                <main className="flex-1 container mx-auto py-14">
                     {children}
                 </main>
 

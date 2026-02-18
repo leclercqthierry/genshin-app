@@ -57,3 +57,13 @@
 .hover-float:hover {
   animation: floatSoft 1.6s ease-in-out infinite;
 }
+
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  animation: floatSoft 1.6s ease-in-out infinite;
+  box-shadow: 0 0 18px var(--color-gold-glow);
+}

@@ -10,7 +10,7 @@ type FormElementProps =
 interface AppFieldBaseProps {
     label: string;
     name: string;
-    children: React.ReactElement<FormElementProps>;
+    children: React.ReactNode;
     fullWidth?: boolean;
     required?: boolean;
     error?: string;
@@ -29,9 +29,22 @@ export default function AppFieldBase({
     const errorId = error ? `${name}-error` : undefined;
     const descriptionId = description ? `${name}-description` : undefined;
 
+    const isFormElement =
+        React.isValidElement(children) &&
+        typeof children.type === "string" &&
+        ["input", "select", "textarea"].includes(children.type);
+
+    const enhancedChild = isFormElement
+        ? React.cloneElement(children as React.ReactElement<FormElementProps>, {
+            id: name,
+            name,
+            "aria-invalid": !!error,
+            "aria-describedby": errorId ?? descriptionId,
+        })
+        : children;
+
     return (
         <div className={`${fullWidth ? "w-full" : ""} flex flex-col gap-1`}>
-            {/* Label */}
             <label
                 htmlFor={name}
                 className="text-white font-medium"
@@ -41,22 +54,14 @@ export default function AppFieldBase({
                 {required && <span className="text-red-400 ml-1">*</span>}
             </label>
 
-            {/* Champ (input/select/textarea) */}
-            {React.cloneElement(children, {
-                id: name,
-                name,
-                "aria-invalid": !!error,
-                "aria-describedby": errorId ?? descriptionId,
-            })}
+            {enhancedChild}
 
-            {/* Description */}
             {description && !error && (
                 <p id={descriptionId} className="text-white/60 text-sm">
                     {description}
                 </p>
             )}
 
-            {/* Erreur */}
             {error && (
                 <p id={errorId} className="text-red-400 text-sm">
                     {error}

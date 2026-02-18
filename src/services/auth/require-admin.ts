@@ -1,8 +1,9 @@
-import { createSupabaseServer } from "@/lib/utils/supabase/server";
+import { createSupabaseServerReadOnly } from "@/lib/utils/supabase/serverReadOnly";
 import { getProfile } from "../supabase/user";
 
 export async function requireAdmin() {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServerReadOnly();
+
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) return { redirect: true };
