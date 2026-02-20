@@ -1,0 +1,42 @@
+export const dynamic = "force-dynamic";
+
+import Redirecting from "@/components/ui/feedback/redirecting";
+import AdminResourcePage from "@/components/admin/layout/resource-page";
+import CharJewelSetCard from "@/components/ui/card/char-jewel-set-card";
+
+import { requireAdmin } from "@/services/auth/require-admin";
+import { getCharJewelSets } from "@/services/supabase/char-jewel-set";
+import { getElements } from "@/services/supabase/element";
+import { deleteCharJewelSetAction } from "./_actions/delete-char-jewel-set";
+
+export default async function CharJewelSetsPage() {
+    const { redirect } = await requireAdmin();
+    if (redirect) return <Redirecting />;
+
+    const [charJewelSets, elements] = await Promise.all([
+        getCharJewelSets(),
+        getElements(),
+    ]);
+
+    // Map optimisée : elementId → élément
+    const elementsMap = Object.fromEntries(
+        elements.map((el) => [el.id, el])
+    );
+
+    return (
+        <AdminResourcePage
+            title="Gestion des sets de joyaux de personnage"
+            description="Ces sets de joyaux de personnages seront utilisés pour les personnages. Il faut donc les créer AVANT ces derniers !"
+            createHref="/admin/char-jewel-sets/new"
+            items={charJewelSets}
+            renderItem={(set) => (
+                <CharJewelSetCard
+                    key={set.id}
+                    set={set}
+                    elementIconUrl={elementsMap[set.elementId].iconUrl}
+                    onDelete={deleteCharJewelSetAction}
+                />
+            )}
+        />
+    );
+}

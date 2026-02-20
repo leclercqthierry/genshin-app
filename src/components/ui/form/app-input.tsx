@@ -25,7 +25,7 @@ const AppInput = forwardRef<HTMLInputElement, AppInputProps>(
             <input
                 ref={ref}
                 className={`
-                    w-full rounded bg-[--color-primary-60] text-white border transition
+                    w-full rounded bg-white text-black border transition
                     border-[--color-gold] focus-visible:outline-[--color-gold]
                     ${sizeStyles[size]}
                     ${className}

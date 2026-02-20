@@ -11,34 +11,49 @@ import { mapRowToElement } from "@/domain/element/mapper";
  * Récupère tous les éléments (lecture seule).
  */
 export async function getElements(): Promise<Element[]> {
-    const supabase = await createSupabaseServerReadOnly();
+    try {
+        const supabase = await createSupabaseServerReadOnly();
 
-    const { data, error } = await supabase
-        .from("elements")
-        .select("*")
-        .order("name", { ascending: true });
+        const { data, error } = await supabase
+            .from("elements")
+            .select("*")
+            .order("name", { ascending: true });
 
-    if (error) throw error;
-    if (!data) return [];
+        if (error) {
+            console.error("ERREUR LECTURE ELEMENTS :", error);
+            return [];
+        }
 
-    return data.map(mapRowToElement);
+        return (data ?? []).map(mapRowToElement);
+    } catch (err) {
+        console.error("ERREUR INATTENDUE GET ELEMENTS :", err);
+        return [];
+    }
 }
 
 /**
  * Récupère un élément spécifique (lecture seule).
  */
 export async function getElement(id: number): Promise<Element | null> {
-    const supabase = await createSupabaseServerReadOnly();
+    try {
+        const supabase = await createSupabaseServerReadOnly();
 
-    const { data, error } = await supabase
-        .from("elements")
-        .select("*")
-        .eq("id", id)
-        .single();
+        const { data, error } = await supabase
+            .from("elements")
+            .select("*")
+            .eq("id", id)
+            .single();
 
-    if (error || !data) return null;
+        if (error || !data) {
+            console.error("ERREUR LECTURE ELEMENT :", error);
+            return null;
+        }
 
-    return mapRowToElement(data);
+        return mapRowToElement(data);
+    } catch (err) {
+        console.error("ERREUR INATTENDUE GET ELEMENT :", err);
+        return null;
+    }
 }
 
 /* ---------------------------------------------

@@ -1,10 +1,10 @@
-import { requireAdmin } from "@/services/auth/require-admin";
+export const dynamic = "force-dynamic";
+
 import Redirecting from "@/components/ui/feedback/redirecting";
-
-import AdminHero from "@/components/ui/layout/admin-hero";
-import AdminPageWrapper from "@/components/ui/layout/admin-page-wrapper";
-
+import AdminResourceEditPage from "@/components/admin/layout/resource-edit-page";
 import ElementForm from "../../_components/element-form";
+
+import { requireAdmin } from "@/services/auth/require-admin";
 import { handleUpdate } from "../../_actions/edit-element";
 import { getElement } from "@/services/supabase/element";
 
@@ -16,9 +16,7 @@ export default async function EditElementPage({ params }: Props) {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    // Next.js 16 → params est une Promise
     const { id } = await params;
-
     const element = await getElement(Number(id));
 
     if (!element) {
@@ -26,19 +24,15 @@ export default async function EditElementPage({ params }: Props) {
     }
 
     return (
-        <>
-            <AdminHero title="Modifier l’élément" />
-
-            <AdminPageWrapper>
-                <ElementForm
-                    action={handleUpdate.bind(null, element.id)}
-                    submitLabel="Mettre à jour"
-                    defaultValues={{
-                        name: element.name,
-                        icon_url: element.iconUrl,
-                    }}
-                />
-            </AdminPageWrapper>
-        </>
+        <AdminResourceEditPage title="Modifier l’élément">
+            <ElementForm
+                action={handleUpdate.bind(null, element.id)}
+                submitLabel="Mettre à jour"
+                defaultValues={{
+                    name: element.name,
+                    icon_url: element.iconUrl,
+                }}
+            />
+        </AdminResourceEditPage>
     );
 }

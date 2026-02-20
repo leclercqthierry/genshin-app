@@ -1,22 +1,27 @@
-// src/services/files/delete-uploadthing-file.ts
 import { UTApi } from "uploadthing/server";
+import { extractErrorMessage } from "@/lib/utils/errors";
 
 const utapi = new UTApi();
 
-function extractFileKey(url: string) {
+function extractFileKey(url: string): string {
     const parts = url.split("/");
     return parts[parts.length - 1];
 }
 
-export async function deleteUploadThingFile(url: string | null | undefined) {
+export async function deleteUploadThingFile(
+    url: string | null | undefined
+): Promise<void> {
     if (!url) return;
 
     const fileKey = extractFileKey(url);
 
     try {
         await utapi.deleteFiles(fileKey);
-    } catch (err) {
-        console.error("Erreur suppression UploadThing:", err);
-        // Tu peux choisir de throw si tu veux rendre la suppression stricte
+    } catch (err: unknown) {
+        console.error("ERREUR SUPPRESSION UPLOADTHING :", err);
+
+        // Ici on throw, car les actions serveur doivent pouvoir
+        // renvoyer un message utilisateur propre.
+        throw new Error(extractErrorMessage(err));
     }
 }

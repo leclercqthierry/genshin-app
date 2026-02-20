@@ -21,17 +21,6 @@
   filter: drop-shadow(0 0 6px var(--color-gold-glow));
 }
 
-/* Hover du texte */
-.navlink-group:hover .navlink-text {
-  color: var(--color-gold);
-  filter: drop-shadow(0 0 6px var(--color-gold-glow));
-}
-
-/* Hover de la barre */
-.navlink-group:hover .navlink-underline {
-  width: 100%;
-}
-
 .card-bg-primary {
   background-color: var(--color-primary-80);
 }
@@ -55,4 +44,36 @@
 
 .card-base {
   @apply rounded-lg bg-(--color-primary)/40 border border-(--color-gold);
+}
+
+.navlink-base {
+  position: relative;
+}
+
+.navlink-base .navlink-text {
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.navlink-base .navlink-underline {
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 0;
+  background-color: var(--color-gold);
+  transition: width 0.3s ease;
+}
+
+/* Hover du texte */
+.navlink-base:hover .navlink-text,
+.navlink-group:hover .navlink-text {
+  color: var(--color-gold);
+  filter: drop-shadow(0 0 6px var(--color-gold-glow));
+}
+
+/* Hover de la barre */
+.navlink-base:hover .navlink-underline,
+.navlink-group:hover .navlink-underline {
+  width: 100%;
 }

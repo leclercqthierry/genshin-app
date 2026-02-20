@@ -1,15 +1,37 @@
 import { createSupabaseServerReadOnly } from "@/lib/utils/supabase/serverReadOnly";
-import { getProfile } from "../supabase/user";
+import { getProfile } from "@/services/supabase/user";
 
 export async function requireAdmin() {
-    const supabase = await createSupabaseServerReadOnly();
+    try {
+        const supabase = await createSupabaseServerReadOnly();
 
-    const { data: { user } } = await supabase.auth.getUser();
+        const { data, error } = await supabase.auth.getUser();
 
-    if (!user) return { redirect: true };
+        if (error) {
+            console.error("ERREUR AUTHENTIFICATION ADMIN :", error);
+            return { redirect: true };
+        }
 
-    const profile = await getProfile(user.id);
-    if (profile?.role !== "admin") return { redirect: true };
+        const user = data.user;
 
-    return { user, profile };
+        if (!user) {
+            return { redirect: true };
+        }
+
+        const profile = await getProfile(user.id);
+
+        if (!profile) {
+            console.error("PROFIL ADMIN INTROUVABLE :", user.id);
+            return { redirect: true };
+        }
+
+        if (profile.role !== "admin") {
+            return { redirect: true };
+        }
+
+        return { user, profile };
+    } catch (err) {
+        console.error("ERREUR INATTENDUE REQUIRE ADMIN :", err);
+        return { redirect: true };
+    }
 }

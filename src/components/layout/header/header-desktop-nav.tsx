@@ -30,11 +30,9 @@ export default function HeaderDesktopNav({
 
             {!loading && isAuthenticated && (
                 <form action={logout}>
-                    <button type="submit" className="relative group">
-                        <span className="transition group-hover:text-gold group-hover:drop-shadow-[0_0_6px_var(--color-gold-glow)]">
-                            Déconnexion
-                        </span>
-                        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full"></span>
+                    <button type="submit" className="navlink-base navlink-group">
+                        <span className="navlink-text">Déconnexion</span>
+                        <span className="navlink-underline" />
                     </button>
                 </form>
             )}

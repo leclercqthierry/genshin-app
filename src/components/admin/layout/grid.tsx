@@ -2,9 +2,9 @@
 
 import React from "react";
 
-type AdminGridVariant = "default" | "compact";
+export type AdminGridVariant = "default" | "compact";
 
-type AdminGridProps = {
+export type AdminGridProps = {
     children: React.ReactNode;
     variant?: AdminGridVariant;
     dense?: boolean;

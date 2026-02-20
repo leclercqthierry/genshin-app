@@ -25,18 +25,16 @@ export default function NavLink({
             href={href}
             onClick={onClick}
             aria-current={isActive ? "page" : undefined}
-            className={`relative navlink-group ${className}`}
+            className={`navlink-base navlink-group ${className}`}
         >
             <span
-                className={`navlink-text transition ${isActive ? "text-gold text-glow-gold" : "text-white"
-                    }`}
+                className={`navlink-text ${isActive ? "text-gold text-glow-gold" : ""}`}
             >
                 {children}
             </span>
 
             <span
-                className={`navlink-underline absolute left-0 -bottom-1 h-0.5 bg-gold transition-all duration-300 ${isActive ? "w-full" : "w-0"
-                    }`}
+                className={`navlink-underline ${isActive ? "w-full" : ""}`}
             />
         </Link>
     );

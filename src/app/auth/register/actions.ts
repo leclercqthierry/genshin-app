@@ -3,6 +3,7 @@
 import { registerSchema } from "@/schemas/registerSchema";
 import { createSupabaseServer } from "@/lib/utils/supabase/server";
 import { createProfile } from "@/services/supabase/user";
+import { deleteUser } from "@/services/supabase/user";
 import type { RegisterFormState } from "./types";
 
 export async function handleRegister(
@@ -10,7 +11,7 @@ export async function handleRegister(
     formData: FormData
 ): Promise<RegisterFormState> {
     try {
-        // 1. Extraction des données
+        // 1. Extraction
         const raw = {
             pseudo: formData.get("pseudo")?.toString() ?? "",
             email: formData.get("email")?.toString() ?? "",
@@ -18,9 +19,8 @@ export async function handleRegister(
             password2: formData.get("password2")?.toString() ?? "",
         };
 
-        // 2. Validation Zod
+        // 2. Validation
         const parsed = registerSchema.safeParse(raw);
-
         if (!parsed.success) {
             return {
                 success: false,
@@ -28,32 +28,52 @@ export async function handleRegister(
             };
         }
 
-        // 3. Supabase côté serveur
+        // 3. Supabase
         const supabase = await createSupabaseServer();
 
         // 4. Création du compte
-        const { data: authData, error } = await supabase.auth.signUp({
+        const { data: authData, error: signUpError } = await supabase.auth.signUp({
             email: parsed.data.email,
             password: parsed.data.password,
             options: {
                 emailRedirectTo: `${process.env.SITE_URL}/auth/account-confirmed`,
             },
         });
-        console.error("REGISTER ERROR DETAILS", error);
 
-        if (error || !authData.user) {
+        if (signUpError || !authData.user) {
             return {
                 success: false,
                 errors: {},
-                message: "Impossible de créer le compte",
+                message: signUpError?.message ?? "Impossible de créer le compte",
             };
         }
 
+        const userId = authData.user.id;
+
         // 5. Création du profil
-        await createProfile(authData.user.id, parsed.data.pseudo);
+        try {
+            await createProfile(userId, parsed.data.pseudo);
+        } catch (err) {
+            console.error("ERREUR DE CRÉATION DE PROFIL", err);
+
+            // rollback complet
+            try {
+                await deleteUser(userId);
+            } catch (rollbackErr) {
+                console.error("ÉCHEC DE LA SUPPRESSION DE L'UTILISATEUR", rollbackErr);
+            }
+
+            return {
+                success: false,
+                errors: {},
+                message: "Impossible de créer le profil utilisateur",
+            };
+        }
 
         return { success: true, errors: {} };
-    } catch {
+    } catch (err) {
+        console.error("ERREUR D'INSCRIPTION", err);
+
         return {
             success: false,
             errors: {},

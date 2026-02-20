@@ -2,21 +2,22 @@
 
 import { loginSchema } from "@/schemas/loginSchema";
 import { createSupabaseServer } from "@/lib/utils/supabase/server";
+import { getProfile } from "@/services/supabase/user";
 import type { LoginFormState } from "./types";
-import { getProfile } from "@/services/supabase/user"; // ← à adapter selon ton arborescence
 
 export async function handleLogin(
     _prevState: LoginFormState,
     formData: FormData
 ): Promise<LoginFormState> {
     try {
+        // 1. Extraction
         const raw = {
             email: formData.get("email")?.toString() ?? "",
             password: formData.get("password")?.toString() ?? "",
         };
 
+        // 2. Validation
         const parsed = loginSchema.safeParse(raw);
-
         if (!parsed.success) {
             return {
                 success: false,
@@ -24,8 +25,10 @@ export async function handleLogin(
             };
         }
 
+        // 3. Supabase
         const supabase = await createSupabaseServer();
 
+        // 4. Tentative de connexion
         const { data, error } = await supabase.auth.signInWithPassword({
             email: parsed.data.email,
             password: parsed.data.password,
@@ -35,20 +38,29 @@ export async function handleLogin(
             return {
                 success: false,
                 errors: {},
-                message: "Identifiants incorrects",
+                message: error?.message ?? "Identifiants incorrects",
             };
         }
 
-        // ⭐ On récupère le profil pour connaître le rôle
+        // 5. Récupération du profil
         const profile = await getProfile(data.user.id);
+
+        if (!profile) {
+            return {
+                success: false,
+                errors: {},
+                message: "Profil utilisateur introuvable",
+            };
+        }
 
         return {
             success: true,
             errors: {},
-            role: profile?.role === "admin" ? "admin" : "user", // ← ajout propre
+            role: profile.role === "admin" ? "admin" : "user",
         };
     } catch (err) {
-        console.error("LOGIN ERROR", err);
+        console.error("ERREUR DE CONNEXION", err);
+
         return {
             success: false,
             errors: {},

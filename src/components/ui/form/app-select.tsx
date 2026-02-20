@@ -42,7 +42,7 @@ const AppSelect = forwardRef<HTMLSelectElement, AppSelectProps>(
         ref
     ) => {
         const baseClasses =
-            "w-full rounded bg-primary-60 text-white border transition";
+            "w-full rounded bg-white text-black border transition";
 
         const borderClasses = error
             ? "border-red-500 focus-visible:outline-red-500"

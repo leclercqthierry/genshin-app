@@ -2,23 +2,28 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 export async function createSupabaseServer() {
-    const cookieStore = await cookies(); // ⭐ obligatoire
+    try {
+        const cookieStore = await cookies();
 
-    return createServerClient(
-        process.env.SUPABASE_URL!,
-        process.env.SUPABASE_KEY!,
-        {
-            cookies: {
-                get(name) {
-                    return cookieStore.get(name)?.value;
+        return createServerClient(
+            process.env.SUPABASE_URL!,
+            process.env.SUPABASE_KEY!,
+            {
+                cookies: {
+                    get(name) {
+                        return cookieStore.get(name)?.value;
+                    },
+                    set(name, value, options) {
+                        cookieStore.set({ name, value, ...options });
+                    },
+                    remove(name, options) {
+                        cookieStore.set({ name, value: "", ...options });
+                    },
                 },
-                set(name, value, options) {
-                    cookieStore.set({ name, value, ...options });
-                },
-                remove(name, options) {
-                    cookieStore.set({ name, value: "", ...options });
-                },
-            },
-        }
-    );
+            }
+        );
+    } catch (err) {
+        console.error("ERREUR CRÉATION CLIENT SUPABASE :", err);
+        throw new Error("Impossible d'initialiser Supabase.");
+    }
 }

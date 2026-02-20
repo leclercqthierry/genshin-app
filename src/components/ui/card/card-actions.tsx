@@ -6,7 +6,7 @@ import { useTransition } from "react";
 
 interface CardActionsProps {
     editHref: string;
-    deleteAction: (formData: FormData) => Promise<void>;
+    deleteAction: (formData: FormData) => Promise<{ success: boolean; message?: string }>;
     elementId: number;
     small?: boolean;
 }

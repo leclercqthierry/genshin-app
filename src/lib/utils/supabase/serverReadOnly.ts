@@ -15,23 +15,24 @@ import { createServerClient } from "@supabase/ssr";
  * sans déclencher d’erreur Next.js 16.
  */
 export async function createSupabaseServerReadOnly() {
-    const cookieStore = await cookies();
+    try {
+        const cookieStore = await cookies();
 
-    return createServerClient(
-        process.env.SUPABASE_URL!,
-        process.env.SUPABASE_KEY!,
-        {
-            cookies: {
-                get(name: string) {
-                    return cookieStore.get(name)?.value;
+        return createServerClient(
+            process.env.SUPABASE_URL!,
+            process.env.SUPABASE_KEY!,
+            {
+                cookies: {
+                    get(name: string) {
+                        return cookieStore.get(name)?.value;
+                    },
+                    set() { },
+                    remove() { },
                 },
-                set() {
-                    // Lecture seule → aucune écriture autorisée
-                },
-                remove() {
-                    // Lecture seule → aucune suppression autorisée
-                },
-            },
-        }
-    );
+            }
+        );
+    } catch (err) {
+        console.error("ERREUR CRÉATION CLIENT SUPABASE (READ-ONLY) :", err);
+        throw new Error("Impossible d'initialiser Supabase en lecture seule.");
+    }
 }

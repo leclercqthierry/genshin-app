@@ -9,15 +9,14 @@ export async function handleResetPassword(
     formData: FormData
 ): Promise<ResetPasswordFormState> {
     try {
-        // 1. Extraction des données
+        // 1. Extraction
         const raw = {
             password: formData.get("password")?.toString() ?? "",
             password2: formData.get("password2")?.toString() ?? "",
         };
 
-        // 2. Validation Zod
+        // 2. Validation
         const parsed = resetPasswordSchema.safeParse(raw);
-
         if (!parsed.success) {
             return {
                 success: false,
@@ -26,7 +25,7 @@ export async function handleResetPassword(
             };
         }
 
-        // 3. Supabase côté serveur
+        // 3. Supabase
         const supabase = await createSupabaseServer();
 
         // 4. Mise à jour du mot de passe
@@ -34,24 +33,26 @@ export async function handleResetPassword(
             password: parsed.data.password,
         });
 
-        // 5. Gestion des erreurs Supabase
         if (error) {
+            console.error("ERREUR MISE À JOUR MOT DE PASSE :", error);
+
             return {
                 success: false,
                 errors: {},
-                message: "Impossible de mettre à jour le mot de passe.",
+                message: error.message ?? "Impossible de mettre à jour le mot de passe.",
                 redirect: false,
             };
         }
 
-        // 6. Succès
         return {
             success: true,
             errors: {},
             message: "Mot de passe mis à jour avec succès !",
             redirect: true,
         };
-    } catch {
+    } catch (err) {
+        console.error("ERREUR INATTENDUE RESET PASSWORD :", err);
+
         return {
             success: false,
             errors: {},

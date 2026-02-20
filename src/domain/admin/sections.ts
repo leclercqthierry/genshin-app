@@ -24,9 +24,9 @@ export const adminSections = [
         title: "Éléments",
         description: "Gérer les éléments.",
     },
-    // {
-    //     href: "/admin/char-jewel-sets",
-    //     title: "Joyaux de personnages",
-    //     description: "Gérer les joyaux de personnages",
-    // },
+    {
+        href: "/admin/char-jewel-sets",
+        title: "Joyaux de personnages",
+        description: "Gérer les joyaux de personnages",
+    },
 ];

@@ -5,7 +5,7 @@ import type { Element } from "@/domain/element/types";
 
 interface ElementCardProps {
     element: Element;
-    onDelete: (formData: FormData) => Promise<void>;
+    onDelete: (formData: FormData) => Promise<{ success: boolean; message?: string }>
 }
 
 export default function ElementCard({ element, onDelete }: ElementCardProps) {
