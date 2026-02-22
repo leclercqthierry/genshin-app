@@ -100,6 +100,7 @@ export default function CharJewelSetForm({
                     label="Joyau ★★"
                     name="rarity2_url"
                     value={rarity2}
+                    rarity={2}
                     error={errors.rarity2_url?.message || state.errors?.rarity2_url?.[0]}
                     onUpload={(url) =>
                         setValue("rarity2_url", url, {
@@ -113,6 +114,7 @@ export default function CharJewelSetForm({
                     label="Joyau ★★★"
                     name="rarity3_url"
                     value={rarity3}
+                    rarity={3}
                     error={errors.rarity3_url?.message || state.errors?.rarity3_url?.[0]}
                     onUpload={(url) =>
                         setValue("rarity3_url", url, {
@@ -126,6 +128,7 @@ export default function CharJewelSetForm({
                     label="Joyau ★★★★"
                     name="rarity4_url"
                     value={rarity4}
+                    rarity={4}
                     error={errors.rarity4_url?.message || state.errors?.rarity4_url?.[0]}
                     onUpload={(url) =>
                         setValue("rarity4_url", url, {
@@ -139,6 +142,7 @@ export default function CharJewelSetForm({
                     label="Joyau ★★★★★"
                     name="rarity5_url"
                     value={rarity5}
+                    rarity={5}
                     error={errors.rarity5_url?.message || state.errors?.rarity5_url?.[0]}
                     onUpload={(url) =>
                         setValue("rarity5_url", url, {

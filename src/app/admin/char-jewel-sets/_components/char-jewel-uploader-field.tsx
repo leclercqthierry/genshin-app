@@ -10,6 +10,7 @@ type Props = {
     value: string | undefined;
     error?: string;
     onUpload: (url: string) => void;
+    rarity: number;
 };
 
 export default function JewelUploaderField({
@@ -18,6 +19,7 @@ export default function JewelUploaderField({
     value,
     error,
     onUpload,
+    rarity,
 }: Props) {
     return (
         <AppFieldBase label={label} name={name} required error={error}>
@@ -29,7 +31,7 @@ export default function JewelUploaderField({
                             alt="Prévisualisation"
                             width={80}
                             height={80}
-                            className="rounded border object-contain"
+                            className={`rounded border object-contain bg-rarity-${rarity}`}
                         />
                     </div>
                 )}

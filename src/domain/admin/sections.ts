@@ -1,9 +1,9 @@
 export const adminSections = [
-    // {
-    //     href: "/admin/boss-drops",
-    //     title: "Drop de boss",
-    //     description: "Gérer les drops de boss",
-    // },
+    {
+        href: "/admin/boss-drops",
+        title: "Drop de boss",
+        description: "Gérer les drops de boss",
+    },
     // {
     //     href: "/admin/world-boss-drops",
     //     title: "Drop de boss de monde",

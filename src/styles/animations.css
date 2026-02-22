@@ -48,22 +48,30 @@
   animation: fadeSlideGenshinOut 0.35s cubic-bezier(0.22, 1.0, 0.36, 1.0);
 }
 
-@keyframes floatSoft {
-  0% { transform: translateY(-5px) scale(1.01); }
-  50% { transform: translateY(-10px) scale(1.015); }
-  100% { transform: translateY(-5px) scale(1.01); }
-}
-
-.hover-float:hover {
-  animation: floatSoft 1.6s ease-in-out infinite;
-}
-
 .card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: float-out 0.3s ease forwards;
+  transition: box-shadow 0.3s ease;
 }
 
 .card-hover:hover {
-  transform: translateY(-4px);
-  animation: floatSoft 1.6s ease-in-out infinite;
+  animation: float-in 0.3s ease forwards, float-loop 1.6s ease-in-out 0.3s infinite;
   box-shadow: 0 0 18px var(--color-gold-glow);
+  cursor:pointer;
+}
+
+
+@keyframes float-in {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6px); }
+}
+
+@keyframes float-loop {
+  0%   { transform: translateY(-6px); }
+  50%  { transform: translateY(-12px); }
+  100% { transform: translateY(-6px); }
+}
+
+@keyframes float-out {
+  from { transform: translateY(-6px); }
+  to   { transform: translateY(0); }
 }

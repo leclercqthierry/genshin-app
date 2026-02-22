@@ -77,3 +77,9 @@
 .navlink-group:hover .navlink-underline {
   width: 100%;
 }
+
+.bg-rarity-1 { background-color: var(--rarity-1); }
+.bg-rarity-2 { background-color: var(--rarity-2); }
+.bg-rarity-3 { background-color: var(--rarity-3); }
+.bg-rarity-4 { background-color: var(--rarity-4); }
+.bg-rarity-5 { background-color: var(--rarity-5); }

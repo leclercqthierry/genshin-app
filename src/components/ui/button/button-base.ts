@@ -3,4 +3,6 @@ export const buttonBaseStyles = `
     font-semibold rounded-md
     transition transform
     focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-gold)]
+    disabled:cursor-not-allowed
+    hover:cursor-pointer
 `;
