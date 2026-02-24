@@ -1,7 +1,7 @@
 "use server";
 
 import { loginSchema } from "@/schemas/loginSchema";
-import { createSupabaseServer } from "@/lib/utils/supabase/server";
+import { createSupabaseServer } from "@/lib/utils/supabase/service";
 import { getProfile } from "@/services/supabase/user";
 import type { LoginFormState } from "./types";
 

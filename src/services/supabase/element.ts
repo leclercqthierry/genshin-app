@@ -1,5 +1,5 @@
-import { createSupabaseServer } from "@/lib/utils/supabase/server";
-import { createSupabaseServerReadOnly } from "@/lib/utils/supabase/serverReadOnly";
+import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/clientReadOnly";
 import type { Element } from "@/domain/element/types";
 import { mapRowToElement } from "@/domain/element/mapper";
 
@@ -12,7 +12,7 @@ import { mapRowToElement } from "@/domain/element/mapper";
  */
 export async function getElements(): Promise<Element[]> {
     try {
-        const supabase = await createSupabaseServerReadOnly();
+        const supabase = await createSupabaseClientReadOnly();
 
         const { data, error } = await supabase
             .from("elements")
@@ -36,7 +36,7 @@ export async function getElements(): Promise<Element[]> {
  */
 export async function getElement(id: number): Promise<Element | null> {
     try {
-        const supabase = await createSupabaseServerReadOnly();
+        const supabase = await createSupabaseClientReadOnly();
 
         const { data, error } = await supabase
             .from("elements")
@@ -67,7 +67,7 @@ export async function createElement(payload: {
     name: string;
     iconUrl: string;
 }): Promise<Element> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServiceClient();
 
     const { data, error } = await supabase
         .from("elements")
@@ -93,7 +93,7 @@ export async function updateElement(
         iconUrl?: string;
     }
 ): Promise<Element> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServiceClient();
 
     const { data, error } = await supabase
         .from("elements")
@@ -114,7 +114,7 @@ export async function updateElement(
  * Supprime un élément.
  */
 export async function deleteElement(id: number): Promise<void> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServiceClient();
 
     const { error } = await supabase
         .from("elements")

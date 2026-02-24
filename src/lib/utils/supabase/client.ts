@@ -1,13 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export async function createSupabaseServer() {
+export async function createSupabaseClient() {
     try {
         const cookieStore = await cookies();
 
         return createServerClient(
             process.env.SUPABASE_URL!,
-            process.env.SUPABASE_KEY!,
+            process.env.SUPABASE_PUBLISHABLE_KEY!,
             {
                 cookies: {
                     get(name) {
@@ -24,6 +24,6 @@ export async function createSupabaseServer() {
         );
     } catch (err) {
         console.error("ERREUR CRÉATION CLIENT SUPABASE :", err);
-        throw new Error("Impossible d'initialiser Supabase.");
+        throw new Error("Impossible d'initialiser le client Supabase.");
     }
 }

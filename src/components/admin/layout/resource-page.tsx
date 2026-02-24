@@ -1,4 +1,4 @@
-import AdminHero from "./hero";
+import PageHero from "../../layout/page-hero";
 import AdminPageWrapper from "./page-wrapper";
 import AdminGrid from "./grid";
 import AppButton from "@/components/ui/button/app-button";
@@ -24,13 +24,13 @@ export default function AdminResourcePage<T>({
 }: AdminResourcePageProps<T>) {
     return (
         <>
-            <AdminHero title={title}>
+            <PageHero title={title}>
                 <AppButton href={createHref}>Ajouter</AppButton>
 
                 {description && (
                     <p className="text-center mt-6">{description}</p>
                 )}
-            </AdminHero>
+            </PageHero>
 
             <AdminPageWrapper>
                 <AdminGrid variant={variant}>

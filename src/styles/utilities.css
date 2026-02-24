@@ -83,3 +83,15 @@
 .bg-rarity-3 { background-color: var(--rarity-3); }
 .bg-rarity-4 { background-color: var(--rarity-4); }
 .bg-rarity-5 { background-color: var(--rarity-5); }
+
+.text-success{
+    color: #05df72;
+}
+
+.text-info{
+    color: #155dfc;
+}
+
+.text-danger{
+    color: #fb2c36;
+}

@@ -1,5 +1,5 @@
-import { createSupabaseServer } from "@/lib/utils/supabase/server";
-import { createSupabaseServerReadOnly } from "@/lib/utils/supabase/serverReadOnly";
+import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/clientReadOnly";
 import type { BossDrop } from "@/domain/boss-drop/types";
 import { mapRowToBossDrop } from "@/domain/boss-drop/mapper";
 
@@ -12,7 +12,7 @@ import { mapRowToBossDrop } from "@/domain/boss-drop/mapper";
  */
 export async function getBossDrops(): Promise<BossDrop[]> {
     try {
-        const supabase = await createSupabaseServerReadOnly();
+        const supabase = await createSupabaseClientReadOnly();
 
         const { data, error } = await supabase
             .from("boss_drops")
@@ -36,7 +36,7 @@ export async function getBossDrops(): Promise<BossDrop[]> {
  */
 export async function getBossDrop(id: number): Promise<BossDrop | null> {
     try {
-        const supabase = await createSupabaseServerReadOnly();
+        const supabase = await createSupabaseClientReadOnly();
 
         const { data, error } = await supabase
             .from("boss_drops")
@@ -67,7 +67,7 @@ export async function createBossDrop(payload: {
     name: string;
     iconUrl: string;
 }): Promise<BossDrop> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServiceClient();
 
     const { data, error } = await supabase
         .from("boss_drops")
@@ -93,7 +93,7 @@ export async function updateBossDrop(
         iconUrl?: string;
     }
 ): Promise<BossDrop> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServiceClient();
 
     const { data, error } = await supabase
         .from("boss_drops")
@@ -114,7 +114,7 @@ export async function updateBossDrop(
  * Supprime un drop de boss.
  */
 export async function deleteBossDrop(id: number): Promise<void> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServiceClient();
 
     const { error } = await supabase
         .from("boss_drops")

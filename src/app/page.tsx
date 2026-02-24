@@ -1,18 +1,16 @@
-"use client";
+import HomeChanges from "./_components/HomeChanges";
+import PageHero from "@/components/layout/page-hero";
 
-export default function HomePage() {
+export default async function HomePage() {
     return (
-        <div className="min-h-screen flex items-center justify-center px-4">
-            <div className="w-full max-w-md space-y-8 text-center text-white/80">
+        <>
+            <PageHero title="Historique des changements">
+                Dernières modifications effectuées dans l’interface d’administration.
+            </PageHero>
 
-                <h1 className="text-3xl font-bold text-gold">
-                    Bienvenue
-                </h1>
-
-                <p className="text-white/60">
-                    Ceci est une page d’accueil minimale pour accéder aux pages d’authentification.
-                </p>
+            <div className="max-w-3xl mx-auto px-6 py-12">
+                <HomeChanges />
             </div>
-        </div>
+        </>
     );
 }

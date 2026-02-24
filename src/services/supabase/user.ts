@@ -1,10 +1,11 @@
-import { createSupabaseServer } from "@/lib/utils/supabase/server";
-import { createSupabaseServerReadOnly } from "@/lib/utils/supabase/serverReadOnly";
+import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/clientReadOnly";
+import { createSupabaseClient } from "@/lib/utils/supabase/client";
 import type { Profile } from "@/domain/user/types";
 
 export async function getProfile(userId: string): Promise<Profile | null> {
     try {
-        const supabase = await createSupabaseServerReadOnly();
+        const supabase = await createSupabaseClientReadOnly();
 
         const { data, error } = await supabase
             .from("profiles")
@@ -25,7 +26,7 @@ export async function getProfile(userId: string): Promise<Profile | null> {
 }
 
 export async function createProfile(userId: string, pseudo: string): Promise<void> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseClient();
 
     const { error } = await supabase.from("profiles").insert({
         id: userId,
@@ -40,7 +41,7 @@ export async function createProfile(userId: string, pseudo: string): Promise<voi
 }
 
 export async function deleteProfile(userId: string): Promise<void> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseClient();
 
     const { error } = await supabase
         .from("profiles")
@@ -54,7 +55,7 @@ export async function deleteProfile(userId: string): Promise<void> {
 }
 
 export async function deleteUser(userId: string): Promise<void> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServiceClient();
 
     const { error } = await supabase.auth.admin.deleteUser(userId);
 

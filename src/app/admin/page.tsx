@@ -1,7 +1,7 @@
 import { requireAdmin } from "@/services/auth/require-admin";
 import { adminSections } from "@/domain/admin/sections";
 
-import AdminHero from "@/components/admin/layout/hero";
+import PageHero from "@/components/layout/page-hero";
 import AdminPageWrapper from "@/components/admin/layout/page-wrapper";
 import AdminGrid from "@/components/admin/layout/grid";
 import QuickLinkCard from "@/components/ui/card/quick-link-card";
@@ -14,9 +14,9 @@ export default async function AdminPage() {
 
     return (
         <>
-            <AdminHero title="Espace Admin">
+            <PageHero title="Espace Admin">
                 Bienvenue {profile?.pseudo ?? "Admin"}.
-            </AdminHero>
+            </PageHero>
 
             <AdminPageWrapper>
                 <AdminGrid variant="compact">

@@ -14,13 +14,13 @@ import { createServerClient } from "@supabase/ssr";
  * Elle permet de lire la session utilisateur
  * sans déclencher d’erreur Next.js 16.
  */
-export async function createSupabaseServerReadOnly() {
+export async function createSupabaseClientReadOnly() {
     try {
         const cookieStore = await cookies();
 
         return createServerClient(
             process.env.SUPABASE_URL!,
-            process.env.SUPABASE_KEY!,
+            process.env.SUPABASE_PUBLISHABLE_KEY!,
             {
                 cookies: {
                     get(name: string) {

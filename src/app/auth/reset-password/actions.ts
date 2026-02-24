@@ -1,7 +1,7 @@
 "use server";
 
 import { resetPasswordSchema } from "@/schemas/resetPasswordSchema";
-import { createSupabaseServer } from "@/lib/utils/supabase/server";
+import { createSupabaseServer } from "@/lib/utils/supabase/service";
 import type { ResetPasswordFormState } from "./types";
 
 export async function handleResetPassword(

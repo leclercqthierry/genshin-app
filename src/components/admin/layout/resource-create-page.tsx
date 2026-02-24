@@ -1,4 +1,4 @@
-import AdminHero from "./hero";
+import PageHero from "../../layout/page-hero";
 import AdminPageWrapper from "./page-wrapper";
 
 interface AdminResourceCreatePageProps {
@@ -12,7 +12,7 @@ export default function AdminResourceCreatePage({
 }: AdminResourceCreatePageProps) {
     return (
         <>
-            <AdminHero title={title} />
+            <PageHero title={title} />
 
             <AdminPageWrapper>
                 {children}

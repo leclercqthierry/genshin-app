@@ -1,5 +1,5 @@
-import { createSupabaseServer } from "@/lib/utils/supabase/server";
-import { createSupabaseServerReadOnly } from "@/lib/utils/supabase/serverReadOnly";
+import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/clientReadOnly";
 
 import type { CharJewelSet } from "@/domain/char-jewel-set/types";
 import type { CharJewelSetRow } from "@/domain/char-jewel-set/db";
@@ -11,7 +11,7 @@ import { mapRowToCharJewelSet } from "@/domain/char-jewel-set/mapper";
 
 export async function getCharJewelSets(): Promise<CharJewelSet[]> {
     try {
-        const supabase = await createSupabaseServerReadOnly();
+        const supabase = await createSupabaseClientReadOnly();
 
         const { data, error } = await supabase
             .from("char_jewel_sets")
@@ -32,7 +32,7 @@ export async function getCharJewelSets(): Promise<CharJewelSet[]> {
 
 export async function getCharJewelSet(id: number): Promise<CharJewelSet | null> {
     try {
-        const supabase = await createSupabaseServerReadOnly();
+        const supabase = await createSupabaseClientReadOnly();
 
         const { data, error } = await supabase
             .from("char_jewel_sets")
@@ -68,7 +68,7 @@ type CreateCharJewelSetPayload = {
 export async function createCharJewelSet(
     payload: CreateCharJewelSetPayload
 ): Promise<CharJewelSet> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServiceClient();
 
     const { data, error } = await supabase
         .from("char_jewel_sets")
@@ -99,7 +99,7 @@ export async function updateCharJewelSet(
         rarity5Url?: string;
     }
 ): Promise<CharJewelSet> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServiceClient();
 
     const { data, error } = await supabase
         .from("char_jewel_sets")
@@ -121,7 +121,7 @@ export async function updateCharJewelSet(
 }
 
 export async function deleteCharJewelSet(id: number): Promise<void> {
-    const supabase = await createSupabaseServer();
+    const supabase = await createSupabaseServiceClient();
 
     const { error } = await supabase
         .from("char_jewel_sets")

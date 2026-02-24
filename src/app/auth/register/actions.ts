@@ -1,7 +1,7 @@
 "use server";
 
 import { registerSchema } from "@/schemas/registerSchema";
-import { createSupabaseServer } from "@/lib/utils/supabase/server";
+import { createSupabaseServer } from "@/lib/utils/supabase/service";
 import { createProfile } from "@/services/supabase/user";
 import { deleteUser } from "@/services/supabase/user";
 import type { RegisterFormState } from "./types";
