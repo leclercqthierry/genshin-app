@@ -5,7 +5,7 @@ import AdminResourceEditPage from "@/components/admin/layout/resource-edit-page"
 import CharJewelSetForm from "../../_components/char-jewel-set-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { handleUpdate } from "../../_actions/edit-char-jewel-set";
+import { handleUpdate } from "@/domain/char-jewel-set/actions/update";
 import { getCharJewelSet } from "@/services/supabase/char-jewel-set";
 import { getElements } from "@/services/supabase/element";
 

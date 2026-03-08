@@ -1,4 +1,4 @@
-import type { ResetPasswordSchema } from "@/schemas/resetPasswordSchema";
+import type { ResetPasswordSchema } from "@/domain/auth/schema/reset-password";
 
 export type ResetPasswordFormState = {
     success: boolean;

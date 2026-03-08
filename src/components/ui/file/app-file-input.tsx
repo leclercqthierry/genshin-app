@@ -22,6 +22,7 @@ export default function AppFileInput({
         <div className={`flex flex-col gap-2 ${className ?? ""}`}>
             {/* Input file masqué */}
             <input
+                data-testid="file-input"
                 ref={inputRef}
                 type="file"
                 accept={accept}

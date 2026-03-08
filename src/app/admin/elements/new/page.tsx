@@ -5,7 +5,7 @@ import Redirecting from "@/components/ui/feedback/redirecting";
 
 import AdminResourceCreatePage from "@/components/admin/layout/resource-create-page";
 import ElementForm from "../_components/element-form";
-import { handleCreate } from "../_actions/create-element";
+import { handleCreate } from "@/domain/element/actions/create";
 
 export default async function NewElementPage() {
     const { redirect } = await requireAdmin();

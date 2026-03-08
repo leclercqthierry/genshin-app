@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { logout } from "@/app/auth/actions/logout";
+import { logout } from "@/domain/auth/actions/logout";
 import { NAV_LINKS } from "./header-nav-links";
 
 interface HeaderMobileNavProps {
@@ -31,7 +31,7 @@ export default function HeaderMobileNav({
         >
             {NAV_LINKS.map((link) => {
                 if (link.adminOnly && !isAdmin) return null;
-                if (link.authOnly && !isAuthenticated) return null;
+                if (link.userOnly && (!isAuthenticated || isAdmin)) return null;
                 if (link.guestOnly && isAuthenticated) return null;
 
                 return (

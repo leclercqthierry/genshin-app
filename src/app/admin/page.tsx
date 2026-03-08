@@ -15,7 +15,7 @@ export default async function AdminPage() {
     return (
         <>
             <PageHero title="Espace Admin">
-                Bienvenue {profile?.pseudo ?? "Admin"}.
+                Bienvenue {profile?.pseudo ?? "admin"}.
             </PageHero>
 
             <AdminPageWrapper>

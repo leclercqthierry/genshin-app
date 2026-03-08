@@ -1,7 +1,7 @@
 "use server";
 
-import { extractErrorMessage } from "@/lib/utils/errors";
-import { recordAdminChange } from "@/domain/admin-changes/actions";
+import { extractErrorMessage } from "@/lib/utils/extract-error-message";
+import { recordAdminChange } from "@/domain/admin-changes/record-admin-change";
 import { deleteUploadThingFile } from "@/services/files/delete-uploadthing-file";
 import { logFailedFileDeletion } from "@/lib/utils/supabase/failed-file-deletions";
 import type { ZodType } from "zod";

@@ -2,12 +2,12 @@ export const dynamic = "force-dynamic";
 
 import Redirecting from "@/components/ui/feedback/redirecting";
 import AdminResourcePage from "@/components/admin/layout/resource-page";
-import CharJewelSetCard from "@/components/ui/card/char-jewel-set-card";
+import CharJewelSetCard from "@/domain/char-jewel-set/card";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { getCharJewelSets } from "@/services/supabase/char-jewel-set";
 import { getElements } from "@/services/supabase/element";
-import { deleteCharJewelSetAction } from "./_actions/delete-char-jewel-set";
+import { deleteCharJewelSetAction } from "@/domain/char-jewel-set/actions/delete";
 
 export default async function CharJewelSetsPage() {
     const { redirect } = await requireAdmin();

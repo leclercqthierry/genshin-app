@@ -54,6 +54,7 @@ export default function AppButton({
                 href={href}
                 aria-disabled={isDisabled}
                 aria-busy={loading}
+                tabIndex={isDisabled ? -1 : undefined}
                 className={classes}
                 onClick={isDisabled ? undefined : onClick}
             >

@@ -2,11 +2,11 @@ export const dynamic = "force-dynamic";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { getElements } from "@/services/supabase/element";
-import { deleteElementAction } from "./_actions/delete-element";
+import { deleteElementAction } from "@/domain/element/actions/delete";
 
 import Redirecting from "@/components/ui/feedback/redirecting";
 import AdminResourcePage from "@/components/admin/layout/resource-page";
-import ElementCard from "@/components/ui/card/element-card";
+import ElementCard from "@/domain/element/card";
 
 export default async function ElementsPage() {
     const { redirect } = await requireAdmin();

@@ -1,5 +1,5 @@
 import { deleteUploadThingFile } from "./delete-uploadthing-file";
-import { extractErrorMessage } from "@/lib/utils/errors";
+import { extractErrorMessage } from "@/lib/utils/extract-error-message";
 
 export async function replaceUploadThingFile(
     oldUrl: string | null,

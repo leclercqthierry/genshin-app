@@ -1,5 +1,5 @@
 import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
-import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/clientReadOnly";
+import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/client-read-only";
 import { createSupabaseClient } from "@/lib/utils/supabase/client";
 import type { Profile } from "@/domain/user/types";
 

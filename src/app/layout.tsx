@@ -5,7 +5,7 @@ import Footer from "@/components/layout/footer";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ReactNode } from "react";
-import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/clientReadOnly";
+import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/client-read-only";
 import { getProfile } from "@/services/supabase/user";
 
 export const metadata: Metadata = {

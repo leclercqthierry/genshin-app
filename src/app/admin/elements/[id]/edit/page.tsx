@@ -5,7 +5,7 @@ import AdminResourceEditPage from "@/components/admin/layout/resource-edit-page"
 import ElementForm from "../../_components/element-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { handleUpdate } from "../../_actions/edit-element";
+import { handleUpdate } from "@/domain/element/actions/update";
 import { getElement } from "@/services/supabase/element";
 
 type Props = {

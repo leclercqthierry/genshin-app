@@ -1,7 +1,8 @@
-import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/clientReadOnly";
+import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/client-read-only";
 import { getProfile } from "@/services/supabase/user";
 
 export async function requireAdmin() {
+
     try {
         const supabase = await createSupabaseClientReadOnly();
 

@@ -1,18 +1,15 @@
-import type { LoginSchema } from "@/schemas/loginSchema";
+import type { LoginSchema } from "@/domain/auth/schema/login";
 
-/**
- * État retourné par le formulaire de connexion.
- */
 export type LoginFormState = {
     success: boolean;
     errors: Partial<Record<keyof LoginSchema, string[]>>;
-    message?: string;
-
-    // ⭐ Ajout pour la redirection conditionnelle
-    role?: "admin" | "user";
+    message: string | null;
+    role: "admin" | "user" | null;
 };
 
 export const initialLoginState: LoginFormState = {
     success: false,
     errors: {},
+    message: null,
+    role: null,
 };

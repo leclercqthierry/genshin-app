@@ -5,7 +5,7 @@ import AdminResourceCreatePage from "@/components/admin/layout/resource-create-p
 import CharJewelSetForm from "../_components/char-jewel-set-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { handleCreate } from "../_actions/create-char-jewel-set";
+import { handleCreate } from "@/domain/char-jewel-set/actions/create";
 import { getElements } from "@/services/supabase/element";
 
 export default async function NewCharJewelSetPage() {

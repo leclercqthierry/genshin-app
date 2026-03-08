@@ -1,8 +1,8 @@
 "use server";
 
 import type { ZodType } from "zod";
-import { extractErrorMessage } from "@/lib/utils/errors";
-import { recordAdminChange } from "@/domain/admin-changes/actions";
+import { extractErrorMessage } from "@/lib/utils/extract-error-message";
+import { recordAdminChange } from "@/domain/admin-changes/record-admin-change";
 import { replaceUploadThingFile } from "@/services/files/replace-uploadthing-file";
 
 interface UpdateWithHistoryOptions<TParsed, TExisting> {

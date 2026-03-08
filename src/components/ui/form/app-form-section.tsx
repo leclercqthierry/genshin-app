@@ -42,7 +42,7 @@ export default function AppFormSection({
     className = "",
 }: AppFormSectionProps) {
     return (
-        <section
+        <section aria-label={title}
             className={`
                 ${variantStyles[variant]}
                 ${sizeStyles[size]}

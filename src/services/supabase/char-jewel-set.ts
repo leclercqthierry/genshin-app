@@ -1,5 +1,5 @@
 import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
-import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/clientReadOnly";
+import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/client-read-only";
 
 import type { CharJewelSet } from "@/domain/char-jewel-set/types";
 import type { CharJewelSetRow } from "@/domain/char-jewel-set/db";

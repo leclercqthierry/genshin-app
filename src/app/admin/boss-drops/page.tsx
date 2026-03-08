@@ -2,11 +2,11 @@ export const dynamic = "force-dynamic";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { getBossDrops } from "@/services/supabase/boss-drop";
-import { deleteBossDropAction } from "./_actions/delete-boss-drop";
+import { deleteBossDropAction } from "@/domain/boss-drop/actions/delete";
 
 import Redirecting from "@/components/ui/feedback/redirecting";
 import AdminResourcePage from "@/components/admin/layout/resource-page";
-import BossDropCard from "@/components/ui/card/boss-drop-card";
+import BossDropCard from "@/domain/boss-drop/card";
 
 export default async function BossDropsPage() {
     const { redirect } = await requireAdmin();

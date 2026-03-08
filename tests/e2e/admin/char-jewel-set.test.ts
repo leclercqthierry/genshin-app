@@ -1,0 +1,37 @@
+import { test, expect, Page } from "@playwright/test";
+import { createAdminContext } from "../helpers/create-admin-context";
+
+test.describe("Admin - CharJewelSetForm", () => {
+    let page: Page;
+    let cleanup: () => Promise<void>;
+
+    test.beforeAll(async () => {
+        const admin = await createAdminContext();
+        page = admin.page;
+        cleanup = admin.cleanup;
+    });
+
+    test.afterAll(async () => {
+        await cleanup();
+    });
+
+    test("affiche correctement le formulaire de création de set de joyaux de personnage", async () => {
+        await page.goto("/admin/char-jewel-sets/new");
+
+        await expect(page.getByRole("heading", { name: /Nouveau set de joyaux de personnage/i })).toBeVisible();
+
+        await expect(page.getByLabel(/Nom du set/i)).toBeVisible();
+
+        await expect(page.getByRole("combobox", { name: /Élément associé/i })).toBeVisible();
+
+        const buttons = await page.getByRole("button", { name: "Importer une icône" }).all();
+        expect(buttons.length).toBe(4);
+
+        for (const button of buttons) {
+            await expect(button).toBeVisible();
+        }
+
+
+        await expect(page.getByRole("button", { name: /Ajouter le set de joyaux/i })).toBeVisible();
+    });
+});

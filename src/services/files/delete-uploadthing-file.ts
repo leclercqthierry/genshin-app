@@ -1,16 +1,11 @@
 import { UTApi } from "uploadthing/server";
-import { extractErrorMessage } from "@/lib/utils/errors";
-
-const utapi = new UTApi();
-
-function extractFileKey(url: string): string {
-    const parts = url.split("/");
-    return parts[parts.length - 1];
-}
+import { extractErrorMessage } from "@/lib/utils/extract-error-message";
+import { extractFileKey } from "./extract-file-key";
 
 export async function deleteUploadThingFile(
     url: string | null | undefined
 ): Promise<void> {
+    const utapi = new UTApi();
     if (!url) return;
 
     const fileKey = extractFileKey(url);

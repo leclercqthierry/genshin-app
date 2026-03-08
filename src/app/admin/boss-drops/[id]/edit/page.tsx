@@ -5,7 +5,7 @@ import AdminResourceEditPage from "@/components/admin/layout/resource-edit-page"
 import BossDropForm from "../../_components/boss-drop-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { handleUpdate } from "../../_actions/edit-boss-drop";
+import { handleUpdate } from "@/domain/boss-drop/actions/update";
 import { getBossDrop } from "@/services/supabase/boss-drop";
 
 type Props = {

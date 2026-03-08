@@ -92,7 +92,7 @@ export default function BossDropForm({ action, submitLabel, defaultValues }: Pro
                         state.errors?.icon_url?.[0]
                     }
                 >
-                    <>
+                    <div className="contents">
                         {iconUrl && (
                             <div className="flex justify-center mb-3">
                                 <Image
@@ -113,7 +113,7 @@ export default function BossDropForm({ action, submitLabel, defaultValues }: Pro
                                 })
                             }
                         />
-                    </>
+                    </div>
                 </AppFieldBase>
 
                 {/* Champ caché pour RHF → FormData */}

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ReactElement } from "react";
 
 type FormElementProps =
     React.InputHTMLAttributes<HTMLInputElement> &
@@ -26,22 +26,18 @@ export default function AppFieldBase({
     error,
     description,
 }: AppFieldBaseProps): React.JSX.Element {
+
     const errorId = error ? `${name}-error` : undefined;
     const descriptionId = description ? `${name}-description` : undefined;
 
-    const isFormElement =
-        React.isValidElement(children) &&
-        typeof children.type === "string" &&
-        ["input", "select", "textarea"].includes(children.type);
-
-    const enhancedChild = isFormElement
-        ? React.cloneElement(children as React.ReactElement<FormElementProps>, {
-            id: name,
-            name,
-            "aria-invalid": !!error,
-            "aria-describedby": errorId ?? descriptionId,
-        })
-        : children;
+    const enhancedChild =
+        React.isValidElement(children)
+            ? React.cloneElement(children as ReactElement<FormElementProps>, {
+                id: name,
+                "aria-invalid": !!error,
+                "aria-describedby": errorId ?? descriptionId,
+            })
+            : children;
 
     return (
         <div className={`${fullWidth ? "w-full" : ""} flex flex-col gap-1`}>

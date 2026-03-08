@@ -1,5 +1,5 @@
 import { createSupabaseServiceClient } from "./service";
-import { extractErrorMessage } from "@/lib/utils/errors";
+import { extractErrorMessage } from "@/lib/utils/extract-error-message";
 
 export async function logFailedFileDeletion(fileUrl: string, error: unknown) {
     const supabase = await createSupabaseServiceClient();

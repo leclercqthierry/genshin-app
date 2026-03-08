@@ -1,4 +1,4 @@
-import HomeChanges from "./_components/HomeChanges";
+import HomeChanges from "./_components/home-changes";
 import PageHero from "@/components/layout/page-hero";
 
 export default async function HomePage() {

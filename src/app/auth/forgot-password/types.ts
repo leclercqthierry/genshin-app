@@ -1,4 +1,4 @@
-import type { ForgotPasswordSchema } from "@/schemas/forgotPasswordSchema";
+import type { ForgotPasswordSchema } from "@/domain/auth/schema/forgot-password";
 
 export type ForgotPasswordFormState = {
     success: boolean;
