@@ -9,11 +9,11 @@ export const adminSections = [
     //     title: "Drop de boss de monde",
     //     description: "Gérer les drops de boss de monde",
     // },
-    // {
-    //     href: "/admin/local-materials",
-    //     title: "Ressources locales",
-    //     description: "Gérer les ressources locales.",
-    // },
+    {
+        href: "/admin/local-materials",
+        title: "Ressources locales",
+        description: "Gérer les ressources locales.",
+    },
     // {
     //     href: "/admin/dungeon-drop-sets",
     //     title: "Drops de donjon",

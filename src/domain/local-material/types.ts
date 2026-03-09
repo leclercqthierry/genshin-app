@@ -1,3 +1,3 @@
 import { BaseItem } from "../shared/type";
 
-export type BossDrop = BaseItem
+export type LocalMaterial = BaseItem

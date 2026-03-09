@@ -1,3 +1,3 @@
 import { BaseItemRow } from "../shared/type";
 
-export type BossDropRow = BaseItemRow;
+export type LocalMaterialRow = BaseItemRow;
