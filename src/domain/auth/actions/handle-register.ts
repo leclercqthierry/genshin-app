@@ -1,9 +1,12 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { parseRegisterForm } from "../logic/parse-register";
-import { registerUser } from "../logic/register-user";
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { parseRegisterForm } from "@/domain/auth/logic/parse-register";
+import { registerUser } from "@/domain/auth/logic/register-user";
+
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
+import { createSupabaseClient } from "@/lib/supabase/client";
+
 import { createProfile, deleteUser } from "@/services/supabase/user";
 import type { RegisterFormState } from "@/app/auth/register/types";
 
@@ -17,16 +20,18 @@ export async function handleRegister(
         return {
             success: false,
             errors: parsed.error.flatten().fieldErrors,
-            message: null
+            message: null,
         };
     }
 
-    const supabase = await createSupabaseServiceClient();
+    // 🔥 1) Instanciation des clients
+    const serviceClient = await createSupabaseServiceClient(); // service-role
 
+    // 🔥 2) Injection dans RegisterDeps
     const result = await registerUser(
         {
             signUp: async (email, password) => {
-                const { data, error } = await supabase.auth.signUp({
+                const { data, error } = await serviceClient.auth.signUp({
                     email,
                     password,
                     options: {
@@ -39,20 +44,24 @@ export async function handleRegister(
                     error: error?.message ?? null,
                 };
             },
+
             createProfile: async (userId, pseudo) => {
                 try {
-                    await createProfile(userId, pseudo);
+                    const writeClient = await createSupabaseClient(); // 🔥 session présente
+                    await createProfile(writeClient, userId, pseudo);
                     return "ok";
                 } catch {
                     return "error";
                 }
             },
-            deleteUser,
+
+            deleteUser: async (userId) => {
+                await deleteUser(serviceClient, userId);
+            },
         },
         parsed.data
     );
 
-    // 🔥 Redirection en cas de succès
     if (result.success) {
         redirect("/auth/email-sent");
     }

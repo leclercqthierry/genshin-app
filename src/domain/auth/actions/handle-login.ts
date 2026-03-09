@@ -2,10 +2,10 @@
 
 import { redirect } from "next/navigation";
 import { loginSchema } from "@/domain/auth/schema/login";
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
 import { getProfile } from "@/services/supabase/user";
 import type { LoginFormState } from "@/app/auth/login/types";
 import { initialLoginState } from "@/app/auth/login/types";
+import { createSupabaseClient } from "@/lib/supabase/client";
 
 export async function handleLogin(
     _prevState: LoginFormState,
@@ -33,7 +33,7 @@ export async function handleLogin(
         }
 
         // 3. Supabase
-        const supabase = await createSupabaseServiceClient();
+        const supabase = await createSupabaseClient();
 
         // 4. Tentative de connexion
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -51,8 +51,7 @@ export async function handleLogin(
         }
 
         // 5. Récupération du profil
-        profile = await getProfile(data.user.id);
-        console.log(profile);
+        profile = await getProfile(supabase, data.user.id);
 
         if (!profile) {
             return {

@@ -1,4 +1,4 @@
-import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/client-read-only";
+import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
 import { getProfile } from "@/services/supabase/user";
 
 export async function requireAdmin() {
@@ -19,7 +19,7 @@ export async function requireAdmin() {
             return { redirect: true };
         }
 
-        const profile = await getProfile(user.id);
+        const profile = await getProfile(supabase, user.id);
 
         if (!profile) {
             console.error("PROFIL ADMIN INTROUVABLE :", user.id);

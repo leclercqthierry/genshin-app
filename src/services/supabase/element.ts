@@ -1,5 +1,5 @@
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
-import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/client-read-only";
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
+import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
 import type { Element } from "@/domain/element/types";
 import { mapRowToElement } from "@/domain/element/mapper";
 

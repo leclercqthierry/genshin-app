@@ -1,4 +1,4 @@
-import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/client-read-only";
+import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
 import { getProfile } from "@/services/supabase/user";
 
 export async function requireUser() {
@@ -10,7 +10,7 @@ export async function requireUser() {
 
         if (error || !data.user) return { redirect: true };
 
-        const profile = await getProfile(data.user.id);
+        const profile = await getProfile(supabase, data.user.id);
         if (!profile) return { redirect: true };
 
         if (profile.role !== "user") return { redirect: true };

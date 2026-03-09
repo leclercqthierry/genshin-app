@@ -3,8 +3,9 @@
 import { extractErrorMessage } from "@/lib/utils/extract-error-message";
 import { recordAdminChange } from "@/domain/admin-changes/record-admin-change";
 import { deleteUploadThingFile } from "@/services/files/delete-uploadthing-file";
-import { logFailedFileDeletion } from "@/lib/utils/supabase/failed-file-deletions";
+import { logFailedFileDeletion } from "@/lib/supabase/failed-file-deletions";
 import type { ZodType } from "zod";
+import { createSupabaseServiceClient } from '@/lib/supabase/service';
 
 interface CreateWithHistoryOptions<TParsed> {
     raw: unknown;
@@ -42,12 +43,14 @@ export async function createWithHistory<TParsed>({
 
         // Cleanup UploadThing si nécessaire
         if (cleanupFiles) {
+            const supabase = await createSupabaseServiceClient();
+
             for (const url of cleanupFiles(data)) {
                 try {
                     await deleteUploadThingFile(url);
                 } catch (fileErr) {
                     console.error("ERREUR CLEANUP FICHIER :", fileErr);
-                    await logFailedFileDeletion(url, fileErr);
+                    await logFailedFileDeletion(supabase, url, fileErr);
                 }
             }
         }

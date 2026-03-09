@@ -1,14 +1,36 @@
+// TOUS LES MOCKS AVANT TOUT IMPORT
+vi.mock("@/domain/admin-changes/record-admin-change", () => ({
+    recordAdminChange: vi.fn(),
+}));
+
+vi.mock("@/services/files/delete-uploadthing-file", () => ({
+    deleteUploadThingFile: vi.fn(),
+}));
+
+// Nouvelle signature : (supabase, url, error)
+vi.mock("@/lib/supabase/failed-file-deletions", () => ({
+    logFailedFileDeletion: vi.fn(),
+}));
+
+// On mocke aussi le client Supabase service
+vi.mock("@/lib/supabase/service", () => ({
+    createSupabaseServiceClient: vi.fn(() => ({
+        from: vi.fn(() => ({
+            insert: vi.fn(),
+        })),
+    })),
+}));
+
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { z } from "zod";
-
 import { createWithHistory } from "./create-with-history";
 import { recordAdminChange } from "@/domain/admin-changes/record-admin-change";
 import { deleteUploadThingFile } from "@/services/files/delete-uploadthing-file";
-import { logFailedFileDeletion } from "@/lib/utils/supabase/failed-file-deletions";
+import { logFailedFileDeletion } from "@/lib/supabase/failed-file-deletions";
 
-vi.mock("@/domain/admin-changes/record-admin-change");
-vi.mock("@/services/files/delete-uploadthing-file");
-vi.mock("@/lib/utils/supabase/failed-file-deletions");
+const mockedDeleteUploadThingFile = vi.mocked(deleteUploadThingFile);
+const mockedLogFailedFileDeletion = vi.mocked(logFailedFileDeletion);
+const mockedRecordAdminChange = vi.mocked(recordAdminChange);
 
 describe("createWithHistory", () => {
     const schema = z.object({
@@ -36,11 +58,10 @@ describe("createWithHistory", () => {
         const create = vi.fn().mockRejectedValue(new Error("Boom"));
         const cleanupFiles = vi.fn().mockReturnValue(["url1", "url2"]);
 
-        (deleteUploadThingFile as unknown as { mockResolvedValue: (v: unknown) => unknown })
-            .mockResolvedValue(undefined);
+        mockedDeleteUploadThingFile.mockResolvedValue(undefined);
 
         const result = await createWithHistory({
-            raw: { name: "Test" }, // valide
+            raw: { name: "Test" },
             schema,
             create,
             entityType: "test",
@@ -55,15 +76,13 @@ describe("createWithHistory", () => {
         expect(result.message).toBe("Boom");
     });
 
+
     it("logFailedFileDeletion est appelé si deleteUploadThingFile échoue", async () => {
         const create = vi.fn().mockRejectedValue(new Error("Boom"));
         const cleanupFiles = vi.fn().mockReturnValue(["url1"]);
 
-        (deleteUploadThingFile as unknown as { mockRejectedValue: (v: unknown) => unknown })
-            .mockRejectedValue(new Error("DeleteFail"));
-
-        (logFailedFileDeletion as unknown as { mockResolvedValue: (v: unknown) => unknown })
-            .mockResolvedValue(undefined);
+        mockedDeleteUploadThingFile.mockRejectedValue(new Error("DeleteFail"));
+        mockedLogFailedFileDeletion.mockResolvedValue(undefined);
 
         const result = await createWithHistory({
             raw: { name: "Test" },
@@ -74,15 +93,30 @@ describe("createWithHistory", () => {
             cleanupFiles,
         });
 
-        expect(logFailedFileDeletion).toHaveBeenCalledWith("url1", expect.any(Error));
+        const calls = mockedLogFailedFileDeletion.mock.calls;
+        expect(calls.length).toBe(1);
+
+        const [passedSupabase, passedUrl, passedError] = calls[0];
+
+        expect(passedSupabase).toHaveProperty("from");
+        expect(typeof passedSupabase.from).toBe("function");
+        expect(passedUrl).toBe("url1");
+
+        // Narrowing strict
+        expect(passedError).toBeInstanceOf(Error);
+
+        if (passedError instanceof Error) {
+            expect(passedError.message).toBe("DeleteFail");
+        }
+
         expect(result.success).toBe(false);
     });
+
 
     it("enregistre l'historique admin après un succès", async () => {
         const create = vi.fn().mockResolvedValue(undefined);
 
-        (recordAdminChange as unknown as { mockResolvedValue: (v: unknown) => unknown })
-            .mockResolvedValue(undefined);
+        mockedRecordAdminChange.mockResolvedValue(undefined);
 
         const result = await createWithHistory({
             raw: { name: "Test" },
@@ -104,8 +138,7 @@ describe("createWithHistory", () => {
     it("ignore les erreurs de recordAdminChange", async () => {
         const create = vi.fn().mockResolvedValue(undefined);
 
-        (recordAdminChange as unknown as { mockRejectedValue: (v: unknown) => unknown })
-            .mockRejectedValue(new Error("HistoryFail"));
+        mockedRecordAdminChange.mockRejectedValue(new Error("HistoryFail"));
 
         const result = await createWithHistory({
             raw: { name: "Test" },

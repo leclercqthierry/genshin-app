@@ -1,7 +1,7 @@
 "use server";
 
 import { forgotPasswordSchema } from "@/domain/auth/schema/forgot-password";
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
 import type { ForgotPasswordFormState } from "../../../app/auth/forgot-password/types";
 
 export async function handleForgotPassword(

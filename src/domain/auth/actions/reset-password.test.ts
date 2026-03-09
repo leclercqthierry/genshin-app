@@ -8,10 +8,10 @@ import {
 } from "vitest";
 
 import { handleResetPassword } from "@/domain/auth/actions/reset-password";
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseClient } from "@/lib/supabase/client";
 import type { ResetPasswordFormState } from "@/app/auth/reset-password/types";
 
-vi.mock("@/lib/utils/supabase/service");
+vi.mock("@/lib/supabase/client");
 
 describe("handleResetPassword", () => {
     const prevState: ResetPasswordFormState = {
@@ -31,7 +31,7 @@ describe("handleResetPassword", () => {
     }>;
 
     function mockSupabase(error: FakeAuthError | null = null) {
-        (createSupabaseServiceClient as Mock).mockResolvedValue({
+        (createSupabaseClient as Mock).mockResolvedValue({
             auth: {
                 updateUser: mockUpdateUser.mockResolvedValue({ error }),
             },
@@ -97,7 +97,7 @@ describe("handleResetPassword", () => {
     });
 
     it("gère les erreurs inattendues", async () => {
-        (createSupabaseServiceClient as Mock).mockRejectedValue(
+        (createSupabaseClient as Mock).mockRejectedValue(
             new Error("Boom")
         );
 

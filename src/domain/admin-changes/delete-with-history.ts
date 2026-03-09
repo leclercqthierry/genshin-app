@@ -3,7 +3,8 @@
 import { extractErrorMessage } from "@/lib/utils/extract-error-message";
 import { recordAdminChange } from "@/domain/admin-changes/record-admin-change";
 import { deleteUploadThingFile } from "@/services/files/delete-uploadthing-file";
-import { logFailedFileDeletion } from "@/lib/utils/supabase/failed-file-deletions";
+import { logFailedFileDeletion } from "@/lib/supabase/failed-file-deletions";
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
 
 interface DeleteWithHistoryOptions<TExisting> {
     id: number;
@@ -56,12 +57,13 @@ export async function deleteWithHistory<TExisting>({
 
         // 4. Suppression UploadThing (optionnel)
         if (deleteFiles) {
+            const supabase = await createSupabaseServiceClient();
             for (const url of deleteFiles(existing)) {
                 try {
                     await deleteUploadThingFile(url);
                 } catch (err) {
                     console.error("ERREUR SUPPRESSION FICHIER :", err);
-                    await logFailedFileDeletion(url, err);
+                    await logFailedFileDeletion(supabase, url, err);
                 }
             }
         }

@@ -1,4 +1,4 @@
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
 import type { AdminChangeAction } from "./types";
 
 export async function recordAdminChange(params: {

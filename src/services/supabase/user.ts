@@ -1,12 +1,12 @@
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
-import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/client-read-only";
-import { createSupabaseClient } from "@/lib/utils/supabase/client";
+// src/services/supabase/user.ts
+import type { ClientReadOnly, ClientWrite, ClientService } from "@/lib/supabase/ports";
 import type { Profile } from "@/domain/user/types";
 
-export async function getProfile(userId: string): Promise<Profile | null> {
+export async function getProfile(
+    supabase: ClientReadOnly,
+    userId: string
+): Promise<Profile | null> {
     try {
-        const supabase = await createSupabaseClientReadOnly();
-
         const { data, error } = await supabase
             .from("profiles")
             .select("*")
@@ -25,9 +25,11 @@ export async function getProfile(userId: string): Promise<Profile | null> {
     }
 }
 
-export async function createProfile(userId: string, pseudo: string): Promise<void> {
-    const supabase = await createSupabaseClient();
-
+export async function createProfile(
+    supabase: ClientWrite,
+    userId: string,
+    pseudo: string
+): Promise<void> {
     const { error } = await supabase.from("profiles").insert({
         id: userId,
         role: "user",
@@ -40,9 +42,10 @@ export async function createProfile(userId: string, pseudo: string): Promise<voi
     }
 }
 
-export async function deleteProfile(userId: string): Promise<void> {
-    const supabase = await createSupabaseClient();
-
+export async function deleteProfile(
+    supabase: ClientWrite,
+    userId: string
+): Promise<void> {
     const { error } = await supabase
         .from("profiles")
         .delete()
@@ -54,9 +57,10 @@ export async function deleteProfile(userId: string): Promise<void> {
     }
 }
 
-export async function deleteUser(userId: string): Promise<void> {
-    const supabase = await createSupabaseServiceClient();
-
+export async function deleteUser(
+    supabase: ClientService,
+    userId: string
+): Promise<void> {
     const { error } = await supabase.auth.admin.deleteUser(userId);
 
     if (error) {

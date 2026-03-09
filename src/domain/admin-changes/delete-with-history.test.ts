@@ -1,14 +1,34 @@
+vi.mock("@/domain/admin-changes/record-admin-change", () => ({
+    recordAdminChange: vi.fn(),
+}));
+
+vi.mock("@/services/files/delete-uploadthing-file", () => ({
+    deleteUploadThingFile: vi.fn(),
+}));
+
+// Nouvelle signature : (supabase, url, error)
+vi.mock("@/lib/supabase/failed-file-deletions", () => ({
+    logFailedFileDeletion: vi.fn(),
+}));
+
+// On mocke aussi le client Supabase service
+vi.mock("@/lib/supabase/service", () => ({
+    createSupabaseServiceClient: vi.fn(() => ({
+        from: vi.fn(() => ({
+            insert: vi.fn(),
+        })),
+    })),
+}));
+
 import { describe, it, expect, vi, beforeEach } from "vitest";
-
 import { deleteWithHistory } from "./delete-with-history";
-
 import { recordAdminChange } from "@/domain/admin-changes/record-admin-change";
 import { deleteUploadThingFile } from "@/services/files/delete-uploadthing-file";
-import { logFailedFileDeletion } from "@/lib/utils/supabase/failed-file-deletions";
+import { logFailedFileDeletion } from "@/lib/supabase/failed-file-deletions";
 
-vi.mock("@/domain/admin-changes/record-admin-change");
-vi.mock("@/services/files/delete-uploadthing-file");
-vi.mock("@/lib/utils/supabase/failed-file-deletions");
+const mockedDeleteUploadThingFile = vi.mocked(deleteUploadThingFile);
+const mockedLogFailedFileDeletion = vi.mocked(logFailedFileDeletion);
+const mockedRecordAdminChange = vi.mocked(recordAdminChange);
 
 describe("deleteWithHistory", () => {
     beforeEach(() => {
@@ -53,9 +73,7 @@ describe("deleteWithHistory", () => {
 
         const deleteEntity = vi.fn().mockResolvedValue(undefined);
 
-        (recordAdminChange as unknown as {
-            mockRejectedValue: (v: unknown) => unknown;
-        }).mockRejectedValue(new Error("HistoryFail"));
+        mockedDeleteUploadThingFile.mockRejectedValue(new Error("HistoryFail"));
 
         const result = await deleteWithHistory({
             id: 1,
@@ -77,9 +95,7 @@ describe("deleteWithHistory", () => {
 
         const deleteFiles = vi.fn().mockReturnValue(["url1", "url2"]);
 
-        (deleteUploadThingFile as unknown as {
-            mockResolvedValue: (v: unknown) => unknown;
-        }).mockResolvedValue(undefined);
+        mockedDeleteUploadThingFile.mockResolvedValue(undefined);
 
         const result = await deleteWithHistory({
             id: 1,
@@ -103,13 +119,8 @@ describe("deleteWithHistory", () => {
 
         const deleteFiles = vi.fn().mockReturnValue(["url1"]);
 
-        (deleteUploadThingFile as unknown as {
-            mockRejectedValue: (v: unknown) => unknown;
-        }).mockRejectedValue(new Error("FileFail"));
-
-        (logFailedFileDeletion as unknown as {
-            mockResolvedValue: (v: unknown) => unknown;
-        }).mockResolvedValue(undefined);
+        mockedDeleteUploadThingFile.mockRejectedValue(new Error("FileFail"));
+        mockedLogFailedFileDeletion.mockResolvedValue(undefined);
 
         const result = await deleteWithHistory({
             id: 1,
@@ -120,8 +131,24 @@ describe("deleteWithHistory", () => {
             deleteFiles,
         });
 
-        expect(logFailedFileDeletion).toHaveBeenCalledWith("url1", expect.any(Error));
+        const calls = mockedLogFailedFileDeletion.mock.calls;
+        expect(calls.length).toBe(1);
+
+        const [passedSupabase, passedUrl, passedError] = calls[0];
+
+        expect(passedSupabase).toHaveProperty("from");
+        expect(typeof passedSupabase.from).toBe("function");
+        expect(passedUrl).toBe("url1");
+
+        // Narrowing strict
+        expect(passedError).toBeInstanceOf(Error);
+
+        if (passedError instanceof Error) {
+            expect(passedError.message).toBe("FileFail");
+        }
+
         expect(result.success).toBe(true);
+
     });
 
     it("retourne un succès complet", async () => {
@@ -130,9 +157,7 @@ describe("deleteWithHistory", () => {
         const getExisting = vi.fn().mockResolvedValue(existing);
         const deleteEntity = vi.fn().mockResolvedValue(undefined);
 
-        (recordAdminChange as unknown as {
-            mockResolvedValue: (v: unknown) => unknown;
-        }).mockResolvedValue(undefined);
+        mockedRecordAdminChange.mockResolvedValue(undefined);
 
         const result = await deleteWithHistory({
             id: 1,

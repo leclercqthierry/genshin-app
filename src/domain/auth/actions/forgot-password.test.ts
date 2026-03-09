@@ -1,7 +1,7 @@
 import { vi } from "vitest";
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
 
-vi.mock("@/lib/utils/supabase/service", () => ({
+vi.mock("@/lib/supabase/service", () => ({
     createSupabaseServiceClient: vi.fn(),
 }));
 

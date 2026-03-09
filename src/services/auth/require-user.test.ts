@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { requireUser } from "./require-user";
 
-vi.mock("@/lib/utils/supabase/client-read-only");
+vi.mock("@/lib/supabase/client-read-only");
 vi.mock("@/services/supabase/user");
 
-import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/client-read-only";
+import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
 import { getProfile } from "@/services/supabase/user";
 
 describe("requireUser", () => {

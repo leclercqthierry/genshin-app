@@ -8,8 +8,8 @@ vi.mock("next/navigation", () => ({
 
 const signInWithPassword = vi.fn();
 
-vi.mock("@/lib/utils/supabase/service", () => ({
-    createSupabaseServiceClient: vi.fn(() => ({
+vi.mock("@/lib/supabase/client", () => ({
+    createSupabaseClient: vi.fn(() => ({
         auth: {
             signInWithPassword,
         },
@@ -23,7 +23,7 @@ vi.mock("@/services/supabase/user", () => ({
 // Maintenant seulement on importe
 import { handleLogin } from "./handle-login";
 import { redirect } from "next/navigation";
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseClient } from "@/lib/supabase/client";
 import { getProfile } from "@/services/supabase/user";
 
 const mockedGetProfile = vi.mocked(getProfile);
@@ -48,7 +48,7 @@ describe("handleLogin", () => {
     });
 
     it("retourne une erreur si Supabase échoue", async () => {
-        const supabase = await createSupabaseServiceClient();
+        const supabase = await createSupabaseClient();
 
         const signIn = supabase.auth
             .signInWithPassword as unknown as Mock;
@@ -72,7 +72,7 @@ describe("handleLogin", () => {
     });
 
     it("retourne une erreur si le profil est introuvable", async () => {
-        const supabase = await createSupabaseServiceClient();
+        const supabase = await createSupabaseClient();
 
         const signIn = supabase.auth
             .signInWithPassword as unknown as Mock;
@@ -98,7 +98,7 @@ describe("handleLogin", () => {
     });
 
     it("redirige vers /admin si l'utilisateur est admin", async () => {
-        const supabase = await createSupabaseServiceClient();
+        const supabase = await createSupabaseClient();
 
         const signIn = supabase.auth
             .signInWithPassword as unknown as Mock;
@@ -127,7 +127,7 @@ describe("handleLogin", () => {
     });
 
     it("redirige vers /my-account si l'utilisateur est user", async () => {
-        const supabase = await createSupabaseServiceClient();
+        const supabase = await createSupabaseClient();
 
         const signIn = supabase.auth
             .signInWithPassword as unknown as Mock;

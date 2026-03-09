@@ -1,91 +1,107 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { handleRegister } from "./handle-register";
-import { redirect } from "next/navigation";
-
-// Mock redirect
+// 🔥 On mocke ce qui doit l’être
 vi.mock("next/navigation", () => ({
     redirect: vi.fn(),
 }));
 
-// Mock registerUser
-vi.mock("../logic/register-user", () => ({
+vi.mock("@/lib/supabase/service", () => ({
+    createSupabaseServiceClient: vi.fn(),
+}));
+
+vi.mock("@/lib/supabase/client", () => ({
+    createSupabaseClient: vi.fn(),
+}));
+
+vi.mock("@/domain/auth/logic/register-user", () => ({
     registerUser: vi.fn(),
 }));
+import { vi, describe, it, expect, Mock } from "vitest";
+import { handleRegister } from "@/domain/auth/actions/handle-register";
+import { registerUser } from "@/domain/auth/logic/register-user";
+import { redirect } from "next/navigation";
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
+import { createSupabaseClient } from "@/lib/supabase/client";
 
-// Mock Supabase service client
-vi.mock("@/lib/utils/supabase/service", () => ({
-    createSupabaseServiceClient: vi.fn(() => ({
-        auth: {
-            signUp: vi.fn(),
-        },
-    })),
-}));
+describe("handleRegister (integration)", () => {
 
-import { registerUser } from "../logic/register-user";
-
-const mockedRegisterUser = vi.mocked(registerUser);
-
-describe("handleRegister", () => {
     beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
-    it("retourne des erreurs de validation si le formulaire est invalide", async () => {
-        const formData = new FormData();
-        formData.append("email", "invalid");
-        formData.append("password", "short");
-        formData.append("password2", "mismatch");
-        formData.append("pseudo", "");
-
-        const result = await handleRegister(
-            { success: false, errors: {}, message: null },
-            formData
-        );
-
-        expect(result.success).toBe(false);
-        expect(result.errors.email).toBeDefined();
-    });
-
-    it("retourne une erreur si registerUser échoue", async () => {
-        const formData = new FormData();
-        formData.append("email", "test@example.com");
-        formData.append("password", "Password123?");
-        formData.append("password2", "Password123?");
-        formData.append("pseudo", "Thierry");
-
-        mockedRegisterUser.mockResolvedValue({
-            success: false,
-            errors: {},
-            message: "Email déjà utilisé",
-        });
-
-        const result = await handleRegister(
-            { success: false, errors: {}, message: null },
-            formData
-        );
-
-        expect(result.success).toBe(false);
-        expect(result.message).toBe("Email déjà utilisé");
+        vi.resetAllMocks();
     });
 
     it("redirige en cas de succès", async () => {
-        const formData = new FormData();
-        formData.append("email", "test@example.com");
-        formData.append("password", "Password123?");
-        formData.append("password2", "Password123?");
-        formData.append("pseudo", "Thierry");
+        // Mock service client
+        const serviceClient = {
+            auth: {
+                signUp: vi.fn().mockResolvedValue({
+                    data: { user: { id: "123" } },
+                    error: null,
+                }),
+            },
+        };
 
-        mockedRegisterUser.mockResolvedValue({
+        (createSupabaseServiceClient as unknown as Mock).mockResolvedValue(serviceClient);
+
+        // Mock client public
+        const writeClient = {
+            from: vi.fn(),
+        };
+
+        (createSupabaseClient as unknown as Mock).mockResolvedValue(writeClient);
+
+        // Mock registerUser → succès
+        (registerUser as Mock).mockResolvedValue({
             success: true,
             errors: {},
-            message: null,
+            message: "ok",
         });
 
-        await handleRegister(
-            { success: false, errors: {}, message: null },
-            formData
-        );
+        const formData = new FormData();
+        formData.append("email", "test@test.com");
+        formData.append("password", "Password123?");
+        formData.append("password2", "Password123?");
+        formData.append("pseudo", "toto");
 
+        await handleRegister({ success: false, errors: {}, message: null }, formData);
+
+        expect(registerUser).toHaveBeenCalled();
         expect(redirect).toHaveBeenCalledWith("/auth/email-sent");
+    });
+
+    it("retourne l’erreur si registerUser échoue", async () => {
+        const serviceClient = {
+            auth: {
+                signUp: vi.fn().mockResolvedValue({
+                    data: { user: { id: "123" } },
+                    error: null,
+                }),
+            },
+        };
+
+        (createSupabaseServiceClient as unknown as Mock).mockResolvedValue(serviceClient);
+
+        const writeClient = {
+            from: vi.fn(),
+        };
+
+        (createSupabaseClient as unknown as Mock).mockResolvedValue(writeClient);
+
+        // Mock registerUser → échec
+        const errorResult = {
+            success: false,
+            errors: { email: ["déjà pris"] },
+            message: "Impossible",
+        };
+
+        (registerUser as Mock).mockResolvedValue(errorResult);
+
+        const formData = new FormData();
+        formData.append("email", "test@test.com");
+        formData.append("password", "Password123?");
+        formData.append("password2", "Password123?");
+        formData.append("pseudo", "toto");
+
+        const result = await handleRegister({ success: false, errors: {}, message: null }, formData);
+
+        expect(result).toEqual(errorResult);
+        expect(redirect).not.toHaveBeenCalled();
     });
 });

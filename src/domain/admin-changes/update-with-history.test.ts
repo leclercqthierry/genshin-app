@@ -3,11 +3,11 @@ import { z } from "zod";
 
 import { updateWithHistory } from "./update-with-history";
 
-import { recordAdminChange } from "@/domain/admin-changes/record-admin-change";
-import { replaceUploadThingFile } from "@/services/files/replace-uploadthing-file";
-
 vi.mock("@/domain/admin-changes/record-admin-change");
 vi.mock("@/services/files/replace-uploadthing-file");
+
+import { recordAdminChange } from "@/domain/admin-changes/record-admin-change";
+import { replaceUploadThingFile } from "@/services/files/replace-uploadthing-file";
 
 describe("updateWithHistory", () => {
     const schema = z.object({

@@ -1,4 +1,4 @@
-import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/client-read-only";
+import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
 import type { AdminChangeGroup } from "./types";
 
 export interface AdminChangeRow {

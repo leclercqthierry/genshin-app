@@ -6,7 +6,7 @@ import { config } from "dotenv";
 config({ path: ".env.local" });
 
 import { describe, it, expect } from "vitest";
-import { createSupabaseServiceClientNode } from "@/lib/utils/supabase/service-node";
+import { createSupabaseServiceClientNode } from "@/lib/supabase/service-node";
 
 describe("CharJewelSet – CRUD réel via client Node (hybride)", () => {
     it("create → get → update → get → delete → get", async () => {

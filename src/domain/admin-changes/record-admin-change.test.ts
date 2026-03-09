@@ -1,6 +1,6 @@
 import { vi, type Mock } from "vitest";
 import { recordAdminChange } from "./record-admin-change";
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
 
 // --- Types stricts, sans any/unknown/never ---
 
@@ -50,7 +50,7 @@ function createBuilder(result: BuilderResult): Builder {
 
 // --- Mock strict du module Supabase service ---
 
-vi.mock("@/lib/utils/supabase/service", () => ({
+vi.mock("@/lib/supabase/service", () => ({
     createSupabaseServiceClient: vi.fn<() => Promise<SupabaseMock>>(),
 }));
 

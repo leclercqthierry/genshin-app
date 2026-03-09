@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { recordAdminChange } from "@/domain/admin-changes/record-admin-change";
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
 
 vi.mock("@/lib/utils/supabase/service");
 

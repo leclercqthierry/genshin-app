@@ -5,7 +5,7 @@ import Footer from "@/components/layout/footer";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ReactNode } from "react";
-import { createSupabaseClientReadOnly } from "@/lib/utils/supabase/client-read-only";
+import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
 import { getProfile } from "@/services/supabase/user";
 
 export const metadata: Metadata = {
@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         data: { user },
     } = await supabase.auth.getUser();
 
-    const profile = user ? await getProfile(user.id) : null;
+    const profile = user ? await getProfile(supabase, user.id) : null;
 
     return (
         <html lang="fr">

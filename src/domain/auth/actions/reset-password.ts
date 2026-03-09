@@ -1,7 +1,7 @@
 "use server";
 
 import { resetPasswordSchema } from "@/domain/auth/schema/reset-password";
-import { createSupabaseServiceClient } from "@/lib/utils/supabase/service";
+import { createSupabaseClient } from "@/lib/supabase/client";
 import type { ResetPasswordFormState } from "../../../app/auth/reset-password/types";
 
 export async function handleResetPassword(
@@ -26,7 +26,7 @@ export async function handleResetPassword(
         }
 
         // 3. Supabase
-        const supabase = await createSupabaseServiceClient();
+        const supabase = await createSupabaseClient();
 
         // 4. Mise à jour du mot de passe
         const { error } = await supabase.auth.updateUser({
