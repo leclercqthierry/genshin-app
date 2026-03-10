@@ -13,11 +13,13 @@ export default async function ElementsPage() {
     if (redirect) return <Redirecting />;
 
     const elements = await getElements();
+    const numberOfElements = elements.length;
 
     return (
         <AdminResourcePage
             title="Gestion des éléments"
             description="Ces éléments seront utilisés pour les personnages. Il faut donc les créer AVANT ces derniers !"
+            count={`Il y a actuellement ${numberOfElements} élément${numberOfElements > 1 ? "s" : ""} dans l'application.`}
             createHref="/admin/elements/new"
             items={elements}
             variant={"compact"}

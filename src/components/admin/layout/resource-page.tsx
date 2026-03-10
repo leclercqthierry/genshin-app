@@ -9,6 +9,7 @@ import type { AdminGridProps } from "./grid";
 interface AdminResourcePageProps<T> extends Pick<AdminGridProps, "variant"> {
     title: string;
     description?: string;
+    count?: string;
     createHref: string;
     items: T[];
     renderItem: (item: T) => React.ReactNode;
@@ -17,6 +18,7 @@ interface AdminResourcePageProps<T> extends Pick<AdminGridProps, "variant"> {
 export default function AdminResourcePage<T>({
     title,
     description,
+    count,
     createHref,
     items,
     renderItem,
@@ -29,6 +31,10 @@ export default function AdminResourcePage<T>({
 
                 {description && (
                     <p className="text-center mt-6">{description}</p>
+                )}
+
+                {count && (
+                    <p className="text-center mt-6">{count}</p>
                 )}
             </PageHero>
 

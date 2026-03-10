@@ -13,11 +13,13 @@ export default async function LocalMaterialsPage() {
     if (redirect) return <Redirecting />;
 
     const localMaterials = await getLocalMaterials();
+    const numberOfLocalMaterials = localMaterials.length;
 
     return (
         <AdminResourcePage
             title="Gestion des ressources locales"
             description="Ces ressources locales seront utilisés pour les personnages. Il faut donc les créer AVANT ces derniers !"
+            count={`Il y a actuellement ${numberOfLocalMaterials} ressource${numberOfLocalMaterials > 1 ? "s" : ""} locale${numberOfLocalMaterials > 1 ? "s" : ""} dans l'application.`}
             createHref="/admin/local-materials/new"
             items={localMaterials}
             variant={"compact"}

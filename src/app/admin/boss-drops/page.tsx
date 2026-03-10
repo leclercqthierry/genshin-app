@@ -13,11 +13,13 @@ export default async function BossDropsPage() {
     if (redirect) return <Redirecting />;
 
     const bossDrops = await getBossDrops();
+    const numberOfBossDrops = bossDrops.length;
 
     return (
         <AdminResourcePage
             title="Gestion des drops de boss"
             description="Ces drops de boss seront utilisés pour les personnages. Il faut donc les créer AVANT ces derniers !"
+            count={`Il y a actuellement ${numberOfBossDrops} drop${numberOfBossDrops > 1 ? "s" : ""} de boss dans l'application.`}
             createHref="/admin/boss-drops/new"
             items={bossDrops}
             variant={"compact"}

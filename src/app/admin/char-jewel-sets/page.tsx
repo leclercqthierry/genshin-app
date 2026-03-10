@@ -23,10 +23,13 @@ export default async function CharJewelSetsPage() {
         elements.map((el) => [el.id, el])
     );
 
+    const numberOfCharJewelSets = charJewelSets.length;
+
     return (
         <AdminResourcePage
             title="Gestion des sets de joyaux de personnage"
             description="Ces sets de joyaux de personnages seront utilisés pour les personnages. Il faut donc les créer AVANT ces derniers !"
+            count={`Il y a actuellement ${numberOfCharJewelSets} set${numberOfCharJewelSets > 1 ? "s" : ""} de joyaux de personnage dans l'application.`}
             createHref="/admin/char-jewel-sets/new"
             items={charJewelSets}
             renderItem={(set) => (
