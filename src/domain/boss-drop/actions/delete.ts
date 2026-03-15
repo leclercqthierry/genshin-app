@@ -1,6 +1,6 @@
 "use server";
 
-import { deleteBossDrop, getBossDrop } from "@/services/supabase/boss-drop";
+import { bossDropService } from "@/services/supabase/boss-drop";
 import { deleteWithHistory } from "@/domain/admin-changes/delete-with-history";
 
 export async function deleteBossDropAction(formData: FormData) {
@@ -8,8 +8,8 @@ export async function deleteBossDropAction(formData: FormData) {
 
     return deleteWithHistory({
         id,
-        getExisting: getBossDrop,
-        deleteEntity: deleteBossDrop,
+        getExisting: bossDropService.getOne,
+        deleteEntity: bossDropService.remove,
         entityType: "BossDrop",
         entityName: (e) => e.name,
         deleteFiles: (e) => [e.iconUrl],

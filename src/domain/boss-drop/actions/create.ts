@@ -1,7 +1,7 @@
 "use server";
 
 import { bossDropSchema } from "@/domain/boss-drop/schema";
-import { createBossDrop } from "@/services/supabase/boss-drop";
+import { bossDropService } from "@/services/supabase/boss-drop";
 import type { BossDropFormState } from "@/app/admin/boss-drops/_components/types";
 import { createWithHistory } from "@/domain/admin-changes/create-with-history";
 
@@ -16,9 +16,9 @@ export async function handleCreate(
         },
         schema: bossDropSchema,
         create: async (data) => {
-            await createBossDrop({
+            await bossDropService.create({
                 name: data.name,
-                iconUrl: data.icon_url,
+                icon_url: data.icon_url,
             });
         },
         entityType: "BossDrop",

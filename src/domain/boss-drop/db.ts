@@ -1,3 +1,3 @@
-import { BaseItemRow } from "../shared/type";
+import { BaseItemRow } from "../shared/base-item/db";
 
 export type BossDropRow = BaseItemRow;

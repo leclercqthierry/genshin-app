@@ -6,7 +6,7 @@ import BossDropForm from "../../_components/boss-drop-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleUpdate } from "@/domain/boss-drop/actions/update";
-import { getBossDrop } from "@/services/supabase/boss-drop";
+import { bossDropService } from "@/services/supabase/boss-drop";
 
 type Props = {
     params: Promise<{ id: string }>;
@@ -17,7 +17,7 @@ export default async function EditBossDropPage({ params }: Props) {
     if (redirect) return <Redirecting />;
 
     const { id } = await params;
-    const bossDrop = await getBossDrop(Number(id));
+    const bossDrop = await bossDropService.getOne(Number(id));
 
     if (!bossDrop) {
         return <p>Drop de boss introuvable.</p>;

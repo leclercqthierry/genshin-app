@@ -1,6 +1,6 @@
 "use server";
 
-import { getCharJewelSet, deleteCharJewelSet } from "@/services/supabase/char-jewel-set";
+import { charJewelSetService } from "@/services/supabase/char-jewel-set";
 import { deleteWithHistory } from "@/domain/admin-changes/delete-with-history";
 
 export async function deleteCharJewelSetAction(formData: FormData) {
@@ -8,8 +8,8 @@ export async function deleteCharJewelSetAction(formData: FormData) {
 
     return deleteWithHistory({
         id,
-        getExisting: getCharJewelSet,
-        deleteEntity: deleteCharJewelSet,
+        getExisting: charJewelSetService.getOne,
+        deleteEntity: charJewelSetService.remove,
         entityType: "CharJewelSet",
         entityName: (e) => e.name,
         deleteFiles: (e) => [

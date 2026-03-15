@@ -1,34 +1,16 @@
-import type { CharJewelSet } from "./types";
-import type { CharJewelSetRow } from "./db";
+import { CharJewelSet } from "./types";
+import { CharJewelSetRow } from "./db";
+import { mapBaseSetToRow, mapRowToBaseSet } from "../shared/base-set/mapper";
 
-/**
- * DB → Domaine
- */
-export function mapRowToCharJewelSet(row: CharJewelSetRow): CharJewelSet {
-    return {
-        id: row.id,
-        name: row.name,
-        rarity2Url: row.rarity2_url,
-        rarity3Url: row.rarity3_url,
-        rarity4Url: row.rarity4_url,
-        rarity5Url: row.rarity5_url,
-        createdAt: row.created_at,
-        elementId: row.element_id,
-    };
-}
+export const mapRowToCharJewelSet = (row: CharJewelSetRow): CharJewelSet =>
+    mapRowToBaseSet(row, (r) => ({
+        rarity5Url: r.rarity5_url,
+        elementId: r.element_id,
+    }));
 
-/**
- * Domaine → DB (pour insert/update)
- */
-export function mapCharJewelSetToRow(entity: CharJewelSet): CharJewelSetRow {
-    return {
-        id: entity.id,
-        name: entity.name,
-        rarity2_url: entity.rarity2Url,
-        rarity3_url: entity.rarity3Url,
-        rarity4_url: entity.rarity4Url,
-        rarity5_url: entity.rarity5Url,
-        created_at: entity.createdAt,
-        element_id: entity.elementId,
-    };
-}
+export const mapCharJewelSetToRow = (entity: CharJewelSet): CharJewelSetRow =>
+    mapBaseSetToRow(entity, (e) => ({
+        rarity5_url: e.rarity5Url,
+        element_id: e.elementId,
+    }));
+

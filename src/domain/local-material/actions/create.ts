@@ -1,9 +1,9 @@
 "use server";
 
 import { localMaterialSchema } from "@/domain/local-material/schema";
-import { createLocalMaterial } from "@/services/supabase/local-material";
 import type { LocalMaterialFormState } from "@/app/admin/local-materials/_components/types";
 import { createWithHistory } from "@/domain/admin-changes/create-with-history";
+import { localMaterialService } from "@/services/supabase/local-material";
 
 export async function handleCreate(
     _prevState: LocalMaterialFormState,
@@ -16,9 +16,9 @@ export async function handleCreate(
         },
         schema: localMaterialSchema,
         create: async (data) => {
-            await createLocalMaterial({
+            await localMaterialService.create({
                 name: data.name,
-                iconUrl: data.icon_url,
+                icon_url: data.icon_url,
             });
         },
         entityType: "LocalMaterial",

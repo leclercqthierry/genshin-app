@@ -1,10 +1,6 @@
-export type CharJewelSet = {
-    id: number;
-    name: string;
-    rarity2Url: string;
-    rarity3Url: string;
-    rarity4Url: string;
+import type { BaseSet } from "@/domain/shared/base-set/types";
+
+export type CharJewelSet = BaseSet & {
     rarity5Url: string;
-    createdAt: string;
     elementId: number;
 };

@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { getLocalMaterials } from "@/services/supabase/local-material";
+import { localMaterialService } from "@/services/supabase/local-material";
 import { deleteLocalMaterialAction } from "@/domain/local-material/actions/delete";
 
 import Redirecting from "@/components/ui/feedback/redirecting";
@@ -12,7 +12,7 @@ export default async function LocalMaterialsPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    const localMaterials = await getLocalMaterials();
+    const localMaterials = await localMaterialService.getAll();
     const numberOfLocalMaterials = localMaterials.length;
 
     return (

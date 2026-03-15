@@ -1,5 +1,3 @@
-export type CharJewelSetFormState = {
-    success: boolean;
-    errors: Record<string, string[]>;
-    message?: string;
-};
+import { BaseSetFormState } from "../../_shared/types";
+
+export type CharJewelSetFormState = BaseSetFormState

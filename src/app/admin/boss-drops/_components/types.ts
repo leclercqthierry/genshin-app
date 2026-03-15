@@ -1,7 +1,3 @@
-import { BossDropSchema } from "@/domain/boss-drop/schema";
+import type { BaseItemFormState } from "../../_shared/types";
 
-export type BossDropFormState = {
-    success: boolean;
-    errors?: Partial<Record<keyof BossDropSchema, string[]>>;
-    message?: string;
-};
+export type BossDropFormState = BaseItemFormState;

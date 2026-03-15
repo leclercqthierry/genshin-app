@@ -18,7 +18,7 @@ export async function handleCreate(
         create: async (data) => {
             await createElement({
                 name: data.name,
-                iconUrl: data.icon_url,
+                icon_url: data.icon_url,
             });
         },
         entityType: "Element",

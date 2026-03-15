@@ -1,7 +1,7 @@
 "use server";
 
 import { charJewelSetSchema } from "@/domain/char-jewel-set/schema";
-import { createCharJewelSet } from "@/services/supabase/char-jewel-set";
+import { charJewelSetService } from "@/services/supabase/char-jewel-set";
 import type { CharJewelSetFormState } from "@/app/admin/char-jewel-sets/_components/types";
 import {
     createWithHistory
@@ -22,13 +22,13 @@ export async function handleCreate(
         },
         schema: charJewelSetSchema,
         create: async (data) => {
-            await createCharJewelSet({
+            await charJewelSetService.create({
                 name: data.name,
-                elementId: data.elementId,
-                rarity2Url: data.rarity2_url,
-                rarity3Url: data.rarity3_url,
-                rarity4Url: data.rarity4_url,
-                rarity5Url: data.rarity5_url,
+                element_id: data.elementId,
+                rarity2_url: data.rarity2_url,
+                rarity3_url: data.rarity3_url,
+                rarity4_url: data.rarity4_url,
+                rarity5_url: data.rarity5_url,
             });
         },
         entityType: "CharJewelSet",

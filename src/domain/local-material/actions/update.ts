@@ -1,7 +1,7 @@
 "use server";
 
 import { localMaterialSchema } from "@/domain/local-material/schema";
-import { getLocalMaterial, updateLocalMaterial } from "@/services/supabase/local-material";
+import { localMaterialService } from "@/services/supabase/local-material";
 import type { LocalMaterialFormState } from "@/app/admin/local-materials/_components/types";
 import { updateWithHistory } from "@/domain/admin-changes/update-with-history";
 
@@ -17,11 +17,11 @@ export async function handleUpdate(
             icon_url: formData.get("icon_url")?.toString() ?? "",
         },
         schema: localMaterialSchema,
-        getExisting: getLocalMaterial,
+        getExisting: localMaterialService.getOne,
         update: async (id, data) => {
-            await updateLocalMaterial(id, {
+            await localMaterialService.update(id, {
                 name: data.name,
-                iconUrl: data.icon_url,
+                icon_url: data.icon_url,
             });
         },
         entityType: "LocalMaterial",

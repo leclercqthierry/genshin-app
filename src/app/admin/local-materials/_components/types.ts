@@ -1,7 +1,3 @@
-import { LocalMaterialSchema } from "@/domain/local-material/schema";
+import { BaseItemFormState } from "../../_shared/types";
 
-export type LocalMaterialFormState = {
-    success: boolean;
-    errors?: Partial<Record<keyof LocalMaterialSchema, string[]>>;
-    message?: string;
-};
+export type LocalMaterialFormState = BaseItemFormState;

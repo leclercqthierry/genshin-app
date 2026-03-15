@@ -5,7 +5,7 @@ import AdminResourcePage from "@/components/admin/layout/resource-page";
 import CharJewelSetCard from "@/domain/char-jewel-set/card";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { getCharJewelSets } from "@/services/supabase/char-jewel-set";
+import { charJewelSetService } from "@/services/supabase/char-jewel-set";
 import { getElements } from "@/services/supabase/element";
 import { deleteCharJewelSetAction } from "@/domain/char-jewel-set/actions/delete";
 
@@ -14,7 +14,7 @@ export default async function CharJewelSetsPage() {
     if (redirect) return <Redirecting />;
 
     const [charJewelSets, elements] = await Promise.all([
-        getCharJewelSets(),
+        charJewelSetService.getAll(),
         getElements(),
     ]);
 

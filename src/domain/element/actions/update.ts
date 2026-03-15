@@ -21,7 +21,7 @@ export async function handleUpdate(
         update: async (id, data) => {
             await updateElement(id, {
                 name: data.name,
-                iconUrl: data.icon_url,
+                icon_url: data.icon_url,
             });
         },
         entityType: "Element",

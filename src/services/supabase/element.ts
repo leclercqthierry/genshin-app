@@ -65,7 +65,7 @@ export async function getElement(id: number): Promise<Element | null> {
  */
 export async function createElement(payload: {
     name: string;
-    iconUrl: string;
+    icon_url: string;
 }): Promise<Element> {
     const supabase = await createSupabaseServiceClient();
 
@@ -73,7 +73,7 @@ export async function createElement(payload: {
         .from("elements")
         .insert({
             name: payload.name,
-            icon_url: payload.iconUrl,
+            icon_url: payload.icon_url,
         })
         .select()
         .single();
@@ -90,7 +90,7 @@ export async function updateElement(
     id: number,
     payload: {
         name?: string;
-        iconUrl?: string;
+        icon_url?: string;
     }
 ): Promise<Element> {
     const supabase = await createSupabaseServiceClient();
@@ -99,7 +99,7 @@ export async function updateElement(
         .from("elements")
         .update({
             ...(payload.name && { name: payload.name }),
-            ...(payload.iconUrl && { icon_url: payload.iconUrl }),
+            ...(payload.icon_url && { icon_url: payload.icon_url }),
         })
         .eq("id", id)
         .select()

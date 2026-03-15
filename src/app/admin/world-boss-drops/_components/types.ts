@@ -1,7 +1,3 @@
-import { WorldBossDropSchema } from "@/domain/world-boss-drop/schema";
+import { BaseItemFormState } from "../../_shared/types";
 
-export type WorldBossDropFormState = {
-    success: boolean;
-    errors?: Partial<Record<keyof WorldBossDropSchema, string[]>>;
-    message?: string;
-};
+export type WorldBossDropFormState = BaseItemFormState;

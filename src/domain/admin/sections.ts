@@ -14,11 +14,11 @@ export const adminSections = [
         title: "Ressources locales",
         description: "Gérer les ressources locales.",
     },
-    // {
-    //     href: "/admin/dungeon-drop-sets",
-    //     title: "Drops de donjon",
-    //     description: "Gérer les drops de donjon.",
-    // },
+    {
+        href: "/admin/dungeon-drop-sets",
+        title: "Drops de donjon",
+        description: "Gérer les drops de donjon.",
+    },
     {
         href: "/admin/elements",
         title: "Éléments",

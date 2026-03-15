@@ -11,7 +11,7 @@ import AppFieldBase from "@/components/ui/form/app-field-base";
 import AppInput from "@/components/ui/form/app-input";
 import AppButton from "@/components/ui/button/app-button";
 import AppSelect from "@/components/ui/form/app-select";
-import JewelUploaderField from './char-jewel-uploader-field'
+import BaseItemUploaderField from "../../_shared/_components/base-item-uploader-field";
 
 import {
     charJewelSetSchema,
@@ -62,16 +62,25 @@ export default function CharJewelSetForm({
         },
     });
 
-    const rarity2 = useWatch({ control, name: "rarity2_url" });
-    const rarity3 = useWatch({ control, name: "rarity3_url" });
-    const rarity4 = useWatch({ control, name: "rarity4_url" });
-    const rarity5 = useWatch({ control, name: "rarity5_url" });
-
     useEffect(() => {
         if (state.success) {
             router.push("/admin/char-jewel-sets");
         }
     }, [state.success, router]);
+
+    const rarityValues = {
+        rarity2_url: useWatch({ control, name: "rarity2_url" }),
+        rarity3_url: useWatch({ control, name: "rarity3_url" }),
+        rarity4_url: useWatch({ control, name: "rarity4_url" }),
+        rarity5_url: useWatch({ control, name: "rarity5_url" }),
+    };
+
+    const rarityFields = [
+        { name: "rarity2_url", label: "Joyau ★★", rarity: 2 },
+        { name: "rarity3_url", label: "Joyau ★★★", rarity: 3 },
+        { name: "rarity4_url", label: "Joyau ★★★★", rarity: 4 },
+        { name: "rarity5_url", label: "Joyau ★★★★★", rarity: 5 },
+    ] as const;
 
     return (
         <AppFormWrapper action={formAction} size="md" className="max-w-md mx-auto">
@@ -96,67 +105,25 @@ export default function CharJewelSetForm({
                     }))}
                 />
 
-                <JewelUploaderField
-                    label="Joyau ★★"
-                    name="rarity2_url"
-                    value={rarity2}
-                    rarity={2}
-                    error={errors.rarity2_url?.message || state.errors?.rarity2_url?.[0]}
-                    onUpload={(url) =>
-                        setValue("rarity2_url", url, {
-                            shouldDirty: true,
-                            shouldValidate: true,
-                        })
-                    }
-                />
+                {rarityFields.map(({ name, label, rarity }) => (
+                    <div key={name}>
+                        <BaseItemUploaderField
+                            label={label}
+                            name={name}
+                            rarity={rarity}
+                            value={rarityValues[name]}
+                            error={errors[name]?.message || state.errors?.[name]?.[0]}
+                            onUpload={(url) =>
+                                setValue(name, url, {
+                                    shouldDirty: true,
+                                    shouldValidate: true,
+                                })
+                            }
+                        />
 
-                <JewelUploaderField
-                    label="Joyau ★★★"
-                    name="rarity3_url"
-                    value={rarity3}
-                    rarity={3}
-                    error={errors.rarity3_url?.message || state.errors?.rarity3_url?.[0]}
-                    onUpload={(url) =>
-                        setValue("rarity3_url", url, {
-                            shouldDirty: true,
-                            shouldValidate: true,
-                        })
-                    }
-                />
-
-                <JewelUploaderField
-                    label="Joyau ★★★★"
-                    name="rarity4_url"
-                    value={rarity4}
-                    rarity={4}
-                    error={errors.rarity4_url?.message || state.errors?.rarity4_url?.[0]}
-                    onUpload={(url) =>
-                        setValue("rarity4_url", url, {
-                            shouldDirty: true,
-                            shouldValidate: true,
-                        })
-                    }
-                />
-
-                <JewelUploaderField
-                    label="Joyau ★★★★★"
-                    name="rarity5_url"
-                    value={rarity5}
-                    rarity={5}
-                    error={errors.rarity5_url?.message || state.errors?.rarity5_url?.[0]}
-                    onUpload={(url) =>
-                        setValue("rarity5_url", url, {
-                            shouldDirty: true,
-                            shouldValidate: true,
-                        })
-                    }
-                />
-
-                {/* Champs cachés */}
-                <input type="hidden" {...register("rarity2_url")} />
-                <input type="hidden" {...register("rarity3_url")} />
-                <input type="hidden" {...register("rarity4_url")} />
-                <input type="hidden" {...register("rarity5_url")} />
+                        <input type="hidden" {...register(name)} />
+                    </div>
+                ))}
 
                 {state.message && (
                     <p className="text-red-500 text-sm">{state.message}</p>

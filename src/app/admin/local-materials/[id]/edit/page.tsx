@@ -6,7 +6,7 @@ import LocalMaterialForm from "../../_components/local-material-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleUpdate } from "@/domain/local-material/actions/update";
-import { getLocalMaterial } from "@/services/supabase/local-material";
+import { localMaterialService } from "@/services/supabase/local-material";
 
 type Props = {
     params: Promise<{ id: string }>;
@@ -17,7 +17,7 @@ export default async function EditLocalMaterialPage({ params }: Props) {
     if (redirect) return <Redirecting />;
 
     const { id } = await params;
-    const localMaterial = await getLocalMaterial(Number(id));
+    const localMaterial = await localMaterialService.getOne(Number(id));
 
     if (!localMaterial) {
         return <p>Ressource locale introuvable.</p>;

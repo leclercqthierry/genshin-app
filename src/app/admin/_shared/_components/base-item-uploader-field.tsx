@@ -1,3 +1,5 @@
+// Le composant est en fait le même pour DungeonDropSet et CharJewelSet
+
 "use client";
 
 import Image from "next/image";
@@ -13,7 +15,7 @@ type Props = {
     rarity: number;
 };
 
-export default function JewelUploaderField({
+export default function BaseItemUploaderField({
     label,
     name,
     value,
@@ -23,7 +25,7 @@ export default function JewelUploaderField({
 }: Props) {
     return (
         <AppFieldBase label={label} name={name} required error={error}>
-            <>
+            <div>
                 {value && (
                     <div className="flex justify-center mb-3">
                         <Image
@@ -37,7 +39,7 @@ export default function JewelUploaderField({
                 )}
 
                 <AppUploader onUpload={onUpload} />
-            </>
+            </div>
         </AppFieldBase>
     );
 }

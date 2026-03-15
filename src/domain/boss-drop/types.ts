@@ -1,3 +1,3 @@
-import { BaseItem } from "../shared/type";
+import { BaseItem } from "../shared/base-item/types";
 
 export type BossDrop = BaseItem

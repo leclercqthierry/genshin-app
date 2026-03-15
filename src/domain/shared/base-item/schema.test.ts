@@ -1,14 +1,14 @@
-import { worldBossDropSchema } from "@/domain/world-boss-drop/schema";
+import { baseItemSchema } from "./schema";
 import { describe, it, expect } from "vitest";
 
-describe("worldBossDropSchema", () => {
+describe("baseItemSchema", () => {
     const validData = {
-        name: "Golem de pierre",
+        name: "Item",
         icon_url: "https://example.com/icon.png",
     };
 
-    it("valide un boss drop correct", () => {
-        const result = worldBossDropSchema.safeParse(validData);
+    it("valide un item correct", () => {
+        const result = baseItemSchema.safeParse(validData);
 
         expect(result.success).toBe(true);
         if (result.success) {
@@ -17,7 +17,7 @@ describe("worldBossDropSchema", () => {
     });
 
     it("refuse un nom vide", () => {
-        const result = worldBossDropSchema.safeParse({
+        const result = baseItemSchema.safeParse({
             ...validData,
             name: "",
         });
@@ -30,7 +30,7 @@ describe("worldBossDropSchema", () => {
     });
 
     it("refuse un nom trop long", () => {
-        const result = worldBossDropSchema.safeParse({
+        const result = baseItemSchema.safeParse({
             ...validData,
             name: "a".repeat(101),
         });
@@ -43,7 +43,7 @@ describe("worldBossDropSchema", () => {
     });
 
     it("refuse une URL invalide", () => {
-        const result = worldBossDropSchema.safeParse({
+        const result = baseItemSchema.safeParse({
             ...validData,
             icon_url: "not-a-url",
         });

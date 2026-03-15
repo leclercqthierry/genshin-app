@@ -1,7 +1,7 @@
 "use server";
 
 import { worldBossDropSchema } from "@/domain/world-boss-drop/schema";
-import { getWorldBossDrop, updateWorldBossDrop } from "@/services/supabase/world-boss-drop";
+import { worldBossDropService } from "@/services/supabase/world-boss-drop";
 import type { WorldBossDropFormState } from "@/app/admin/world-boss-drops/_components/types";
 import { updateWithHistory } from "@/domain/admin-changes/update-with-history";
 
@@ -17,11 +17,11 @@ export async function handleUpdate(
             icon_url: formData.get("icon_url")?.toString() ?? "",
         },
         schema: worldBossDropSchema,
-        getExisting: getWorldBossDrop,
+        getExisting: worldBossDropService.getOne,
         update: async (id, data) => {
-            await updateWorldBossDrop(id, {
+            await worldBossDropService.update(id, {
                 name: data.name,
-                iconUrl: data.icon_url,
+                icon_url: data.icon_url,
             });
         },
         entityType: "WorldBossDrop",
