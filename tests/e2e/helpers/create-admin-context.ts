@@ -1,6 +1,8 @@
 import { chromium } from "@playwright/test";
 import type { BrowserContext, Page } from "@playwright/test";
 import fs from "fs";
+import path from "path";
+import crypto from "crypto";
 import { adminLogin } from "./admin-login";
 
 export interface AdminTestContext {
@@ -10,7 +12,12 @@ export interface AdminTestContext {
 }
 
 export async function createAdminContext(): Promise<AdminTestContext> {
-    const storageDir = "playwright/.auth";
+    // dossier unique par test
+    const storageDir = path.join(
+        process.cwd(),
+        "playwright/.auth",
+        crypto.randomUUID()
+    );
 
     const context: BrowserContext = await chromium.launchPersistentContext(
         storageDir,
@@ -23,7 +30,15 @@ export async function createAdminContext(): Promise<AdminTestContext> {
 
     async function cleanup(): Promise<void> {
         await context.close();
-        fs.rmSync(storageDir, { recursive: true, force: true });
+
+        // suppression safe
+        try {
+            fs.rmSync(storageDir, { recursive: true, force: true });
+        } catch {
+            // Windows peut garder un fichier ouvert quelques ms
+            await new Promise((r) => setTimeout(r, 200));
+            fs.rmSync(storageDir, { recursive: true, force: true });
+        }
     }
 
     return { context, page, cleanup };

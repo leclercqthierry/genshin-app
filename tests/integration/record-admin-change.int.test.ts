@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { recordAdminChange } from "@/domain/admin-changes/record-admin-change";
 import { createSupabaseServiceClient } from "@/lib/supabase/service";
 
-vi.mock("@/lib/utils/supabase/service");
+vi.mock("@/lib/supabase/service");
 
 describe("recordAdminChange (integration)", () => {
     beforeEach(() => {

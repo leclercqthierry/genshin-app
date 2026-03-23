@@ -20,7 +20,7 @@ test.describe("Admin - ElementForm", () => {
 
         await expect(page.getByRole("heading", { name: /Nouvel élément/i })).toBeVisible();
 
-        await expect(page.getByLabel(/Nom de l’élément/i)).toBeVisible();
+        await expect(page.getByLabel(/Nom de l'élément/i)).toBeVisible();
 
         await expect(page.getByRole("button", { name: /Importer une icône/i })).toBeVisible();
 

@@ -16,7 +16,7 @@ export default function WorldBossDropForm(props: Props) {
         <BaseItemForm
             {...props}
             path="/admin/world-boss-drops"
-            itemLabel="Nom du drop de world boss"
+            itemLabel="Nom du drop de boss de monde"
             rarity={5}
         />
     );

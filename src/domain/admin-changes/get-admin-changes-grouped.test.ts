@@ -3,7 +3,7 @@ import { getAdminChangesGrouped } from "./get-admin-changes-grouped";
 
 import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
 
-vi.mock("@/lib/utils/supabase/client-read-only");
+vi.mock("@/lib/supabase/client-read-only");
 
 describe("getAdminChangesGrouped", () => {
     beforeEach(() => {
