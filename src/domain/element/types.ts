@@ -1,6 +1,3 @@
-export type Element = {
-    id: number;
-    name: string;
-    iconUrl: string;
-    createdAt: string;
-};
+import { BaseItem } from "../shared/base-item/types";
+
+export type Element = BaseItem;

@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
 import AppFormWrapper from "@/components/ui/form/app-form-wrapper";
-import AppFormSection from "@/components/ui/form/app-form-section";
+import AppSection from "@/components/ui/layout/app-section";
 import AppFieldBase from "@/components/ui/form/app-field-base";
 import AppInput from "@/components/ui/form/app-input";
 import AppButton from "@/components/ui/button/app-button";
@@ -77,7 +77,7 @@ export default function DungeonDropSetForm({
 
     return (
         <AppFormWrapper action={formAction} size="md" className="max-w-md mx-auto">
-            <AppFormSection withBorder={false}>
+            <AppSection variant="ghost">
                 {/* Nom */}
                 <AppFieldBase
                     label="Nom du set"
@@ -102,6 +102,7 @@ export default function DungeonDropSetForm({
                                     shouldValidate: true,
                                 })
                             }
+                            alt={`Image du ${label}`}
                         />
 
                         <input type="hidden" {...register(name)} />
@@ -111,7 +112,7 @@ export default function DungeonDropSetForm({
                 {state.message && (
                     <p className="text-red-500 text-sm">{state.message}</p>
                 )}
-            </AppFormSection>
+            </AppSection>
 
             <div className="flex justify-center">
                 <AppButton type="submit" disabled={!isValid || !isDirty}>

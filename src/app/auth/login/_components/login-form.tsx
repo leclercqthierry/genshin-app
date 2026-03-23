@@ -8,7 +8,7 @@ import { handleLogin } from "@/domain/auth/actions/handle-login";
 import { initialLoginState } from "../types";
 
 import AppFormWrapper from "@/components/ui/form/app-form-wrapper";
-import AppFormSection from "@/components/ui/form/app-form-section";
+import AppSection from "@/components/ui/layout/app-section";
 import AppFormActions from "@/components/ui/form/app-form-actions";
 import AppFieldBase from "@/components/ui/form/app-field-base";
 import AppInput from "@/components/ui/form/app-input";
@@ -41,7 +41,7 @@ export default function LoginForm() {
 
     return (
         <AppFormWrapper onSubmit={handleSubmit(onSubmit)} size="md" variant="default">
-            <AppFormSection withBorder={false}>
+            <AppSection variant="ghost">
                 <AppFieldBase
                     label="Email"
                     name="email"
@@ -63,7 +63,7 @@ export default function LoginForm() {
                 {state.message && (
                     <p className="text-red-400 text-sm">{state.message}</p>
                 )}
-            </AppFormSection>
+            </AppSection>
 
             <AppFormActions align="between">
                 <NavLink href="/auth/forgot-password">

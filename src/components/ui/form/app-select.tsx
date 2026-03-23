@@ -1,7 +1,6 @@
 "use client";
 
 import { forwardRef } from "react";
-import AppFieldBase from "./app-field-base";
 
 // Styles de tailles, cohérents avec AppInput et AppButton
 const sizeStyles = {
@@ -19,22 +18,16 @@ type NativeSelectProps = Omit<
 >;
 
 interface AppSelectProps extends NativeSelectProps {
-    label: string;
-    name: string;
     options: { value: string; label: string }[];
     error?: string;
-    description?: string;
     size?: SelectSize;
 }
 
 const AppSelect = forwardRef<HTMLSelectElement, AppSelectProps>(
     (
         {
-            label,
-            name,
             options,
             error,
-            description,
             size = "md",
             className,
             ...rest
@@ -51,24 +44,20 @@ const AppSelect = forwardRef<HTMLSelectElement, AppSelectProps>(
         const sizeClass = sizeStyles[size];
 
         return (
-            <AppFieldBase
-                label={label}
-                name={name}
-                error={error}
-                description={description}
+            <select
+                ref={ref}
+                className={`${baseClasses} ${borderClasses} ${sizeClass} ${className ?? ""}`}
+                {...rest}
             >
-                <select
-                    ref={ref}
-                    className={`${baseClasses} ${borderClasses} ${sizeClass} ${className ?? ""}`}
-                    {...rest}
-                >
-                    {options.map((opt) => (
-                        <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                        </option>
-                    ))}
-                </select>
-            </AppFieldBase>
+                {options.map((opt) => (
+                    <option
+                        key={opt.value}
+                        value={opt.value}
+                        className="text-center">
+                        {opt.label}
+                    </option>
+                ))}
+            </select>
         );
     }
 );

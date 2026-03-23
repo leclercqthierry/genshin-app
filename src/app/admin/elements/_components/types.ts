@@ -1,7 +1,3 @@
-import type { ElementSchema } from "@/domain/element/schema";
+import type { BaseItemFormState } from "../../_shared/types";
 
-export type ElementFormState = {
-    success: boolean;
-    errors?: Partial<Record<keyof ElementSchema, string[]>>;
-    message?: string;
-};
+export type ElementFormState = BaseItemFormState;

@@ -1,12 +1,12 @@
 import PageHero from "../../layout/page-hero";
-import AdminPageWrapper from "./page-wrapper";
-import AdminGrid from "./grid";
+import PageWrapper from "@/components/layout/page-wrapper";
+import Grid from "../../layout/grid";
 import AppButton from "@/components/ui/button/app-button";
 
-import type { AdminGridProps } from "./grid";
+import type { GridProps } from "../../layout/grid";
 
 
-interface AdminResourcePageProps<T> extends Pick<AdminGridProps, "variant"> {
+interface AdminResourcePageProps<T> extends Pick<GridProps, "variant"> {
     title: string;
     description?: string;
     count?: string;
@@ -38,11 +38,11 @@ export default function AdminResourcePage<T>({
                 )}
             </PageHero>
 
-            <AdminPageWrapper>
-                <AdminGrid variant={variant}>
+            <PageWrapper>
+                <Grid variant={variant}>
                     {items.map((item) => renderItem(item))}
-                </AdminGrid>
-            </AdminPageWrapper>
+                </Grid>
+            </PageWrapper>
         </>
     );
 }

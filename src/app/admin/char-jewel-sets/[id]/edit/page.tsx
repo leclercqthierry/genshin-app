@@ -6,8 +6,8 @@ import CharJewelSetForm from "../../_components/char-jewel-set-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleUpdate } from "@/domain/char-jewel-set/actions/update";
-import { getCharJewelSet } from "@/services/supabase/char-jewel-set";
-import { getElements } from "@/services/supabase/element";
+import { charJewelSetService } from "@/services/supabase/char-jewel-set";
+import { elementService } from "@/services/supabase/element";
 
 type Props = {
     params: Promise<{ id: string }>;
@@ -18,14 +18,14 @@ export default async function EditCharJewelSetPage({ params }: Props) {
     if (redirect) return <Redirecting />;
 
     const { id } = await params;
-    const charJewelSet = await getCharJewelSet(Number(id));
+    const charJewelSet = await charJewelSetService.getOne(Number(id));
 
     if (!charJewelSet) {
         return <p>Set de joyaux introuvable.</p>;
     }
 
     // ⭐ Charger les éléments pour le select
-    const elements = await getElements();
+    const elements = await elementService.getAll();
 
     return (
         <AdminResourceEditPage title="Modifier le set de joyaux de personnage">

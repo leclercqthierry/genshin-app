@@ -6,7 +6,7 @@ import CharJewelSetCard from "@/domain/char-jewel-set/card";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { charJewelSetService } from "@/services/supabase/char-jewel-set";
-import { getElements } from "@/services/supabase/element";
+import { elementService } from "@/services/supabase/element";
 import { deleteCharJewelSetAction } from "@/domain/char-jewel-set/actions/delete";
 
 export default async function CharJewelSetsPage() {
@@ -15,7 +15,7 @@ export default async function CharJewelSetsPage() {
 
     const [charJewelSets, elements] = await Promise.all([
         charJewelSetService.getAll(),
-        getElements(),
+        elementService.getAll(),
     ]);
 
     // Map optimisée : elementId → élément

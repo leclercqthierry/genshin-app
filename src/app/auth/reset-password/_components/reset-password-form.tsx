@@ -13,7 +13,7 @@ import { handleResetPassword } from "@/domain/auth/actions/reset-password";
 import { initialResetPasswordState } from "../types";
 
 import AppFormWrapper from "@/components/ui/form/app-form-wrapper";
-import AppFormSection from "@/components/ui/form/app-form-section";
+import AppSection from "@/components/ui/layout/app-section";
 import AppFormActions from "@/components/ui/form/app-form-actions";
 import AppFieldBase from "@/components/ui/form/app-field-base";
 import AppInput from "@/components/ui/form/app-input";
@@ -46,7 +46,7 @@ export default function ResetPasswordForm() {
         <AppFormWrapper onSubmit={handleSubmit(onSubmit)} size="md" variant="default">
 
             {/* SECTION : Champs */}
-            <AppFormSection withBorder={false}>
+            <AppSection variant="ghost">
                 <AppFieldBase
                     label="Nouveau mot de passe"
                     name="password"
@@ -74,7 +74,7 @@ export default function ResetPasswordForm() {
                         {state.message}
                     </p>
                 )}
-            </AppFormSection>
+            </AppSection>
 
             {/* ACTIONS */}
             <AppFormActions align="between">

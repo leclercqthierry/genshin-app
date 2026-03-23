@@ -1,14 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import AppFormSection from "./app-form-section";
+import AppSection from "./app-section";
 
 describe("AppFormSection", () => {
     it("affiche le titre si fourni", () => {
-        render(<AppFormSection title="Infos">Contenu</AppFormSection>);
+        render(<AppSection title="Infos">Contenu</AppSection>);
         expect(screen.getByText("Infos")).toBeInTheDocument();
     });
 
     it("n'affiche pas de titre si non fourni", () => {
-        render(<AppFormSection>Contenu</AppFormSection>);
+        render(<AppSection>Contenu</AppSection>);
         expect(screen.queryByRole("heading")).not.toBeInTheDocument();
     });
 

@@ -12,10 +12,10 @@ export default async function NewDungeonDropSetPage() {
     if (redirect) return <Redirecting />;
 
     return (
-        <AdminResourceCreatePage title="Nouveau set de drop de donjon">
+        <AdminResourceCreatePage title="Nouveau set de drops de donjon">
             <DungeonDropSetForm
                 action={handleCreate}
-                submitLabel="Ajouter le set de drop de donjon"
+                submitLabel="Ajouter le set de drops de donjon"
             />
         </AdminResourceCreatePage>
     );

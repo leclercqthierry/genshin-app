@@ -2,8 +2,8 @@ import { requireAdmin } from "@/services/auth/require-admin";
 import { adminSections } from "@/domain/admin/sections";
 
 import PageHero from "@/components/layout/page-hero";
-import AdminPageWrapper from "@/components/admin/layout/page-wrapper";
-import AdminGrid from "@/components/admin/layout/grid";
+import AdminPageWrapper from "@/components/layout/page-wrapper";
+import AdminGrid from "@/components/layout/grid";
 import QuickLinkCard from "@/components/ui/card/quick-link-card";
 import Redirecting from "@/components/ui/feedback/redirecting";
 

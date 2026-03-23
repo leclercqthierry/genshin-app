@@ -1,5 +1,5 @@
 import PageHero from "../../layout/page-hero";
-import AdminPageWrapper from "./page-wrapper";
+import AdminPageWrapper from "../../layout/page-wrapper";
 
 interface AdminResourceEditPageProps {
     title: string;

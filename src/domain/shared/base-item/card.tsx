@@ -5,16 +5,16 @@ import type { BaseItem, DeleteAction } from "./types";
 
 interface BaseItemCardProps {
     item: BaseItem;
-    editHref: string;
-    onDelete: DeleteAction;
-    rarityBgClass?: string; // ex: "bg-rarity-4"
+    editHref?: string;          // optionnel
+    onDelete?: DeleteAction;    // optionnel
+    rarityBgClass?: string;
 }
 
 export default function BaseItemCard({
     item,
     editHref,
     onDelete,
-    rarityBgClass = "bg-rarity-1",
+    rarityBgClass,
 }: BaseItemCardProps) {
     return (
         <AppCard className="card-base card-hover max-w-sm mx-auto flex flex-col justify-between items-center gap-3">
@@ -30,12 +30,15 @@ export default function BaseItemCard({
                 {item.name}
             </h3>
 
-            <CardActions
-                editHref={editHref}
-                deleteAction={onDelete}
-                elementId={item.id}
-                small
-            />
+            {/* Affichage conditionnel */}
+            {editHref && onDelete && (
+                <CardActions
+                    editHref={editHref}
+                    deleteAction={onDelete}
+                    elementId={item.id}
+                    small
+                />
+            )}
         </AppCard>
     );
 }

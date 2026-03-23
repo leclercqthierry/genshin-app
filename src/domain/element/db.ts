@@ -1,6 +1,6 @@
-export type ElementRow = {
-    id: number;
-    name: string;
-    icon_url: string;
-    created_at: string;
-};
+import { BaseItemCreateRow, BaseItemRow, BaseItemUpdateRow } from "../shared/base-item/db";
+
+export type ElementRow = BaseItemRow;
+
+export type ElementCreateRow = BaseItemCreateRow;
+export type ElementUpdateRow = BaseItemUpdateRow;

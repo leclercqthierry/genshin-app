@@ -1,34 +1,16 @@
-import Image from "next/image";
-import AppCard from "../../components/ui/card/app-card";
-import CardActions from "../../components/ui/card/card-actions";
-import type { Element } from "@/domain/element/types";
+import BaseItemCard from "../shared/base-item/card";
+import type { Element } from "./types";
+import { DeleteAction } from "../shared/base-item/types";
 
-interface ElementCardProps {
+export default function ElementCard({ element, onDelete }: {
     element: Element;
-    onDelete: (formData: FormData) => Promise<{ success: boolean; message?: string }>
-}
-
-export default function ElementCard({ element, onDelete }: ElementCardProps) {
+    onDelete: DeleteAction;
+}) {
     return (
-        <AppCard className="card-base card-hover max-w-sm mx-auto flex flex-col items-center gap-3">
-            <Image
-                src={element.iconUrl}
-                alt={element.name}
-                width={64}
-                height={64}
-                className="rounded"
-            />
-
-            <h3 className="text-lg text-white font-semibold">
-                {element.name}
-            </h3>
-
-            <CardActions
-                editHref={`/admin/elements/${element.id}/edit`}
-                deleteAction={onDelete}
-                elementId={element.id}
-                small
-            />
-        </AppCard>
+        <BaseItemCard
+            item={element}
+            editHref={`/admin/elements/${element.id}/edit`}
+            onDelete={onDelete}
+        />
     );
 }

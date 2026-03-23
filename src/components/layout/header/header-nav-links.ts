@@ -9,7 +9,7 @@ export interface HeaderLink {
 export const NAV_LINKS: HeaderLink[] = [
     { label: "Personnages", href: "/characters" },
     { label: "Armes", href: "/weapons" },
-    { label: "Artéfacts", href: "/artifacts" },
+    { label: "Artéfacts", href: "/artifact-sets" },
     { label: "Équipes", href: "/teams" },
 
     // Liens invités

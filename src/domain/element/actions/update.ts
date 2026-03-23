@@ -1,7 +1,7 @@
 "use server";
 
 import { elementSchema } from "@/domain/element/schema";
-import { getElement, updateElement } from "@/services/supabase/element";
+import { elementService } from "@/services/supabase/element";
 import type { ElementFormState } from "../../../app/admin/elements/_components/types";
 import { updateWithHistory } from "@/domain/admin-changes/update-with-history";
 
@@ -17,9 +17,9 @@ export async function handleUpdate(
             icon_url: formData.get("icon_url")?.toString() ?? "",
         },
         schema: elementSchema,
-        getExisting: getElement,
+        getExisting: elementService.getOne,
         update: async (id, data) => {
-            await updateElement(id, {
+            await elementService.update(id, {
                 name: data.name,
                 icon_url: data.icon_url,
             });

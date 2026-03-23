@@ -1,22 +1,28 @@
 import { render, screen } from "@testing-library/react";
 import AppSelect from "./app-select";
 
+import { fireEvent } from "@testing-library/react";
+
 describe("AppSelect", () => {
-    it("rend un select avec les options", () => {
+    test("rend les options et change de valeur", () => {
         render(
             <AppSelect
-                label="Pays"
-                name="country"
+                defaultValue="3"
                 options={[
-                    { value: "fr", label: "France" },
-                    { value: "be", label: "Belgique" },
+                    { value: "2", label: "2" },
+                    { value: "3", label: "3" },
+                    { value: "4", label: "4" },
                 ]}
             />
         );
 
-        const select = screen.getByRole("combobox", { name: "Pays" });
-        expect(select).toBeInTheDocument();
-        expect(screen.getByRole("option", { name: "France" })).toBeInTheDocument();
+        const select = screen.getByRole("combobox");
+
+        expect(select).toHaveValue("3");
+
+        fireEvent.change(select, { target: { value: "4" } });
+
+        expect(select).toHaveValue("4");
     });
 
 });

@@ -8,7 +8,7 @@ import { baseItemSchema, type BaseItemSchema } from "@/domain/shared/base-item/s
 import type { BaseItemFormState } from "../types";
 
 import AppFormWrapper from "@/components/ui/form/app-form-wrapper";
-import AppFormSection from "@/components/ui/form/app-form-section";
+import AppSection from "@/components/ui/layout/app-section";
 import AppFieldBase from "@/components/ui/form/app-field-base";
 import AppInput from "@/components/ui/form/app-input";
 import AppButton from "@/components/ui/button/app-button";
@@ -29,7 +29,7 @@ type Props = {
     defaultValues?: Partial<BaseItemSchema>
     path: string;
     itemLabel: string;
-    rarity: number;
+    rarity?: number;
 };
 
 export default function BaseItemForm({ action, submitLabel, defaultValues, path, itemLabel, rarity }: Props) {
@@ -65,7 +65,7 @@ export default function BaseItemForm({ action, submitLabel, defaultValues, path,
             size="md"
             className="max-w-md mx-auto"
         >
-            <AppFormSection withBorder={false}>
+            <AppSection variant="ghost">
                 {/* Nom */}
                 <AppFieldBase
                     label={itemLabel}// ex: "Nom du drop de boss"
@@ -119,7 +119,7 @@ export default function BaseItemForm({ action, submitLabel, defaultValues, path,
                 {state.message && (
                     <p className="text-red-500 text-sm">{state.message}</p>
                 )}
-            </AppFormSection>
+            </AppSection>
 
             <div className="flex justify-center">
                 <AppButton type="submit" disabled={!isValid || !isDirty}>

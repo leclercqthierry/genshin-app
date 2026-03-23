@@ -11,7 +11,7 @@ import { handleForgotPassword } from "@/domain/auth/actions/forgot-password";
 import { initialForgotPasswordState } from "../types";
 
 import AppFormWrapper from "@/components/ui/form/app-form-wrapper";
-import AppFormSection from "@/components/ui/form/app-form-section";
+import AppSection from "@/components/ui/layout/app-section";
 import AppFormActions from "@/components/ui/form/app-form-actions";
 import AppFieldBase from "@/components/ui/form/app-field-base";
 import AppInput from "@/components/ui/form/app-input";
@@ -43,7 +43,7 @@ export default function ForgotPasswordForm() {
         <AppFormWrapper onSubmit={handleSubmit(onSubmit)} size="md" variant="default">
 
             {/* SECTION : Champs */}
-            <AppFormSection withBorder={false}>
+            <AppSection variant="ghost">
                 <AppFieldBase
                     label="Email"
                     name="email"
@@ -62,7 +62,7 @@ export default function ForgotPasswordForm() {
                         {state.message}
                     </p>
                 )}
-            </AppFormSection>
+            </AppSection>
 
             {/* ACTIONS */}
             <AppFormActions align="between">

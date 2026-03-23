@@ -1,0 +1,1 @@
+export const RARITIES = [1, 2, 3, 4, 5];

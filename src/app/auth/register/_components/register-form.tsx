@@ -7,7 +7,7 @@ import { useActionState, startTransition } from "react";
 import { handleRegister } from "@/domain/auth/actions/handle-register";
 import { initialRegisterState } from "../types";
 import AppFormWrapper from "@/components/ui/form/app-form-wrapper";
-import AppFormSection from "@/components/ui/form/app-form-section";
+import AppSection from "@/components/ui/layout/app-section";
 import AppFormActions from "@/components/ui/form/app-form-actions";
 import AppFieldBase from "@/components/ui/form/app-field-base";
 import AppInput from "@/components/ui/form/app-input";
@@ -38,7 +38,7 @@ export default function RegisterForm() {
 
     return (
         <AppFormWrapper onSubmit={handleSubmit(onSubmit)} size="md" variant="default">
-            <AppFormSection withBorder={false}>
+            <AppSection variant="ghost">
                 <AppFieldBase
                     label="Pseudo"
                     name="pseudo"
@@ -75,7 +75,7 @@ export default function RegisterForm() {
                     <AppInput type="password" {...register("password2")} />
                 </AppFieldBase>
 
-            </AppFormSection>
+            </AppSection>
 
             <AppFormActions align="right">
                 <AppButton type="submit" full variant="primary" disabled={!isValid}>

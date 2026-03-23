@@ -2,25 +2,25 @@
 
 import React from "react";
 
-export type AdminGridVariant = "default" | "compact";
+export type GridVariant = "default" | "compact";
 
-export type AdminGridProps = {
+export type GridProps = {
     children: React.ReactNode;
-    variant?: AdminGridVariant;
+    variant?: GridVariant;
     dense?: boolean;
     gap?: string;
     columns?: number;
     className?: string;
 };
 
-export default function AdminGrid({
+export default function Grid({
     children,
     variant = "default",
     dense = false,
     gap,
     columns,
     className,
-}: AdminGridProps) {
+}: GridProps) {
     // 1) Gestion du gap
     const gapClass = gap
         ? gap

@@ -1,7 +1,7 @@
 "use server";
 
 import { elementSchema } from "@/domain/element/schema";
-import { createElement } from "@/services/supabase/element";
+import { elementService } from "@/services/supabase/element";
 import type { ElementFormState } from "../../../app/admin/elements/_components/types";
 import { createWithHistory } from "@/domain/admin-changes/create-with-history";
 
@@ -16,7 +16,7 @@ export async function handleCreate(
         },
         schema: elementSchema,
         create: async (data) => {
-            await createElement({
+            await elementService.create({
                 name: data.name,
                 icon_url: data.icon_url,
             });
