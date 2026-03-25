@@ -23,10 +23,11 @@ export default function BaseItemCard({
                 alt={item.name}
                 width={64}
                 height={64}
-                className={`rounded ${rarityBgClass}`}
+                style={{ height: 64, width: "auto" }}
+                className={`rounded ${rarityBgClass} object-contain`}
             />
 
-            <h3 className="text-lg text-white font-semibold">
+            <h3 className="text-base text-white font-semibold">
                 {item.name}
             </h3>
 

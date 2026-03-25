@@ -19,7 +19,7 @@ export default async function AdminPage() {
             </PageHero>
 
             <AdminPageWrapper>
-                <AdminGrid variant="compact">
+                <AdminGrid variant="default">
                     {adminSections.map((section) => (
                         <QuickLinkCard
                             key={section.href}

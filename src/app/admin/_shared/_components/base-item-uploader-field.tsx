@@ -1,4 +1,4 @@
-// Le composant est en fait le même pour DungeonDropSet et CharJewelSet
+// Le composant est en fait le même pour AptitudeDungeonDropSet et CharJewelSet
 
 "use client";
 

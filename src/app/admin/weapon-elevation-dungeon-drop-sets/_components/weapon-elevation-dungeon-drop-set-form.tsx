@@ -10,36 +10,33 @@ import AppSection from "@/components/ui/layout/app-section";
 import AppFieldBase from "@/components/ui/form/app-field-base";
 import AppInput from "@/components/ui/form/app-input";
 import AppButton from "@/components/ui/button/app-button";
-import AppSelect from "@/components/ui/form/app-select";
 import BaseItemUploaderField from "../../_shared/_components/base-item-uploader-field";
 
 import {
-    charJewelSetSchema,
-    type CharJewelSetSchema,
-} from "@/domain/char-jewel-set/schema";
+    weaponElevationDungeonDropSetSchema,
+    type WeaponElevationDungeonDropSetSchema,
+} from "@/domain/weapon-elevation-dungeon-drop-set/schema";
 
-import type { CharJewelSetFormState } from "./types";
+import type { WeaponElevationDungeonDropSetFormState } from "./types";
 
-const initialState: CharJewelSetFormState = {
+const initialState: WeaponElevationDungeonDropSetFormState = {
     success: false,
     errors: {},
 };
 
 type Props = {
     action: (
-        prev: CharJewelSetFormState,
+        prev: WeaponElevationDungeonDropSetFormState,
         formData: FormData
-    ) => Promise<CharJewelSetFormState>;
+    ) => Promise<WeaponElevationDungeonDropSetFormState>;
     submitLabel: string;
-    defaultValues?: Partial<CharJewelSetSchema>;
-    elements: { id: number; name: string }[];
+    defaultValues?: Partial<WeaponElevationDungeonDropSetSchema>;
 };
 
-export default function CharJewelSetForm({
+export default function WeaponElevationDungeonDropSetForm({
     action,
     submitLabel,
     defaultValues,
-    elements,
 }: Props) {
     const router = useRouter();
     const [state, formAction] = useActionState(action, initialState);
@@ -49,8 +46,8 @@ export default function CharJewelSetForm({
         setValue,
         control,
         formState: { errors, isValid, isDirty },
-    } = useForm<CharJewelSetSchema>({
-        resolver: zodResolver(charJewelSetSchema),
+    } = useForm<WeaponElevationDungeonDropSetSchema>({
+        resolver: zodResolver(weaponElevationDungeonDropSetSchema),
         mode: "onChange",
         defaultValues: {
             name: defaultValues?.name ?? "",
@@ -58,13 +55,12 @@ export default function CharJewelSetForm({
             rarity3_url: defaultValues?.rarity3_url ?? "",
             rarity4_url: defaultValues?.rarity4_url ?? "",
             rarity5_url: defaultValues?.rarity5_url ?? "",
-            elementId: defaultValues?.elementId ?? 1,
         },
     });
 
     useEffect(() => {
         if (state.success) {
-            router.push("/admin/char-jewel-sets");
+            router.push("/admin/weapon-elevation-dungeon-drop-sets");
         }
     }, [state.success, router]);
 
@@ -76,49 +72,30 @@ export default function CharJewelSetForm({
     };
 
     const rarityFields = [
-        { name: "rarity2_url", label: "Joyau ★★", rarity: 2 },
-        { name: "rarity3_url", label: "Joyau ★★★", rarity: 3 },
-        { name: "rarity4_url", label: "Joyau ★★★★", rarity: 4 },
-        { name: "rarity5_url", label: "Joyau ★★★★★", rarity: 5 },
+        { name: "rarity2_url", label: "Drop ★★", rarity: 2 },
+        { name: "rarity3_url", label: "Drop ★★★", rarity: 3 },
+        { name: "rarity4_url", label: "Drop ★★★★", rarity: 4 },
+        { name: "rarity5_url", label: "Drop ★★★★", rarity: 5 },
     ] as const;
 
     return (
-        <AppFormWrapper action={formAction} size="md" className="mx-auto">
+        <AppFormWrapper action={formAction} size="md" className="mx-auto max-w-md lg:max-w-2xl">
             <AppSection variant="ghost">
-                {/* Nom */}
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="lg:max-w-1/2 max-w-md mx-auto">
+                    {/* Nom */}
                     <AppFieldBase
                         label="Nom du set"
                         name="name"
                         required
                         error={errors.name?.message || state.errors?.name?.[0]}
                     >
-                        <AppInput
-                            className="h-9"
-                            placeholder="Ex: Set du Voyageur" {...register("name")}
-                        />
-                    </AppFieldBase>
-
-                    <AppFieldBase
-                        label="Élément associé"
-                        name="element_id"
-                        required
-                    >
-                        <AppSelect
-                            error={errors.elementId?.message || state.errors?.elementId?.[0]}
-                            {...register("elementId", { valueAsNumber: true })}
-                            options={elements.map((el) => ({
-                                value: el.id.toString(),
-                                label: el.name,
-                            }))}
-                        />
+                        <AppInput placeholder="Ex: Décarabian" {...register("name")} />
                     </AppFieldBase>
                 </div>
 
-                <div className="flex flex-col sm:flex-row flex-wrap justify-evenly items-center gap-3">
-
+                <div className="flex flex-col lg:flex-row flex-wrap justify-evenly items-center gap-3">
                     {rarityFields.map(({ name, label, rarity }) => (
-                        <div className="w-full sm:w-auto" key={name}>
+                        <div className="w-full lg:w-auto" key={name}>
                             <BaseItemUploaderField
                                 label={label}
                                 name={name}

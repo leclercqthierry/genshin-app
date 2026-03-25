@@ -20,9 +20,14 @@ export const adminSections = [
         description: "Gérer les ressources locales.",
     },
     {
-        href: "/admin/dungeon-drop-sets",
-        title: "Drops de donjon",
-        description: "Gérer les drops de donjon.",
+        href: "/admin/aptitude-dungeon-drop-sets",
+        title: "Sets de drops de donjon d'aptitude",
+        description: "Gérer les sets de drops de donjon d'aptitude.",
+    },
+    {
+        href: "/admin/weapon-elevation-dungeon-drop-sets",
+        title: "Sets de drops de donjon d'élévation d'arme",
+        description: "Gérer les sets de drops de donjon d'élévation d'arme.",
     },
     {
         href: "/admin/elements",
@@ -31,7 +36,7 @@ export const adminSections = [
     },
     {
         href: "/admin/char-jewel-sets",
-        title: "Joyaux de personnages",
-        description: "Gérer les joyaux de personnages",
+        title: "Sets de joyaux de personnages",
+        description: "Gérer les sets de joyaux de personnages",
     },
 ];

@@ -1,7 +1,7 @@
 import { test, expect, Page } from "@playwright/test";
 import { createAdminContext } from "../helpers/create-admin-context";
 
-test.describe("Admin - DungeonDropSetForm", () => {
+test.describe("Admin - AptitudeDungeonDropSetForm", () => {
     let page: Page;
     let cleanup: () => Promise<void>;
 
@@ -15,10 +15,10 @@ test.describe("Admin - DungeonDropSetForm", () => {
         await cleanup();
     });
 
-    test("affiche correctement le formulaire de création de set de drop de donjon", async () => {
-        await page.goto("/admin/dungeon-drop-sets/new");
+    test("affiche correctement le formulaire de création de set de drop de donjon d'aptitude", async () => {
+        await page.goto("/admin/aptitude-dungeon-drop-sets/new");
 
-        await expect(page.getByRole("heading", { name: /Nouveau set de drops de donjon/i })).toBeVisible();
+        await expect(page.getByRole("heading", { name: /Nouveau set de drops de donjon d'aptitude/i })).toBeVisible();
 
         await expect(page.getByLabel(/Nom du set/i)).toBeVisible();
 
@@ -29,6 +29,6 @@ test.describe("Admin - DungeonDropSetForm", () => {
             await expect(button).toBeVisible();
         }
 
-        await expect(page.getByRole("button", { name: /Ajouter le set de drops de donjon/i })).toBeVisible();
+        await expect(page.getByRole("button", { name: /Ajouter le set de drops de donjon d'aptitude/i })).toBeVisible();
     });
 });

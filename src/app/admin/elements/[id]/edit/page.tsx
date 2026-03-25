@@ -6,7 +6,7 @@ import ElementForm from "../../_components/element-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleUpdate } from "@/domain/element/actions/update";
-import { getElement } from "@/services/supabase/element";
+import { elementService } from "@/services/supabase/element";
 
 type Props = {
     params: Promise<{ id: string }>;
@@ -17,7 +17,7 @@ export default async function EditElementPage({ params }: Props) {
     if (redirect) return <Redirecting />;
 
     const { id } = await params;
-    const element = await getElement(Number(id));
+    const element = await elementService.getOne(Number(id));
 
     if (!element) {
         return <p>Élément introuvable.</p>;

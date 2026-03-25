@@ -34,7 +34,7 @@ export default function BaseSetCard({
     altPrefix = "Image",
 }: BaseSetCardProps) {
     return (
-        <AppCard className="card-base card-hover max-w-sm mx-auto flex flex-col gap-4">
+        <AppCard className="card-base card-hover w-64 mx-auto flex flex-col justify-between gap-4">
             {/* Header */}
             {iconUrl && (
                 <div className="flex justify-center items-center">
@@ -43,13 +43,13 @@ export default function BaseSetCard({
                         alt={name}
                         width={40}
                         height={40}
-                        className="object-contain"
+                        className="object-contain h-16 w-auto"
                     />
                 </div>
             )}
 
             <div className="flex justify-center items-center">
-                <h3 className="text-lg font-semibold text-white">{name}</h3>
+                <h3 className="text-base font-semibold text-white">{name}</h3>
             </div>
 
             {/* Images */}
@@ -67,7 +67,7 @@ export default function BaseSetCard({
                             alt={`${altPrefix} ★${rarity}`}
                             width={60}
                             height={60}
-                            className="object-contain"
+                            className="object-contain h-10 w-auto"
                         />
                     </div>
                 ))}

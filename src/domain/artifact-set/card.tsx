@@ -20,19 +20,19 @@ export default function ArtifactSetCard({ artifactSet, onDelete, showActions = t
     ];
 
     return (
-        <AppCard className="card-base card-hover max-w-sm mx-auto flex flex-col items-center gap-4">
+        <AppCard className="card-base card-hover max-w-sm mx-auto flex flex-col items-center justify-evenly gap-4">
 
             {/* Header */}
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col justify-between items-center">
                 <Image
                     src={artifactSet.iconFlowerUrl}
                     alt={artifactSet.name}
                     width={64}
                     height={64}
-                    className="rounded"
+                    className="rounded object-contain w-auto h-16"
                 />
 
-                <h3 className="text-lg text-white font-semibold">
+                <h3 className="text-base text-white font-semibold">
                     {artifactSet.name}
                 </h3>
             </div>
@@ -47,9 +47,9 @@ export default function ArtifactSetCard({ artifactSet, onDelete, showActions = t
                         <Image
                             src={url}
                             alt={alt}
-                            width={60}
-                            height={60}
-                            className="object-contain"
+                            width={40}
+                            height={40}
+                            className="object-contain h-auto w-10"
                         />
                     </div>
                 ))}
@@ -64,7 +64,6 @@ export default function ArtifactSetCard({ artifactSet, onDelete, showActions = t
                     small
                 />
             )}
-
         </AppCard>
     )
 }
