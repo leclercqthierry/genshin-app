@@ -16,7 +16,7 @@ export default function MiniArtifactSetCard({ artifactSet, rarityBgClass, }: Min
                 alt={artifactSet.name}
                 width={64}
                 height={64}
-                className={`rounded ${rarityBgClass}`}
+                className={`rounded ${rarityBgClass} object-contain h-16 w-auto`}
             />
 
             <h3 className="text-sm text-white font-semibold">

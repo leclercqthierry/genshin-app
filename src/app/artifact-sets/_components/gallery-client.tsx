@@ -43,6 +43,9 @@ export default function ArtifactSetsGalleryClient({
             count={`Il y a actuellement ${artifactSets.length} set${artifactSets.length > 1 ? "s" : ""} d'artéfacts dans l'application.`}
             variant="compact"
             items={sortedSets}
+            emptyState={
+                <p>Aucun set ne correspond à vos filtres.</p>
+            }
             extra={
                 <GalleryControls
                     sortBy={sortBy}
@@ -64,5 +67,6 @@ export default function ArtifactSetsGalleryClient({
                 </Link>
             )}
         />
+
     );
 }

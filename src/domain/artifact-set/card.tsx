@@ -29,7 +29,7 @@ export default function ArtifactSetCard({ artifactSet, onDelete, showActions = t
                     alt={artifactSet.name}
                     width={64}
                     height={64}
-                    className="rounded object-contain w-auto h-16"
+                    className="rounded object-contain h-16 w-auto"
                 />
 
                 <h3 className="text-base text-white font-semibold">
