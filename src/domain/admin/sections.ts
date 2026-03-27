@@ -15,6 +15,11 @@ export const adminSections = [
         description: "Gérer les drops de mobs",
     },
     {
+        href: "/admin/elite-drop-sets",
+        title: "Drops de mobs élite",
+        description: "Gérer les drops de mobs élite",
+    },
+    {
         href: "/admin/world-boss-drops",
         title: "Drop de boss de monde",
         description: "Gérer les drops de boss de monde",
