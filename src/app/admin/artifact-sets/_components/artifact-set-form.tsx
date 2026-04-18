@@ -1,12 +1,11 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useMemo } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { artifactSetSchema, type ArtifactSetSchema } from "@/domain/artifact-set/schema";
 import type { ArtifactSetFormState } from "./types";
-import { RARITIES } from "@/constants/rarity";
 
 import AppFormWrapper from "@/components/ui/form/app-form-wrapper";
 import AppSection from "@/components/ui/layout/app-section";
@@ -49,14 +48,14 @@ export default function ArtifactSetForm({
         mode: "onChange",
         defaultValues: {
             name: defaultValues?.name ?? "",
-            icon_flower_url: defaultValues?.icon_flower_url ?? "",
-            icon_plume_url: defaultValues?.icon_plume_url ?? "",
-            icon_circlet_url: defaultValues?.icon_circlet_url ?? "",
-            icon_sand_url: defaultValues?.icon_sand_url ?? "",
-            icon_goblet_url: defaultValues?.icon_goblet_url ?? "",
-            rarity_max: defaultValues?.rarity_max ?? 5,
-            bonus_2P: defaultValues?.bonus_2P ?? "",
-            bonus_4P: defaultValues?.bonus_4P ?? "",
+            iconFlowerUrl: defaultValues?.iconFlowerUrl ?? "",
+            iconPlumeUrl: defaultValues?.iconPlumeUrl ?? "",
+            iconCircletUrl: defaultValues?.iconCircletUrl ?? "",
+            iconSandUrl: defaultValues?.iconSandUrl ?? "",
+            iconGobletUrl: defaultValues?.iconGobletUrl ?? "",
+            rarityMax: defaultValues?.rarityMax ?? 5,
+            bonus2P: defaultValues?.bonus2P ?? "",
+            bonus4P: defaultValues?.bonus4P ?? "",
         },
     });
 
@@ -67,22 +66,25 @@ export default function ArtifactSetForm({
     }, [state.success, router]);
 
     const artifactValues = {
-        icon_flower_url: useWatch({ control, name: "icon_flower_url" }),
-        icon_plume_url: useWatch({ control, name: "icon_plume_url" }),
-        icon_circlet_url: useWatch({ control, name: "icon_circlet_url" }),
-        icon_sand_url: useWatch({ control, name: "icon_sand_url" }),
-        icon_goblet_url: useWatch({ control, name: "icon_goblet_url" }),
+        iconFlowerUrl: useWatch({ control, name: "iconFlowerUrl" }),
+        iconPlumeUrl: useWatch({ control, name: "iconPlumeUrl" }),
+        iconCircletUrl: useWatch({ control, name: "iconCircletUrl" }),
+        iconSandUrl: useWatch({ control, name: "iconSandUrl" }),
+        iconGobletUrl: useWatch({ control, name: "iconGobletUrl" }),
     };
 
-    const rarityMax = useWatch({ control, name: "rarity_max" }) ?? defaultValues?.rarity_max ?? 5;
+
+    const rarityMax = useWatch({ control, name: "rarityMax" }) ?? defaultValues?.rarityMax ?? 5;
 
     const artifactFields = [
-        { name: "icon_flower_url", label: "Fleur" },
-        { name: "icon_plume_url", label: "Plume" },
-        { name: "icon_circlet_url", label: "Coiffe" },
-        { name: "icon_sand_url", label: "Sablier" },
-        { name: "icon_goblet_url", label: "Coupe" },
+        { name: "iconFlowerUrl", label: "Fleur" },
+        { name: "iconPlumeUrl", label: "Plume" },
+        { name: "iconCircletUrl", label: "Coiffe" },
+        { name: "iconSandUrl", label: "Sablier" },
+        { name: "iconGobletUrl", label: "Coupe" },
     ] as const;
+
+    const allowedRarities = useMemo(() => [3, 4, 5], []);
 
     return (
         <AppFormWrapper action={formAction} size="md" className="mx-auto">
@@ -103,10 +105,10 @@ export default function ArtifactSetForm({
                         required
                     >
                         <AppSelect
-                            {...register("rarity_max", { valueAsNumber: true })}
-                            options={RARITIES.map((rarity) => ({
+                            {...register("rarityMax", { valueAsNumber: true })}
+                            options={allowedRarities.map((rarity) => ({
                                 value: rarity.toString(),
-                                label: rarity.toString(),
+                                label: "⭐".repeat(rarity),
                             }))}
                         />
                     </AppFieldBase>
@@ -149,7 +151,7 @@ export default function ArtifactSetForm({
                     name="bonus_2P"
                     required
                 >
-                    <AppTextArea {...register("bonus_2P")}></AppTextArea>
+                    <AppTextArea {...register("bonus2P")}></AppTextArea>
                 </AppFieldBase>
 
                 <AppFieldBase
@@ -157,7 +159,7 @@ export default function ArtifactSetForm({
                     name="bonus_4P"
                     required
                 >
-                    <AppTextArea {...register("bonus_4P")}></AppTextArea>
+                    <AppTextArea {...register("bonus4P")}></AppTextArea>
                 </AppFieldBase>
             </AppSection>
 

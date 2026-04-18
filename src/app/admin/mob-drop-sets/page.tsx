@@ -12,7 +12,7 @@ export default async function MobDropSetsPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    const mobDropSets = await mobDropSetService().getAll();
+    const mobDropSets = await mobDropSetService.getAll();
     const numberOfMobDropSets = mobDropSets.length;
 
     return (

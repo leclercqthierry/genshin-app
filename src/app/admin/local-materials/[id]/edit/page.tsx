@@ -30,7 +30,7 @@ export default async function EditLocalMaterialPage({ params }: Props) {
                 submitLabel="Mettre à jour"
                 defaultValues={{
                     name: localMaterial.name,
-                    icon_url: localMaterial.iconUrl,
+                    iconUrl: localMaterial.iconUrl,
                 }}
             />
         </AdminResourceEditPage>

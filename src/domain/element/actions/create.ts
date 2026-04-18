@@ -12,17 +12,17 @@ export async function handleCreate(
     return createWithHistory({
         raw: {
             name: formData.get("name")?.toString() ?? "",
-            icon_url: formData.get("icon_url")?.toString() ?? "",
+            iconUrl: formData.get("iconUrl")?.toString() ?? "",
         },
         schema: elementSchema,
         create: async (data) => {
             await elementService.create({
                 name: data.name,
-                icon_url: data.icon_url,
+                icon_url: data.iconUrl,
             });
         },
         entityType: "Element",
         entityName: (data) => data.name,
-        cleanupFiles: (data) => [data.icon_url],
+        cleanupFiles: (data) => [data.iconUrl],
     });
 }

@@ -14,13 +14,18 @@ export default function ArtifactSetsGalleryClient({
     artifactSets: ArtifactSet[];
 }) {
     const [sortBy, setSortBy] = useState<"name" | "rarity">("name");
-    const [rarityFilter, setRarityFilter] = useState<number | "all">("all");
+    const [rarityFilter, setRarityFilter] = useState<string | number>("all");
+    const allowedRarities = useMemo(() => [3, 4, 5], []);
+
 
     // 1) Filtrage
     const filteredSets = useMemo(() => {
         if (rarityFilter === "all") return artifactSets;
-        return artifactSets.filter((s) => s.rarityMax === rarityFilter);
+
+        const rarity = Number(rarityFilter);
+        return artifactSets.filter((s) => s.rarityMax === rarity);
     }, [artifactSets, rarityFilter]);
+
 
     // 2) Tri
     const sortedSets = useMemo(() => {
@@ -50,9 +55,27 @@ export default function ArtifactSetsGalleryClient({
                 <GalleryControls
                     sortBy={sortBy}
                     onSortChange={setSortBy}
-                    rarityFilter={rarityFilter}
-                    onRarityFilterChange={setRarityFilter}
+                    sortOptions={[
+                        { value: "name", label: "Trier par nom" },
+                        { value: "rarity", label: "Trier par rareté" },
+                    ]}
+                    filters={[
+                        {
+                            key: "rarity",
+                            value: rarityFilter,
+                            onChange: setRarityFilter,
+                            options: [
+                                { value: "all", rawValue: "all", label: "Toutes les raretés" },
+                                ...allowedRarities.map((r) => ({
+                                    value: String(r),
+                                    rawValue: r,
+                                    label: "⭐".repeat(r),
+                                })),
+                            ],
+                        },
+                    ]}
                 />
+
             }
             renderItem={(artifactSet) => (
                 <Link

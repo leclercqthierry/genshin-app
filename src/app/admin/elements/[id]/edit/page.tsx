@@ -30,7 +30,7 @@ export default async function EditElementPage({ params }: Props) {
                 submitLabel="Mettre à jour"
                 defaultValues={{
                     name: element.name,
-                    icon_url: element.iconUrl,
+                    iconUrl: element.iconUrl,
                 }}
             />
         </AdminResourceEditPage>

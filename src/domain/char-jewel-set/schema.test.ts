@@ -6,10 +6,10 @@ describe("charJewelSetSchema", () => {
     const validData = {
         name: "Set",
         elementId: 1,
-        rarity2_url: "https://example.com/r2.png",
-        rarity3_url: "https://example.com/r3.png",
-        rarity4_url: "https://example.com/r4.png",
-        rarity5_url: "https://example.com/r5.png",
+        rarity2Url: "https://example.com/r2.png",
+        rarity3Url: "https://example.com/r3.png",
+        rarity4Url: "https://example.com/r4.png",
+        rarity5Url: "https://example.com/r5.png",
     };
 
     it("refuse un elementId non positif", () => {
@@ -25,15 +25,15 @@ describe("charJewelSetSchema", () => {
         }
     });
 
-    it("refuse une URL invalide pour rarity5_url", () => {
+    it("refuse une URL invalide pour rarity5Url", () => {
         const result = charJewelSetSchema.safeParse({
             ...validData,
-            rarity5_url: "invalid",
+            rarity5Url: "invalid",
         });
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.rarity5_url?.[0])
+            expect(result.error.flatten().fieldErrors.rarity5Url?.[0])
                 .toBe("URL invalide");
 
         }

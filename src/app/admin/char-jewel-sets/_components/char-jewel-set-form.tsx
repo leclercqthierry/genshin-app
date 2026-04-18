@@ -54,10 +54,10 @@ export default function CharJewelSetForm({
         mode: "onChange",
         defaultValues: {
             name: defaultValues?.name ?? "",
-            rarity2_url: defaultValues?.rarity2_url ?? "",
-            rarity3_url: defaultValues?.rarity3_url ?? "",
-            rarity4_url: defaultValues?.rarity4_url ?? "",
-            rarity5_url: defaultValues?.rarity5_url ?? "",
+            rarity2Url: defaultValues?.rarity2Url ?? "",
+            rarity3Url: defaultValues?.rarity3Url ?? "",
+            rarity4Url: defaultValues?.rarity4Url ?? "",
+            rarity5Url: defaultValues?.rarity5Url ?? "",
             elementId: defaultValues?.elementId ?? 1,
         },
     });
@@ -69,17 +69,17 @@ export default function CharJewelSetForm({
     }, [state.success, router]);
 
     const rarityValues = {
-        rarity2_url: useWatch({ control, name: "rarity2_url" }),
-        rarity3_url: useWatch({ control, name: "rarity3_url" }),
-        rarity4_url: useWatch({ control, name: "rarity4_url" }),
-        rarity5_url: useWatch({ control, name: "rarity5_url" }),
+        rarity2Url: useWatch({ control, name: "rarity2Url" }),
+        rarity3Url: useWatch({ control, name: "rarity3Url" }),
+        rarity4Url: useWatch({ control, name: "rarity4Url" }),
+        rarity5Url: useWatch({ control, name: "rarity5Url" }),
     };
 
     const rarityFields = [
-        { name: "rarity2_url", label: "Joyau ★★", rarity: 2 },
-        { name: "rarity3_url", label: "Joyau ★★★", rarity: 3 },
-        { name: "rarity4_url", label: "Joyau ★★★★", rarity: 4 },
-        { name: "rarity5_url", label: "Joyau ★★★★★", rarity: 5 },
+        { name: "rarity2Url", label: "Joyau ⭐⭐", rarity: 2 },
+        { name: "rarity3Url", label: "Joyau ⭐⭐⭐", rarity: 3 },
+        { name: "rarity4Url", label: "Joyau ⭐⭐⭐⭐", rarity: 4 },
+        { name: "rarity5Url", label: "Joyau ⭐⭐⭐⭐⭐", rarity: 5 },
     ] as const;
 
     return (
@@ -101,7 +101,7 @@ export default function CharJewelSetForm({
 
                     <AppFieldBase
                         label="Élément associé"
-                        name="element_id"
+                        name="elementId"
                         required
                     >
                         <AppSelect

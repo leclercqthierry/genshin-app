@@ -31,9 +31,9 @@ export default async function EditEliteDropSetPage({ params }: Props) {
                 submitLabel="Mettre à jour"
                 defaultValues={{
                     name: eliteDropSet.name,
-                    rarity2_url: eliteDropSet.rarity2Url,
-                    rarity3_url: eliteDropSet.rarity3Url,
-                    rarity4_url: eliteDropSet.rarity4Url,
+                    rarity2Url: eliteDropSet.rarity2Url,
+                    rarity3Url: eliteDropSet.rarity3Url,
+                    rarity4Url: eliteDropSet.rarity4Url,
                 }}
             />
         </AdminResourceEditPage>

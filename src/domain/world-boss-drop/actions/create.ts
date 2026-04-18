@@ -12,17 +12,17 @@ export async function handleCreate(
     return createWithHistory({
         raw: {
             name: formData.get("name")?.toString() ?? "",
-            icon_url: formData.get("icon_url")?.toString() ?? "",
+            iconUrl: formData.get("iconUrl")?.toString() ?? "",
         },
         schema: worldBossDropSchema,
         create: async (data) => {
             await worldBossDropService.create({
                 name: data.name,
-                icon_url: data.icon_url,
+                icon_url: data.iconUrl,
             });
         },
         entityType: "WorldBossDrop",
         entityName: (data) => data.name,
-        cleanupFiles: (data) => [data.icon_url],
+        cleanupFiles: (data) => [data.iconUrl],
     });
 }

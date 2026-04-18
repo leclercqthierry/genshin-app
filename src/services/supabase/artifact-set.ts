@@ -4,7 +4,7 @@ import type { ArtifactSet } from "@/domain/artifact-set/types";
 import { mapRowToArtifactSet } from "@/domain/artifact-set/mapper";
 import { ArtifactSetCreateRow, ArtifactSetRow, ArtifactSetUpdateRow } from "@/domain/artifact-set/db";
 
-export function artifactSetService() {
+export function artifactSetCrud() {
     return {
         async getAll(): Promise<ArtifactSet[]> {
             const supabase = await createSupabaseClientReadOnly();
@@ -79,3 +79,5 @@ export function artifactSetService() {
         }
     }
 }
+
+export const artifactSetService = artifactSetCrud();

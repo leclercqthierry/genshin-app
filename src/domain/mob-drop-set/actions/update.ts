@@ -14,26 +14,26 @@ export async function handleUpdate(
         id,
         raw: {
             name: formData.get("name")?.toString() ?? "",
-            rarity1_url: formData.get("rarity1_url")?.toString() ?? "",
-            rarity2_url: formData.get("rarity2_url")?.toString() ?? "",
-            rarity3_url: formData.get("rarity3_url")?.toString() ?? "",
+            rarity1Url: formData.get("rarity1Url")?.toString() ?? "",
+            rarity2Url: formData.get("rarity2Url")?.toString() ?? "",
+            rarity3Url: formData.get("rarity3Url")?.toString() ?? "",
         },
         schema: mobDropSetSchema,
-        getExisting: mobDropSetService().getOne,
+        getExisting: mobDropSetService.getOne,
         update: async (id, data) => {
-            await mobDropSetService().update(id, {
+            await mobDropSetService.update(id, {
                 name: data.name,
-                rarity1_url: data.rarity1_url,
-                rarity2_url: data.rarity2_url,
-                rarity3_url: data.rarity3_url,
+                rarity1_url: data.rarity1Url,
+                rarity2_url: data.rarity2Url,
+                rarity3_url: data.rarity3Url,
             });
         },
         entityType: "MobDropSet",
         entityName: (data) => data.name,
         replaceFiles: (existing, data) => [
-            [existing.rarity1Url, data.rarity1_url],
-            [existing.rarity2Url, data.rarity2_url],
-            [existing.rarity3Url, data.rarity3_url]
+            [existing.rarity1Url, data.rarity1Url],
+            [existing.rarity2Url, data.rarity2Url],
+            [existing.rarity3Url, data.rarity3Url]
         ],
     });
 }

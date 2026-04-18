@@ -5,7 +5,7 @@
             "@playwright/test",
             "node"
         ],
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "target": "ES2017",
         "lib": [
             "ES2017",

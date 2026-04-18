@@ -8,8 +8,8 @@ export async function deleteMobDropSetAction(formData: FormData) {
 
     return deleteWithHistory({
         id,
-        getExisting: mobDropSetService().getOne,
-        deleteEntity: mobDropSetService().remove,
+        getExisting: mobDropSetService.getOne,
+        deleteEntity: mobDropSetService.remove,
         entityType: "AptitudeDungeonDropSet",
         entityName: (e) => e.name,
         deleteFiles: (e) => [

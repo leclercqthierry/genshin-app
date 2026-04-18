@@ -18,7 +18,7 @@ export default async function EditMobDropSetPage({ params }: Props) {
     if (redirect) return <Redirecting />;
 
     const { id } = await params;
-    const mobDropSet = await mobDropSetService().getOne(Number(id));
+    const mobDropSet = await mobDropSetService.getOne(Number(id));
 
     if (!mobDropSet) {
         return <p>Set de drops de mobs introuvable.</p>;
@@ -31,9 +31,9 @@ export default async function EditMobDropSetPage({ params }: Props) {
                 submitLabel="Mettre à jour"
                 defaultValues={{
                     name: mobDropSet.name,
-                    rarity1_url: mobDropSet.rarity1Url,
-                    rarity2_url: mobDropSet.rarity2Url,
-                    rarity3_url: mobDropSet.rarity3Url,
+                    rarity1Url: mobDropSet.rarity1Url,
+                    rarity2Url: mobDropSet.rarity2Url,
+                    rarity3Url: mobDropSet.rarity3Url,
                 }}
             />
         </AdminResourceEditPage>

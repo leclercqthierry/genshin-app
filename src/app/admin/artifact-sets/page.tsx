@@ -12,7 +12,7 @@ export default async function ArtifactSetsPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    const artifactSets = await artifactSetService().getAll();
+    const artifactSets = await artifactSetService.getAll();
     const numberOfArtifactSets = artifactSets.length;
 
     return (

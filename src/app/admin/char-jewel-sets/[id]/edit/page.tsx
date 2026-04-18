@@ -36,10 +36,10 @@ export default async function EditCharJewelSetPage({ params }: Props) {
                 defaultValues={{
                     name: charJewelSet.name,
                     elementId: charJewelSet.elementId,
-                    rarity2_url: charJewelSet.rarity2Url,
-                    rarity3_url: charJewelSet.rarity3Url,
-                    rarity4_url: charJewelSet.rarity4Url,
-                    rarity5_url: charJewelSet.rarity5Url,
+                    rarity2Url: charJewelSet.rarity2Url,
+                    rarity3Url: charJewelSet.rarity3Url,
+                    rarity4Url: charJewelSet.rarity4Url,
+                    rarity5Url: charJewelSet.rarity5Url,
                 }}
             />
         </AdminResourceEditPage>

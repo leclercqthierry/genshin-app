@@ -5,6 +5,11 @@ export const adminSections = [
         description: "Gérer les sets d'artéfacts",
     },
     {
+        href: "/admin/weapons",
+        title: "Armes",
+        description: "Gérer les armes",
+    },
+    {
         href: "/admin/boss-drops",
         title: "Drop de boss",
         description: "Gérer les drops de boss",

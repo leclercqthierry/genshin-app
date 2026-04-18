@@ -14,20 +14,20 @@ export async function handleUpdate(
         id,
         raw: {
             name: formData.get("name")?.toString() ?? "",
-            icon_url: formData.get("icon_url")?.toString() ?? "",
+            iconUrl: formData.get("iconUrl")?.toString() ?? "",
         },
         schema: localMaterialSchema,
         getExisting: localMaterialService.getOne,
         update: async (id, data) => {
             await localMaterialService.update(id, {
                 name: data.name,
-                icon_url: data.icon_url,
+                icon_url: data.iconUrl,
             });
         },
         entityType: "LocalMaterial",
         entityName: (data) => data.name,
         replaceFiles: (existing, data) => [
-            [existing.iconUrl, data.icon_url],
+            [existing.iconUrl, data.iconUrl],
         ],
     });
 }

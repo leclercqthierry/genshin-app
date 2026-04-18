@@ -1,22 +1,45 @@
 "use client";
 
 import AppSelect from "@/components/ui/form/app-select";
-export const RARITIES = [1, 2, 3, 4, 5];
 
-interface GalleryControlsProps {
-    sortBy: "name" | "rarity";
-    onSortChange: (value: "name" | "rarity") => void;
-
-    rarityFilter: number | "all";
-    onRarityFilterChange: (value: number | "all") => void;
+interface SortOption<T extends string> {
+    label: string;
+    value: T;
 }
 
-export default function GalleryControls({
+interface FilterOption<T extends string | number> {
+    label: string;
+    value: string;   // pour le <select>
+    rawValue: T;     // vraie valeur
+}
+
+export interface FilterConfig<T extends string | number> {
+    key: string;
+    value: T;
+    onChange: (value: T) => void;
+    options: FilterOption<T>[];
+}
+
+interface GalleryControlsProps<
+    SortKey extends string,
+    Filters extends readonly FilterConfig<string | number>[]
+> {
+    sortBy: SortKey;
+    onSortChange: (value: SortKey) => void;
+    sortOptions: SortOption<SortKey>[];
+
+    filters: Filters;
+}
+
+export default function GalleryControls<
+    SortKey extends string,
+    Filters extends readonly FilterConfig<string | number>[]
+>({
     sortBy,
     onSortChange,
-    rarityFilter,
-    onRarityFilterChange,
-}: GalleryControlsProps) {
+    sortOptions,
+    filters
+}: GalleryControlsProps<SortKey, Filters>) {
     return (
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 p-4">
 
@@ -24,29 +47,29 @@ export default function GalleryControls({
             <AppSelect
                 className="flex-1 max-w-sm"
                 value={sortBy}
-                onChange={(e) => onSortChange(e.target.value as "name" | "rarity")}
-                options={[
-                    { value: "name", label: "Trier par nom" },
-                    { value: "rarity", label: "Trier par rareté" },
-                ]}
+                onChange={(e) => onSortChange(e.target.value as SortKey)}
+                options={sortOptions}
             />
 
-            {/* Filtre par rareté */}
-            <AppSelect
-                className="flex-1 max-w-sm"
-                value={rarityFilter}
-                onChange={(e) => {
-                    const v = e.target.value;
-                    onRarityFilterChange(v === "all" ? "all" : Number(v));
-                }}
-                options={[
-                    { value: "all", label: "Toutes les raretés" },
-                    ...RARITIES.map((r) => ({
-                        value: String(r),
-                        label: `${r}⭐`,
-                    })),
-                ]}
-            />
+            {/* Filtres */}
+            {filters.map((filter) => (
+                <AppSelect
+                    key={filter.key}
+                    className="flex-1 max-w-sm"
+                    value={String(filter.value)}
+                    onChange={(e) => {
+                        const selected = filter.options.find(
+                            (o) => o.value === e.target.value
+                        );
+                        if (!selected) return;
+                        filter.onChange(selected.rawValue);
+                    }}
+                    options={filter.options.map((o) => ({
+                        value: o.value,
+                        label: o.label,
+                    }))}
+                />
+            ))}
         </div>
     );
 }

@@ -51,9 +51,9 @@ export default function AptitudeDungeonDropSetForm({
         mode: "onChange",
         defaultValues: {
             name: defaultValues?.name ?? "",
-            rarity2_url: defaultValues?.rarity2_url ?? "",
-            rarity3_url: defaultValues?.rarity3_url ?? "",
-            rarity4_url: defaultValues?.rarity4_url ?? "",
+            rarity2Url: defaultValues?.rarity2Url ?? "",
+            rarity3Url: defaultValues?.rarity3Url ?? "",
+            rarity4Url: defaultValues?.rarity4Url ?? "",
         },
     });
 
@@ -64,15 +64,15 @@ export default function AptitudeDungeonDropSetForm({
     }, [state.success, router]);
 
     const rarityValues = {
-        rarity2_url: useWatch({ control, name: "rarity2_url" }),
-        rarity3_url: useWatch({ control, name: "rarity3_url" }),
-        rarity4_url: useWatch({ control, name: "rarity4_url" }),
+        rarity2Url: useWatch({ control, name: "rarity2Url" }),
+        rarity3Url: useWatch({ control, name: "rarity3Url" }),
+        rarity4Url: useWatch({ control, name: "rarity4Url" }),
     };
 
     const rarityFields = [
-        { name: "rarity2_url", label: "Livre ★★", rarity: 2 },
-        { name: "rarity3_url", label: "Livre ★★★", rarity: 3 },
-        { name: "rarity4_url", label: "Livre ★★★★", rarity: 4 },
+        { name: "rarity2Url", label: "Livre ⭐⭐", rarity: 2 },
+        { name: "rarity3Url", label: "Livre ⭐⭐⭐", rarity: 3 },
+        { name: "rarity4Url", label: "Livre ⭐⭐⭐⭐", rarity: 4 },
     ] as const;
 
     return (

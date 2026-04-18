@@ -7,7 +7,7 @@ describe("makeBaseItemSchema", () => {
 
         const result = schema.safeParse({
             name: "Pyro",
-            icon_url: "https://example.com/icon.png",
+            iconUrl: "https://example.com/icon.png",
         });
 
         expect(result.success).toBe(true);
@@ -18,7 +18,7 @@ describe("makeBaseItemSchema", () => {
 
         const result = schema.safeParse({
             name: "TropLong", // 8 caractères
-            icon_url: "https://example.com/icon.png",
+            iconUrl: "https://example.com/icon.png",
         });
 
         expect(result.success).toBe(false);
@@ -31,11 +31,11 @@ describe("makeBaseItemSchema", () => {
 
         const result = schema.safeParse({
             name: "Hydro",
-            icon_url: "not-an-url",
+            iconUrl: "not-an-url",
         });
 
         expect(result.success).toBe(false);
-        expect(result.error?.flatten().fieldErrors.icon_url?.[0])
+        expect(result.error?.flatten().fieldErrors.iconUrl?.[0])
             .toBe("URL d'image invalide.");
     });
 });

@@ -5,26 +5,26 @@ export const artifactSetSchema = z.object({
         .string()
         .min(1, "Le nom est requis.")
         .max(100, "Le nom ne peut pas dépasser 100 caractères."),
-    icon_flower_url: z
+    iconFlowerUrl: z
         .url("URL d'image invalide."),
-    icon_plume_url: z
+    iconPlumeUrl: z
         .url("URL d'image invalide."),
-    icon_circlet_url: z
+    iconCircletUrl: z
         .url("URL d'image invalide."),
-    icon_sand_url: z
+    iconSandUrl: z
         .url("URL d'image invalide."),
-    icon_goblet_url: z
+    iconGobletUrl: z
         .url("URL d'image invalide."),
-    rarity_max: z
+    rarityMax: z
         .number()
         .positive()
         .min(1)
         .max(5),
-    bonus_2P: z
+    bonus2P: z
         .string()
         .min(1, "Le bonus 2 pièces est requis.")
         .max(500, "Le bonus 2 pièces ne peut pas dépassés 500 caractères."),
-    bonus_4P: z
+    bonus4P: z
         .string()
         .min(1, "Le bonus 4 pièces est requis.")
         .max(1500, "Le bonus 4 pièces ne peut pas dépassés 1500 caractères.")

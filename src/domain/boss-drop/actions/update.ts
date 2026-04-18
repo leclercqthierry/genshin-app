@@ -14,20 +14,20 @@ export async function handleUpdate(
         id,
         raw: {
             name: formData.get("name")?.toString() ?? "",
-            icon_url: formData.get("icon_url")?.toString() ?? "",
+            iconUrl: formData.get("iconUrl")?.toString() ?? "",
         },
         schema: bossDropSchema,
         getExisting: bossDropService.getOne,
         update: async (id, data) => {
             await bossDropService.update(id, {
                 name: data.name,
-                icon_url: data.icon_url,
+                icon_url: data.iconUrl,
             });
         },
         entityType: "BossDrop",
         entityName: (data) => data.name,
         replaceFiles: (existing, data) => [
-            [existing.iconUrl, data.icon_url],
+            [existing.iconUrl, data.iconUrl],
         ],
     });
 }

@@ -17,7 +17,7 @@ export default async function EditArtifactSetPage({ params }: Props) {
     if (redirect) return <Redirecting />;
 
     const { id } = await params;
-    const artifactSet = await artifactSetService().getOne(Number(id));
+    const artifactSet = await artifactSetService.getOne(Number(id));
 
     if (!artifactSet) {
         return <p>Set d&apos;artéfacts introuvable</p>;
@@ -30,14 +30,14 @@ export default async function EditArtifactSetPage({ params }: Props) {
                 submitLabel="Mettre à jour"
                 defaultValues={{
                     name: artifactSet.name,
-                    icon_flower_url: artifactSet.iconFlowerUrl,
-                    icon_plume_url: artifactSet.iconPlumeUrl,
-                    icon_circlet_url: artifactSet.iconCircletUrl,
-                    icon_sand_url: artifactSet.iconSandUrl,
-                    icon_goblet_url: artifactSet.iconGobletUrl,
-                    rarity_max: artifactSet.rarityMax,
-                    bonus_2P: artifactSet.bonus2P,
-                    bonus_4P: artifactSet.bonus4P,
+                    iconFlowerUrl: artifactSet.iconFlowerUrl,
+                    iconPlumeUrl: artifactSet.iconPlumeUrl,
+                    iconCircletUrl: artifactSet.iconCircletUrl,
+                    iconSandUrl: artifactSet.iconSandUrl,
+                    iconGobletUrl: artifactSet.iconGobletUrl,
+                    rarityMax: artifactSet.rarityMax,
+                    bonus2P: artifactSet.bonus2P,
+                    bonus4P: artifactSet.bonus4P,
                 }}
             />
         </AdminResourceEditPage>

@@ -7,6 +7,7 @@ import WeaponElevationDungeonDropSetForm from "../../_components/weapon-elevatio
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleUpdate } from "@/domain/weapon-elevation-dungeon-drop-set/actions/update";
 import { weaponElevationDungeonDropSetService } from "@/services/supabase/weapon-elevation-dungeon-drop-set";
+import { FARM_DAYS } from "@/constants/farm-days";
 
 
 type Props = {
@@ -29,11 +30,14 @@ export default async function EditWeaponElevationDungeonDropSetPage({ params }: 
             <WeaponElevationDungeonDropSetForm
                 action={handleUpdate.bind(null, weaponElevationDungeonDropSet.id)}
                 submitLabel="Mettre à jour"
+                farmDays={FARM_DAYS}
                 defaultValues={{
                     name: weaponElevationDungeonDropSet.name,
-                    rarity2_url: weaponElevationDungeonDropSet.rarity2Url,
-                    rarity3_url: weaponElevationDungeonDropSet.rarity3Url,
-                    rarity4_url: weaponElevationDungeonDropSet.rarity4Url,
+                    rarity2Url: weaponElevationDungeonDropSet.rarity2Url,
+                    rarity3Url: weaponElevationDungeonDropSet.rarity3Url,
+                    rarity4Url: weaponElevationDungeonDropSet.rarity4Url,
+                    rarity5Url: weaponElevationDungeonDropSet.rarity5Url,
+                    farmDaysIndex: weaponElevationDungeonDropSet.farmDaysIndex,
                 }}
             />
         </AdminResourceEditPage>

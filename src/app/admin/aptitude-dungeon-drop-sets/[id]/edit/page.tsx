@@ -31,9 +31,9 @@ export default async function EditAptitudeDungeonDropSetPage({ params }: Props) 
                 submitLabel="Mettre à jour"
                 defaultValues={{
                     name: aptitudeDungeonDropSet.name,
-                    rarity2_url: aptitudeDungeonDropSet.rarity2Url,
-                    rarity3_url: aptitudeDungeonDropSet.rarity3Url,
-                    rarity4_url: aptitudeDungeonDropSet.rarity4Url,
+                    rarity2Url: aptitudeDungeonDropSet.rarity2Url,
+                    rarity3Url: aptitudeDungeonDropSet.rarity3Url,
+                    rarity4Url: aptitudeDungeonDropSet.rarity4Url,
                 }}
             />
         </AdminResourceEditPage>

@@ -13,25 +13,25 @@ export async function handleCreate(
     return createWithHistory<z.infer<typeof aptitudeDungeonDropSetSchema>>({
         raw: {
             name: formData.get("name")?.toString() ?? "",
-            rarity2_url: formData.get("rarity2_url")?.toString() ?? "",
-            rarity3_url: formData.get("rarity3_url")?.toString() ?? "",
-            rarity4_url: formData.get("rarity4_url")?.toString() ?? "",
+            rarity2Url: formData.get("rarity2Url")?.toString() ?? "",
+            rarity3Url: formData.get("rarity3Url")?.toString() ?? "",
+            rarity4Url: formData.get("rarity4Url")?.toString() ?? "",
         },
         schema: aptitudeDungeonDropSetSchema,
         create: async (data) => {
             await aptitudeDungeonDropSetService.create({
                 name: data.name,
-                rarity2_url: data.rarity2_url,
-                rarity3_url: data.rarity3_url,
-                rarity4_url: data.rarity4_url,
+                rarity2_url: data.rarity2Url,
+                rarity3_url: data.rarity3Url,
+                rarity4_url: data.rarity4Url,
             });
         },
         entityType: "AptitudeDungeonDropSet",
         entityName: (data) => data.name,
         cleanupFiles: (data) => [
-            data.rarity2_url,
-            data.rarity3_url,
-            data.rarity4_url,
+            data.rarity2Url,
+            data.rarity3Url,
+            data.rarity4Url,
         ],
     });
 }

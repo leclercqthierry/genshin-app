@@ -8,8 +8,8 @@ export async function deleteArtifactSetAction(formData: FormData) {
 
     return deleteWithHistory({
         id,
-        getExisting: artifactSetService().getOne,
-        deleteEntity: artifactSetService().remove,
+        getExisting: artifactSetService.getOne,
+        deleteEntity: artifactSetService.remove,
         entityType: "ArtifactSet",
         entityName: (e) => e.name,
         deleteFiles: (e) => [

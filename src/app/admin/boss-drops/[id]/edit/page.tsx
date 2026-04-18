@@ -30,7 +30,7 @@ export default async function EditBossDropPage({ params }: Props) {
                 submitLabel="Mettre à jour"
                 defaultValues={{
                     name: bossDrop.name,
-                    icon_url: bossDrop.iconUrl,
+                    iconUrl: bossDrop.iconUrl,
                 }}
             />
         </AdminResourceEditPage>

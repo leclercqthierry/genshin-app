@@ -4,9 +4,9 @@ import { describe, it, expect } from "vitest";
 describe("baseSetSchema", () => {
     const validData = {
         name: "Set",
-        rarity1_url: "https://example.com/r1.png",
-        rarity2_url: "https://example.com/r2.png",
-        rarity3_url: "https://example.com/r3.png",
+        rarity1Url: "https://example.com/r1.png",
+        rarity2Url: "https://example.com/r2.png",
+        rarity3Url: "https://example.com/r3.png",
     };
 
     it("valide un set correct", () => {
@@ -31,43 +31,43 @@ describe("baseSetSchema", () => {
         }
     });
 
-    it("refuse une URL invalide pour rarity1_url", () => {
+    it("refuse une URL invalide pour rarity1Url", () => {
         const result = mobDropSetSchema.safeParse({
             ...validData,
-            rarity1_url: "not-a-url",
+            rarity1Url: "not-a-url",
         });
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.rarity1_url?.[0])
+            expect(result.error.flatten().fieldErrors.rarity1Url?.[0])
                 .toBe("URL invalide");
 
         }
     });
 
-    it("refuse une URL invalide pour rarity2_url", () => {
+    it("refuse une URL invalide pour rarity2Url", () => {
         const result = mobDropSetSchema.safeParse({
             ...validData,
-            rarity2_url: "invalid",
+            rarity2Url: "invalid",
         });
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.rarity2_url?.[0])
+            expect(result.error.flatten().fieldErrors.rarity2Url?.[0])
                 .toBe("URL invalide");
 
         }
     });
 
-    it("refuse une URL invalide pour rarity3_url", () => {
+    it("refuse une URL invalide pour rarity3Url", () => {
         const result = mobDropSetSchema.safeParse({
             ...validData,
-            rarity3_url: "invalid",
+            rarity3Url: "invalid",
         });
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.rarity3_url?.[0])
+            expect(result.error.flatten().fieldErrors.rarity3Url?.[0])
                 .toBe("URL invalide");
 
         }

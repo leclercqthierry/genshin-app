@@ -13,25 +13,25 @@ export async function handleCreate(
     return createWithHistory<z.infer<typeof mobDropSetSchema>>({
         raw: {
             name: formData.get("name")?.toString() ?? "",
-            rarity1_url: formData.get("rarity1_url")?.toString() ?? "",
-            rarity2_url: formData.get("rarity2_url")?.toString() ?? "",
-            rarity3_url: formData.get("rarity3_url")?.toString() ?? "",
+            rarity1Url: formData.get("rarity1Url")?.toString() ?? "",
+            rarity2Url: formData.get("rarity2Url")?.toString() ?? "",
+            rarity3Url: formData.get("rarity3Url")?.toString() ?? "",
         },
         schema: mobDropSetSchema,
         create: async (data) => {
-            await mobDropSetService().create({
+            await mobDropSetService.create({
                 name: data.name,
-                rarity1_url: data.rarity1_url,
-                rarity2_url: data.rarity2_url,
-                rarity3_url: data.rarity3_url,
+                rarity1_url: data.rarity1Url,
+                rarity2_url: data.rarity2Url,
+                rarity3_url: data.rarity3Url,
             });
         },
         entityType: "MobDropSet",
         entityName: (data) => data.name,
         cleanupFiles: (data) => [
-            data.rarity1_url,
-            data.rarity2_url,
-            data.rarity3_url,
+            data.rarity1Url,
+            data.rarity2Url,
+            data.rarity3Url,
         ],
     });
 }

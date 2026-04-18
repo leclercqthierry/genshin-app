@@ -46,11 +46,11 @@ export default function BaseItemForm({ action, submitLabel, defaultValues, path,
         mode: "onChange",
         defaultValues: {
             name: defaultValues?.name ?? "",
-            icon_url: defaultValues?.icon_url ?? "",
+            iconUrl: defaultValues?.iconUrl ?? "",
         },
     });
 
-    const iconUrl = useWatch({ control, name: "icon_url" });
+    const iconUrl = useWatch({ control, name: "iconUrl" });
 
     // Redirection après succès
     useEffect(() => {
@@ -82,11 +82,11 @@ export default function BaseItemForm({ action, submitLabel, defaultValues, path,
                 {/* Icône */}
                 <AppFieldBase
                     label="Icône"
-                    name="icon_url"
+                    name="iconUrl"
                     required
                     error={
-                        errors.icon_url?.message ||
-                        state.errors?.icon_url?.[0]
+                        errors.iconUrl?.message ||
+                        state.errors?.iconUrl?.[0]
                     }
                 >
                     <div className="contents">
@@ -104,7 +104,7 @@ export default function BaseItemForm({ action, submitLabel, defaultValues, path,
 
                         <AppUploader
                             onUpload={(url) =>
-                                setValue("icon_url", url, {
+                                setValue("iconUrl", url, {
                                     shouldDirty: true,
                                     shouldValidate: true,
                                 })
@@ -114,7 +114,7 @@ export default function BaseItemForm({ action, submitLabel, defaultValues, path,
                 </AppFieldBase>
 
                 {/* Champ caché pour RHF → FormData */}
-                <input type="hidden" {...register("icon_url")} />
+                <input type="hidden" {...register("iconUrl")} />
 
                 {state.message && (
                     <p className="text-red-500 text-sm">{state.message}</p>

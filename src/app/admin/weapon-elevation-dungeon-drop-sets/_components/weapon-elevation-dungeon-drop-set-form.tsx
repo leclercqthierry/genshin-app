@@ -11,6 +11,7 @@ import AppFieldBase from "@/components/ui/form/app-field-base";
 import AppInput from "@/components/ui/form/app-input";
 import AppButton from "@/components/ui/button/app-button";
 import BaseItemUploaderField from "../../_shared/_components/base-item-uploader-field";
+import AppSelect from "@/components/ui/form/app-select";
 
 import {
     weaponElevationDungeonDropSetSchema,
@@ -31,12 +32,14 @@ type Props = {
     ) => Promise<WeaponElevationDungeonDropSetFormState>;
     submitLabel: string;
     defaultValues?: Partial<WeaponElevationDungeonDropSetSchema>;
+    farmDays: readonly string[];
 };
 
 export default function WeaponElevationDungeonDropSetForm({
     action,
     submitLabel,
     defaultValues,
+    farmDays,
 }: Props) {
     const router = useRouter();
     const [state, formAction] = useActionState(action, initialState);
@@ -51,10 +54,11 @@ export default function WeaponElevationDungeonDropSetForm({
         mode: "onChange",
         defaultValues: {
             name: defaultValues?.name ?? "",
-            rarity2_url: defaultValues?.rarity2_url ?? "",
-            rarity3_url: defaultValues?.rarity3_url ?? "",
-            rarity4_url: defaultValues?.rarity4_url ?? "",
-            rarity5_url: defaultValues?.rarity5_url ?? "",
+            rarity2Url: defaultValues?.rarity2Url ?? "",
+            rarity3Url: defaultValues?.rarity3Url ?? "",
+            rarity4Url: defaultValues?.rarity4Url ?? "",
+            rarity5Url: defaultValues?.rarity5Url ?? "",
+            farmDaysIndex: defaultValues?.farmDaysIndex ?? 0,
         },
     });
 
@@ -65,20 +69,21 @@ export default function WeaponElevationDungeonDropSetForm({
     }, [state.success, router]);
 
     const rarityValues = {
-        rarity2_url: useWatch({ control, name: "rarity2_url" }),
-        rarity3_url: useWatch({ control, name: "rarity3_url" }),
-        rarity4_url: useWatch({ control, name: "rarity4_url" }),
-        rarity5_url: useWatch({ control, name: "rarity5_url" }),
+        rarity2Url: useWatch({ control, name: "rarity2Url" }),
+        rarity3Url: useWatch({ control, name: "rarity3Url" }),
+        rarity4Url: useWatch({ control, name: "rarity4Url" }),
+        rarity5Url: useWatch({ control, name: "rarity5Url" }),
     };
 
     const rarityFields = [
-        { name: "rarity2_url", label: "Drop ★★", rarity: 2 },
-        { name: "rarity3_url", label: "Drop ★★★", rarity: 3 },
-        { name: "rarity4_url", label: "Drop ★★★★", rarity: 4 },
-        { name: "rarity5_url", label: "Drop ★★★★", rarity: 5 },
+        { name: "rarity2Url", label: "Drop ⭐⭐", rarity: 2 },
+        { name: "rarity3Url", label: "Drop ⭐⭐⭐", rarity: 3 },
+        { name: "rarity4Url", label: "Drop ⭐⭐⭐⭐", rarity: 4 },
+        { name: "rarity5Url", label: "Drop ⭐⭐⭐⭐⭐", rarity: 5 },
     ] as const;
 
     return (
+
         <AppFormWrapper action={formAction} size="md" className="mx-auto max-w-md lg:max-w-2xl">
             <AppSection variant="ghost">
                 <div className="lg:max-w-1/2 max-w-md mx-auto">
@@ -91,6 +96,24 @@ export default function WeaponElevationDungeonDropSetForm({
                     >
                         <AppInput placeholder="Ex: Décarabian" {...register("name")} />
                     </AppFieldBase>
+
+                    <AppFieldBase
+                        label="Jours de farm"
+                        name="farmDaysIndex"
+                        required
+                    >
+                        <AppSelect
+                            error={
+                                errors.farmDaysIndex?.message || state.errors?.farmDaysIndex?.[0]
+                            }
+                            {...register("farmDaysIndex", { valueAsNumber: true })}
+                            options={farmDays.map((farmDay, index) => ({
+                                value: index.toString(),
+                                label: farmDay,
+                            }))}
+                        />
+                    </AppFieldBase>
+
                 </div>
 
                 <div className="flex flex-col lg:flex-row flex-wrap justify-evenly items-center gap-3">

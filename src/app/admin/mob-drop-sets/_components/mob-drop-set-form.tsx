@@ -51,9 +51,9 @@ export default function MobDropSetForm({
         mode: "onChange",
         defaultValues: {
             name: defaultValues?.name ?? "",
-            rarity1_url: defaultValues?.rarity1_url ?? "",
-            rarity2_url: defaultValues?.rarity2_url ?? "",
-            rarity3_url: defaultValues?.rarity3_url ?? "",
+            rarity1Url: defaultValues?.rarity1Url ?? "",
+            rarity2Url: defaultValues?.rarity2Url ?? "",
+            rarity3Url: defaultValues?.rarity3Url ?? "",
         },
     });
 
@@ -64,15 +64,15 @@ export default function MobDropSetForm({
     }, [state.success, router]);
 
     const rarityValues = {
-        rarity1_url: useWatch({ control, name: "rarity1_url" }),
-        rarity2_url: useWatch({ control, name: "rarity2_url" }),
-        rarity3_url: useWatch({ control, name: "rarity3_url" }),
+        rarity1Url: useWatch({ control, name: "rarity1Url" }),
+        rarity2Url: useWatch({ control, name: "rarity2Url" }),
+        rarity3Url: useWatch({ control, name: "rarity3Url" }),
     };
 
     const rarityFields = [
-        { name: "rarity1_url", label: "Drop ★", rarity: 1 },
-        { name: "rarity2_url", label: "Drop ★★", rarity: 2 },
-        { name: "rarity3_url", label: "Drop ★★★", rarity: 3 },
+        { name: "rarity1Url", label: "Drop ★", rarity: 1 },
+        { name: "rarity2Url", label: "Drop ★★", rarity: 2 },
+        { name: "rarity3Url", label: "Drop ★★★", rarity: 3 },
     ] as const;
 
     return (
