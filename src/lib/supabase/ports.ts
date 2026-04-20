@@ -17,6 +17,5 @@ export interface ClientService {
         admin: {
             deleteUser: (userId: string) => Promise<{ error: unknown }>;
         };
-        // signUp: SupabaseClient["auth"]["signUp"];
     };
 }

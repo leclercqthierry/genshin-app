@@ -1,5 +1,6 @@
 import { mobDropSetSchema } from "./schema";
 import { describe, it, expect } from "vitest";
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 describe("baseSetSchema", () => {
     const validData = {
@@ -25,9 +26,10 @@ describe("baseSetSchema", () => {
         });
 
         expect(result.success).toBe(false);
+
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.name?.[0])
-                .toBe("Nom requis");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.name?.[0]).toBe("Nom requis");
         }
     });
 
@@ -38,10 +40,10 @@ describe("baseSetSchema", () => {
         });
 
         expect(result.success).toBe(false);
-        if (!result.success) {
-            expect(result.error.flatten().fieldErrors.rarity1Url?.[0])
-                .toBe("URL invalide");
 
+        if (!result.success) {
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.rarity1Url?.[0]).toBe("URL invalide");
         }
     });
 
@@ -52,10 +54,10 @@ describe("baseSetSchema", () => {
         });
 
         expect(result.success).toBe(false);
-        if (!result.success) {
-            expect(result.error.flatten().fieldErrors.rarity2Url?.[0])
-                .toBe("URL invalide");
 
+        if (!result.success) {
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.rarity2Url?.[0]).toBe("URL invalide");
         }
     });
 
@@ -66,10 +68,10 @@ describe("baseSetSchema", () => {
         });
 
         expect(result.success).toBe(false);
-        if (!result.success) {
-            expect(result.error.flatten().fieldErrors.rarity3Url?.[0])
-                .toBe("URL invalide");
 
+        if (!result.success) {
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.rarity3Url?.[0]).toBe("URL invalide");
         }
     });
 });

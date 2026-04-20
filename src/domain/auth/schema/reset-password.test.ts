@@ -1,5 +1,6 @@
 import { resetPasswordSchema } from "./reset-password";
 import { describe, it, expect } from "vitest";
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 describe("resetPasswordSchema", () => {
     const validData = {
@@ -23,8 +24,10 @@ describe("resetPasswordSchema", () => {
         });
 
         expect(result.success).toBe(false);
+
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.password?.[0])
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.password?.[0])
                 .toBe("Le mot de passe doit contenir au moins 6 caractères.");
         }
     });
@@ -36,8 +39,10 @@ describe("resetPasswordSchema", () => {
         });
 
         expect(result.success).toBe(false);
+
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.password2?.[0])
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.password2?.[0])
                 .toBe("Les mots de passe ne correspondent pas.");
         }
     });

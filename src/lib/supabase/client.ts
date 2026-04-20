@@ -10,14 +10,16 @@ export async function createSupabaseClient() {
             process.env.SUPABASE_PUBLISHABLE_KEY!,
             {
                 cookies: {
-                    get(name) {
-                        return cookieStore.get(name)?.value;
+                    getAll() {
+                        return cookieStore.getAll().map((c) => ({
+                            name: c.name,
+                            value: c.value,
+                        }));
                     },
-                    set(name, value, options) {
-                        cookieStore.set({ name, value, ...options });
-                    },
-                    remove(name, options) {
-                        cookieStore.set({ name, value: "", ...options });
+                    setAll(cookiesToSet) {
+                        for (const { name, value, options } of cookiesToSet) {
+                            cookieStore.set(name, value, options);
+                        }
                     },
                 },
             }

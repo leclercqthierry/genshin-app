@@ -23,11 +23,13 @@ export async function createSupabaseClientReadOnly() {
             process.env.SUPABASE_PUBLISHABLE_KEY!,
             {
                 cookies: {
-                    get(name: string) {
-                        return cookieStore.get(name)?.value;
+                    getAll() {
+                        return cookieStore.getAll().map((c) => ({
+                            name: c.name,
+                            value: c.value,
+                        }));
                     },
-                    set() { },
-                    remove() { },
+                    setAll() { },
                 },
             }
         );

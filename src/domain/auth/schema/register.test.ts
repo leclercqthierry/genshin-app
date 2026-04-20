@@ -1,5 +1,6 @@
 import { registerSchema } from "./register";
 import { describe, it, expect } from "vitest";
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 describe("registerSchema", () => {
     const validData = {
@@ -28,8 +29,8 @@ describe("registerSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.pseudo?.[0])
-                .toBe("Le pseudo doit contenir au moins 3 caractères.");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.pseudo?.[0]).toBe("Le pseudo doit contenir au moins 3 caractères.");
         }
     });
 
@@ -41,8 +42,8 @@ describe("registerSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.pseudo?.[0])
-                .toBe("Le pseudo ne peut pas dépasser 20 caractères.");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.pseudo?.[0]).toBe("Le pseudo ne peut pas dépasser 20 caractères.");
         }
     });
 
@@ -54,8 +55,8 @@ describe("registerSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.pseudo?.[0])
-                .toBe("Le pseudo ne peut contenir que des lettres et des chiffres.");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.pseudo?.[0]).toBe("Le pseudo ne peut contenir que des lettres et des chiffres.");
         }
     });
 
@@ -69,8 +70,8 @@ describe("registerSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.email?.[0])
-                .toBe("Format d'email invalide.");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.email?.[0]).toBe("Format d'email invalide.");
         }
     });
 
@@ -82,8 +83,8 @@ describe("registerSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.email?.[0])
-                .toBe("L'email est trop long.");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.email?.[0]).toBe("L'email est trop long.");
         }
     });
 
@@ -98,8 +99,8 @@ describe("registerSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.password?.[0])
-                .toBe("Le mot de passe doit contenir au moins 12 caractères.");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.password?.[0]).toBe("Le mot de passe doit contenir au moins 12 caractères.");
         }
     });
 
@@ -112,8 +113,8 @@ describe("registerSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.password?.[0])
-                .toBe("Le mot de passe doit contenir au moins une majuscule.");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.password?.[0]).toBe("Le mot de passe doit contenir au moins une majuscule.");
         }
     });
 
@@ -126,35 +127,36 @@ describe("registerSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.password?.[0])
-                .toBe("Le mot de passe doit contenir au moins une minuscule.");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.password?.[0]).toBe("Le mot de passe doit contenir au moins une minuscule.");
         }
     });
 
     it("refuse un mot de passe sans chiffre", () => {
         const result = registerSchema.safeParse({
             ...validData,
-            password: "Password!!!!", // 12 caractères, maj, min, spécial, mais PAS de chiffre
+            password: "Password!!!!",
             password2: "Password!!!!",
         });
+
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.password?.[0])
-                .toBe("Le mot de passe doit contenir au moins un chiffre.");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.password?.[0]).toBe("Le mot de passe doit contenir au moins un chiffre.");
         }
     });
 
     it("refuse un mot de passe sans caractère spécial", () => {
         const result = registerSchema.safeParse({
             ...validData,
-            password: "Password1234", // 12 caractères, maj, min, chiffres, mais PAS de spécial
+            password: "Password1234",
             password2: "Password1234",
         });
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.password?.[0])
-                .toBe("Le mot de passe doit contenir au moins un caractère spécial.");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.password?.[0]).toBe("Le mot de passe doit contenir au moins un caractère spécial.");
         }
     });
 
@@ -168,8 +170,8 @@ describe("registerSchema", () => {
 
         expect(result.success).toBe(false);
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.password2?.[0])
-                .toBe("Les mots de passe ne correspondent pas.");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.password2?.[0]).toBe("Les mots de passe ne correspondent pas.");
         }
     });
 });

@@ -1,7 +1,7 @@
 import { charJewelSetSchema } from "@/domain/char-jewel-set/schema";
 import { describe, it, expect } from "vitest";
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
-// Ici uniquement ce qui est spécifique à charJewelSet
 describe("charJewelSetSchema", () => {
     const validData = {
         name: "Set",
@@ -19,9 +19,10 @@ describe("charJewelSetSchema", () => {
         });
 
         expect(result.success).toBe(false);
+
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.elementId?.[0])
-                .toBe("Élément requis");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.elementId?.[0]).toBe("Élément requis");
         }
     });
 
@@ -32,10 +33,10 @@ describe("charJewelSetSchema", () => {
         });
 
         expect(result.success).toBe(false);
-        if (!result.success) {
-            expect(result.error.flatten().fieldErrors.rarity5Url?.[0])
-                .toBe("URL invalide");
 
+        if (!result.success) {
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.rarity5Url?.[0]).toBe("URL invalide");
         }
     });
 });

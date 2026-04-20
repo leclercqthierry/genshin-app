@@ -4,6 +4,7 @@ import type { ZodType } from "zod";
 import { extractErrorMessage } from "@/lib/utils/extract-error-message";
 import { recordAdminChange } from "@/domain/admin-changes/record-admin-change";
 import { replaceUploadThingFile } from "@/services/files/replace-uploadthing-file";
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 interface UpdateWithHistoryOptions<TParsed, TExisting> {
     id: number;
@@ -39,7 +40,7 @@ export async function updateWithHistory<TParsed, TExisting>({
         // 2. Validation
         const parsed = schema.safeParse(raw);
         if (!parsed.success) {
-            const fieldErrors = parsed.error.flatten().fieldErrors;
+            const fieldErrors = zodFieldErrorsSimple(parsed.error);
 
             // Normalisation : remplacer undefined par []
             const normalizedErrors: Record<string, string[]> = {};

@@ -10,14 +10,16 @@ export async function createSupabaseServiceClient() {
             process.env.SUPABASE_SECRET_KEY!, // service role
             {
                 cookies: {
-                    get(name) {
-                        return cookieStore.get(name)?.value;
+                    getAll() {
+                        return cookieStore.getAll().map((c) => ({
+                            name: c.name,
+                            value: c.value,
+                        }));
                     },
-                    set(name, value, options) {
-                        cookieStore.set({ name, value, ...options });
-                    },
-                    remove(name, options) {
-                        cookieStore.set({ name, value: "", ...options });
+                    setAll(cookiesToSet) {
+                        for (const { name, value, options } of cookiesToSet) {
+                            cookieStore.set(name, value, options);
+                        }
                     },
                 },
             }

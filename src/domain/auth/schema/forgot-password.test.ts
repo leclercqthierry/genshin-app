@@ -1,5 +1,6 @@
 import { forgotPasswordSchema } from "./forgot-password";
 import { describe, it, expect } from "vitest";
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 describe("forgotPasswordSchema", () => {
     const validData = {
@@ -21,9 +22,10 @@ describe("forgotPasswordSchema", () => {
         });
 
         expect(result.success).toBe(false);
+
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.email?.[0])
-                .toBe("L'email est obligatoire");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.email?.[0]).toBe("L'email est obligatoire");
         }
     });
 
@@ -33,9 +35,10 @@ describe("forgotPasswordSchema", () => {
         });
 
         expect(result.success).toBe(false);
+
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.email?.[0])
-                .toBe("Email invalide");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.email?.[0]).toBe("Email invalide");
         }
     });
 });

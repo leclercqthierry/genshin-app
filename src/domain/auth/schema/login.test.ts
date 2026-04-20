@@ -1,5 +1,6 @@
 import { loginSchema } from "./login";
 import { describe, it, expect } from "vitest";
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 describe("loginSchema", () => {
     const validData = {
@@ -25,9 +26,10 @@ describe("loginSchema", () => {
         });
 
         expect(result.success).toBe(false);
+
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.email?.[0])
-                .toBe("Email invalide");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.email?.[0]).toBe("Email invalide");
         }
     });
 
@@ -38,9 +40,10 @@ describe("loginSchema", () => {
         });
 
         expect(result.success).toBe(false);
+
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.email?.[0])
-                .toBe("L'email est obligatoire");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.email?.[0]).toBe("L'email est obligatoire");
         }
     });
 
@@ -53,9 +56,10 @@ describe("loginSchema", () => {
         });
 
         expect(result.success).toBe(false);
+
         if (!result.success) {
-            expect(result.error.flatten().fieldErrors.password?.[0])
-                .toBe("Le mot de passe est obligatoire");
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.password?.[0]).toBe("Le mot de passe est obligatoire");
         }
     });
 });

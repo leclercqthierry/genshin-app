@@ -6,6 +6,7 @@ import { getProfile } from "@/services/supabase/user";
 import type { LoginFormState } from "@/app/auth/login/types";
 import { initialLoginState } from "@/app/auth/login/types";
 import { createSupabaseClient } from "@/lib/supabase/client";
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 export async function handleLogin(
     _prevState: LoginFormState,
@@ -26,7 +27,7 @@ export async function handleLogin(
         if (!parsed.success) {
             return {
                 success: false,
-                errors: parsed.error.flatten().fieldErrors,
+                errors: zodFieldErrorsSimple(parsed.error),
                 message: null,
                 role: null,
             };

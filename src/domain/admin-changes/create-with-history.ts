@@ -6,6 +6,7 @@ import { deleteUploadThingFile } from "@/services/files/delete-uploadthing-file"
 import { logFailedFileDeletion } from "@/lib/supabase/failed-file-deletions";
 import type { ZodType } from "zod";
 import { createSupabaseServiceClient } from '@/lib/supabase/service';
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 interface CreateWithHistoryOptions<TParsed> {
     raw: unknown;
@@ -29,7 +30,8 @@ export async function createWithHistory<TParsed>({
     if (!parsed.success) {
         return {
             success: false,
-            errors: parsed.error.flatten().fieldErrors,
+            errors: zodFieldErrorsSimple(parsed.error),
+
         };
     }
 

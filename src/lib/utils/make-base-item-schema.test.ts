@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { makeBaseItemSchema } from '@/lib/utils/make-base-item-schema';
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 describe("makeBaseItemSchema", () => {
     it("valide un item correct", () => {
@@ -22,8 +23,12 @@ describe("makeBaseItemSchema", () => {
         });
 
         expect(result.success).toBe(false);
-        expect(result.error?.flatten().fieldErrors.name?.[0])
-            .toBe("Le nom ne peut pas dépasser 5 caractères.");
+
+        if (!result.success) {
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.name?.[0])
+                .toBe("Le nom ne peut pas dépasser 5 caractères.");
+        }
     });
 
     it("rejette une URL invalide", () => {
@@ -35,7 +40,11 @@ describe("makeBaseItemSchema", () => {
         });
 
         expect(result.success).toBe(false);
-        expect(result.error?.flatten().fieldErrors.iconUrl?.[0])
-            .toBe("URL d'image invalide.");
+
+        if (!result.success) {
+            const errors = zodFieldErrorsSimple(result.error);
+            expect(errors.iconUrl?.[0])
+                .toBe("URL d'image invalide.");
+        }
     });
 });

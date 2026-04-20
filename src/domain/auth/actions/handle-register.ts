@@ -9,6 +9,7 @@ import { createSupabaseClient } from "@/lib/supabase/client";
 
 import { createProfile, deleteUser } from "@/services/supabase/user";
 import type { RegisterFormState } from "@/app/auth/register/types";
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 export async function handleRegister(
     _prevState: RegisterFormState,
@@ -19,7 +20,7 @@ export async function handleRegister(
     if (!parsed.success) {
         return {
             success: false,
-            errors: parsed.error.flatten().fieldErrors,
+            errors: zodFieldErrorsSimple(parsed.error),
             message: null,
         };
     }

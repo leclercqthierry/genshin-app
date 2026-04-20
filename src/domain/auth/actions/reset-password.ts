@@ -2,7 +2,8 @@
 
 import { resetPasswordSchema } from "@/domain/auth/schema/reset-password";
 import { createSupabaseClient } from "@/lib/supabase/client";
-import type { ResetPasswordFormState } from "../../../app/auth/reset-password/types";
+import type { ResetPasswordFormState } from "@/app/auth/reset-password/types";
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 export async function handleResetPassword(
     _prevState: ResetPasswordFormState,
@@ -20,7 +21,7 @@ export async function handleResetPassword(
         if (!parsed.success) {
             return {
                 success: false,
-                errors: parsed.error.flatten().fieldErrors,
+                errors: zodFieldErrorsSimple(parsed.error),
                 redirect: false,
             };
         }

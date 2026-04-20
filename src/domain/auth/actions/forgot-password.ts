@@ -2,7 +2,8 @@
 
 import { forgotPasswordSchema } from "@/domain/auth/schema/forgot-password";
 import { createSupabaseServiceClient } from "@/lib/supabase/service";
-import type { ForgotPasswordFormState } from "../../../app/auth/forgot-password/types";
+import type { ForgotPasswordFormState } from "@/app/auth/forgot-password/types";
+import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
 
 export async function handleForgotPassword(
     _prevState: ForgotPasswordFormState,
@@ -19,7 +20,7 @@ export async function handleForgotPassword(
         if (!parsed.success) {
             return {
                 success: false,
-                errors: parsed.error.flatten().fieldErrors,
+                errors: zodFieldErrorsSimple(parsed.error),
             };
         }
 
