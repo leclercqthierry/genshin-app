@@ -8,7 +8,7 @@ import { requireAdmin } from "@/services/auth/require-admin";
 import { handleCreate } from "@/domain/weapon/actions/create";
 import { mobDropSetService } from "@/services/supabase/mob-drop-set";
 import { eliteDropSetService } from "@/services/supabase/elite-drop-set";
-import { weaponElevationDungeonDropSetService } from '@/services/supabase/weapon-elevation-dungeon-drop-set';
+import { weaponElevationDungeonDropSetService } from '@/services/supabase/weapon-elevation-set';
 
 export default async function NewWeaponPage() {
     const { redirect } = await requireAdmin();

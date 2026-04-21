@@ -3,13 +3,15 @@
 import { MobDropSetFormState } from "@/app/admin/mob-drop-sets/_components/types";
 import { updateWithHistory } from "@/domain/admin-changes/update-with-history";
 import { mobDropSetSchema } from "../schema";
-import { mobDropSetService } from '@/services/supabase/mob-drop-set';
+import { makeMobDropSetAdminService } from '@/services/supabase/mob-drop-set';
 
 export async function handleUpdate(
     id: number,
     _prev: MobDropSetFormState,
     formData: FormData
 ): Promise<MobDropSetFormState> {
+
+    const mobDropSetAdminService = await makeMobDropSetAdminService();
     return updateWithHistory({
         id,
         raw: {
@@ -19,9 +21,9 @@ export async function handleUpdate(
             rarity3Url: formData.get("rarity3Url")?.toString() ?? "",
         },
         schema: mobDropSetSchema,
-        getExisting: mobDropSetService.getOne,
+        getExisting: mobDropSetAdminService.getOne,
         update: async (id, data) => {
-            await mobDropSetService.update(id, {
+            await mobDropSetAdminService.update(id, {
                 name: data.name,
                 rarity1_url: data.rarity1Url,
                 rarity2_url: data.rarity2Url,

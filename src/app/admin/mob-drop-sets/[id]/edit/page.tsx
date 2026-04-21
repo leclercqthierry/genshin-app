@@ -6,7 +6,7 @@ import MobDropSetForm from "../../_components/mob-drop-set-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleUpdate } from "@/domain/mob-drop-set/actions/update";
-import { mobDropSetService } from "@/services/supabase/mob-drop-set";
+import { makeMobDropSetAdminService } from "@/services/supabase/mob-drop-set";
 
 
 type Props = {
@@ -18,7 +18,8 @@ export default async function EditMobDropSetPage({ params }: Props) {
     if (redirect) return <Redirecting />;
 
     const { id } = await params;
-    const mobDropSet = await mobDropSetService.getOne(Number(id));
+    const mobDropSetAdminService = await makeMobDropSetAdminService();
+    const mobDropSet = await mobDropSetAdminService.getOne(Number(id));
 
     if (!mobDropSet) {
         return <p>Set de drops de mobs introuvable.</p>;

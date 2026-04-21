@@ -5,14 +5,15 @@ import AdminResourcePage from "@/components/admin/layout/resource-page";
 import EliteDropSetCard from "@/domain/elite-drop-set/card";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { eliteDropSetService } from "@/services/supabase/elite-drop-set";
+import { makeEliteDropSetAdminService } from "@/services/supabase/elite-drop-set";
 import { deleteEliteDropSetAction } from "@/domain/elite-drop-set/actions/delete";
 
 export default async function EliteDropSetsPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    const eliteDropSets = await eliteDropSetService.getAll();
+    const eliteDropSetAdminService = await makeEliteDropSetAdminService();
+    const eliteDropSets = await eliteDropSetAdminService.getAll();
     const numberOfEliteDropSets = eliteDropSets.length;
 
     return (

@@ -3,11 +3,11 @@ import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
 import type { ArtifactSet } from "@/domain/artifact-set/types";
 import { mapRowToArtifactSet } from "@/domain/artifact-set/mapper";
 import { ArtifactSetCreateRow, ArtifactSetRow, ArtifactSetUpdateRow } from "@/domain/artifact-set/db";
+import { SupabaseClient } from '@supabase/supabase-js';
 
-export function artifactSetCrud() {
+export function artifactSetCrud(supabase: SupabaseClient) {
     return {
         async getAll(): Promise<ArtifactSet[]> {
-            const supabase = await createSupabaseClientReadOnly();
             const { data, error } = await supabase
                 .from("artifact_sets")
                 .select("*")
@@ -22,7 +22,6 @@ export function artifactSetCrud() {
         },
 
         async getOne(id: number): Promise<ArtifactSet | null> {
-            const supabase = await createSupabaseClientReadOnly();
 
             const { data, error } = await supabase
                 .from("artifact_sets")
@@ -39,7 +38,6 @@ export function artifactSetCrud() {
         },
 
         async create(payload: ArtifactSetCreateRow): Promise<ArtifactSet> {
-            const supabase = await createSupabaseServiceClient();
 
             const { data, error } = await supabase
                 .from("artifact_sets")
@@ -53,7 +51,6 @@ export function artifactSetCrud() {
         },
 
         async update(id: number, payload: ArtifactSetUpdateRow): Promise<ArtifactSet> {
-            const supabase = await createSupabaseServiceClient();
 
             const { data, error } = await supabase
                 .from("artifact_sets")
@@ -68,7 +65,6 @@ export function artifactSetCrud() {
         },
 
         async remove(id: number): Promise<void> {
-            const supabase = await createSupabaseServiceClient();
 
             const { error } = await supabase
                 .from("artifact_sets")
@@ -80,4 +76,12 @@ export function artifactSetCrud() {
     }
 }
 
-export const artifactSetService = artifactSetCrud();
+export async function makeArtifactSetAdminService() {
+    const supabase = await createSupabaseServiceClient();
+    return artifactSetCrud(supabase);
+};
+
+export async function makeArtifactSetReadOnlyService() {
+    const supabase = await createSupabaseClientReadOnly();
+    return artifactSetCrud(supabase);
+};

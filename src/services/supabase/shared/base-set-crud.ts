@@ -1,19 +1,19 @@
-import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
-import { createSupabaseServiceClient } from "@/lib/supabase/service";
 import { BaseSet } from "@/domain/shared/base-set/types";
-import { BaseSetRow } from "@/domain/shared/base-set/db";
+import { BaseSetCreateRow, BaseSetRow, BaseSetUpdateRow } from "@/domain/shared/base-set/db";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 export function createBaseSetCrud<
     TDomain extends BaseSet,
     TRow extends BaseSetRow,
-    TCreateRow
+    TCreateRow extends BaseSetCreateRow,
+    TUpdateRow extends BaseSetUpdateRow
 >(
     table: string,
-    mapRowToDomain: (row: TRow) => TDomain
+    mapRowToDomain: (row: TRow) => TDomain,
+    supabase: SupabaseClient
 ) {
     return {
         async getAll(): Promise<TDomain[]> {
-            const supabase = await createSupabaseClientReadOnly();
             const { data } = await supabase
                 .from(table)
                 .select("*")
@@ -25,7 +25,6 @@ export function createBaseSetCrud<
         },
 
         async getOne(id: number): Promise<TDomain | null> {
-            const supabase = await createSupabaseClientReadOnly();
             const { data } = await supabase
                 .from(table)
                 .select("*")
@@ -36,7 +35,6 @@ export function createBaseSetCrud<
         },
 
         async create(payload: TCreateRow): Promise<TDomain> {
-            const supabase = await createSupabaseServiceClient();
 
             const { data, error } = await supabase
                 .from(table)
@@ -49,8 +47,7 @@ export function createBaseSetCrud<
             return mapRowToDomain(data as TRow);
         },
 
-        async update(id: number, payload: Partial<TCreateRow>): Promise<TDomain> {
-            const supabase = await createSupabaseServiceClient();
+        async update(id: number, payload: TUpdateRow): Promise<TDomain> {
 
             const { data, error } = await supabase
                 .from(table)
@@ -65,7 +62,6 @@ export function createBaseSetCrud<
         },
 
         async remove(id: number): Promise<void> {
-            const supabase = await createSupabaseServiceClient();
             const { error } = await supabase.from(table).delete().eq("id", id);
             if (error) throw error;
         },

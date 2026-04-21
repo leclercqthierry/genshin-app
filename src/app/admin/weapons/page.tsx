@@ -5,14 +5,15 @@ import AdminResourcePage from "@/components/admin/layout/resource-page";
 import WeaponCard from "@/domain/weapon/card";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { weaponService } from "@/services/supabase/weapon";
 import { deleteWeaponAction } from "@/domain/weapon/actions/delete";
+import { makeWeaponAdminService } from "@/services/supabase/weapon";
 
 export default async function WeaponsPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    const weapons = await weaponService.getAll();
+    const weaponAdminService = await makeWeaponAdminService();
+    const weapons = await weaponAdminService.getAll();
     const numberOfWeapons = weapons.length;
 
     return (

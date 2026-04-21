@@ -1,14 +1,13 @@
-import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
-import { createSupabaseServiceClient } from "@/lib/supabase/service";
-
 import type { Weapon } from "@/domain/weapon/types";
 import type { WeaponRow, WeaponCreateRow, WeaponUpdateRow } from "@/domain/weapon/db";
 import { mapRowToWeapon } from "@/domain/weapon/mapper";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
+import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
 
-export function weaponCrud() {
+export function weaponCrud(supabase: SupabaseClient) {
     return {
         async getAll(): Promise<Weapon[]> {
-            const supabase = await createSupabaseClientReadOnly();
             const { data, error } = await supabase
                 .from("weapons")
                 .select("*")
@@ -23,7 +22,6 @@ export function weaponCrud() {
         },
 
         async getOne(id: number): Promise<Weapon | null> {
-            const supabase = await createSupabaseClientReadOnly();
             const { data, error } = await supabase
                 .from("weapons")
                 .select("*")
@@ -39,7 +37,6 @@ export function weaponCrud() {
         },
 
         async create(payload: WeaponCreateRow): Promise<Weapon> {
-            const supabase = await createSupabaseServiceClient();
 
             const { data, error } = await supabase
                 .from("weapons")
@@ -53,7 +50,6 @@ export function weaponCrud() {
         },
 
         async update(id: number, payload: WeaponUpdateRow): Promise<Weapon> {
-            const supabase = await createSupabaseServiceClient();
 
             const { data, error } = await supabase
                 .from("weapons")
@@ -68,11 +64,25 @@ export function weaponCrud() {
         },
 
         async remove(id: number): Promise<void> {
-            const supabase = await createSupabaseServiceClient();
             const { error } = await supabase.from("weapons").delete().eq("id", id);
             if (error) throw error;
         },
     };
 }
 
-export const weaponService = weaponCrud();
+export type WeaponReadOnlyService = Pick<
+    ReturnType<typeof weaponCrud>,
+    "getAll" | "getOne"
+>;
+
+export type WeaponAdminService = ReturnType<typeof weaponCrud>;
+
+export async function makeWeaponAdminService(): Promise<WeaponAdminService> {
+    const supabase = await createSupabaseServiceClient();
+    return weaponCrud(supabase);
+}
+
+export async function makeWeaponReadOnlyService(): Promise<WeaponReadOnlyService> {
+    const supabase = await createSupabaseClientReadOnly();
+    return weaponCrud(supabase);
+}

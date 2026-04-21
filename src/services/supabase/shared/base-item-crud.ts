@@ -1,14 +1,11 @@
-import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
-import { createSupabaseServiceClient } from "@/lib/supabase/service";
-
 import type { BaseItem } from "@/domain/shared/base-item/types";
 import type { BaseItemRow, BaseItemCreateRow, BaseItemUpdateRow } from "@/domain/shared/base-item/db";
 import { mapRowToBaseItem } from "@/domain/shared/base-item/mapper";
+import { SupabaseClient } from "@supabase/supabase-js";
 
-export function createBaseItemCrud(table: string) {
+export function createBaseItemCrud(table: string, supabase: SupabaseClient) {
     return {
         async getAll(): Promise<BaseItem[]> {
-            const supabase = await createSupabaseClientReadOnly();
             const { data, error } = await supabase
                 .from(table)
                 .select("*")
@@ -23,7 +20,6 @@ export function createBaseItemCrud(table: string) {
         },
 
         async getOne(id: number): Promise<BaseItem | null> {
-            const supabase = await createSupabaseClientReadOnly();
             const { data, error } = await supabase
                 .from(table)
                 .select("*")
@@ -39,7 +35,6 @@ export function createBaseItemCrud(table: string) {
         },
 
         async create(payload: BaseItemCreateRow): Promise<BaseItem> {
-            const supabase = await createSupabaseServiceClient();
 
             const { data, error } = await supabase
                 .from(table)
@@ -53,7 +48,6 @@ export function createBaseItemCrud(table: string) {
         },
 
         async update(id: number, payload: BaseItemUpdateRow): Promise<BaseItem> {
-            const supabase = await createSupabaseServiceClient();
 
             const { data, error } = await supabase
                 .from(table)
@@ -68,7 +62,7 @@ export function createBaseItemCrud(table: string) {
         },
 
         async remove(id: number): Promise<void> {
-            const supabase = await createSupabaseServiceClient();
+
             const { error } = await supabase.from(table).delete().eq("id", id);
             if (error) throw error;
         },

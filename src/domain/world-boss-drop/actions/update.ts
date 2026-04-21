@@ -1,7 +1,7 @@
 "use server";
 
 import { worldBossDropSchema } from "@/domain/world-boss-drop/schema";
-import { worldBossDropService } from "@/services/supabase/world-boss-drop";
+import { makeWorldBossDropAdminService } from "@/services/supabase/world-boss-drop";
 import type { WorldBossDropFormState } from "@/app/admin/world-boss-drops/_components/types";
 import { updateWithHistory } from "@/domain/admin-changes/update-with-history";
 
@@ -10,6 +10,8 @@ export async function handleUpdate(
     _prev: WorldBossDropFormState,
     formData: FormData
 ): Promise<WorldBossDropFormState> {
+
+    const worldBossDropAdminService = await makeWorldBossDropAdminService();
     return updateWithHistory({
         id,
         raw: {
@@ -17,9 +19,9 @@ export async function handleUpdate(
             iconUrl: formData.get("iconUrl")?.toString() ?? "",
         },
         schema: worldBossDropSchema,
-        getExisting: worldBossDropService.getOne,
+        getExisting: worldBossDropAdminService.getOne,
         update: async (id, data) => {
-            await worldBossDropService.update(id, {
+            await worldBossDropAdminService.update(id, {
                 name: data.name,
                 icon_url: data.iconUrl,
             });

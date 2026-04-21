@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { artifactSetService } from "@/services/supabase/artifact-set";
+import { makeArtifactSetAdminService } from "@/services/supabase/artifact-set";
 import { deleteArtifactSetAction } from "@/domain/artifact-set/actions/delete";
 
 import Redirecting from "@/components/ui/feedback/redirecting";
@@ -12,7 +12,8 @@ export default async function ArtifactSetsPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    const artifactSets = await artifactSetService.getAll();
+    const artifactSetAdminService = await makeArtifactSetAdminService();
+    const artifactSets = await artifactSetAdminService.getAll();
     const numberOfArtifactSets = artifactSets.length;
 
     return (

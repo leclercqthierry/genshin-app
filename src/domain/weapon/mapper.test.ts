@@ -17,7 +17,7 @@ describe("Weapon mappers", () => {
         description: "Une arme légendaire.",
         elite_drop_set_id: 10,
         mob_drop_set_id: 20,
-        weapon_elevation_dungeon_drop_set_id: 30,
+        weapon_elevation_set_id: 30,
         created_at: "2024-01-01T00:00:00Z",
     };
 
@@ -33,7 +33,7 @@ describe("Weapon mappers", () => {
         description: "Une arme légendaire.",
         eliteDropSetId: 10,
         mobDropSetId: 20,
-        weaponElevationDungeonDropSetId: 30,
+        weaponElevationSetId: 30,
         createdAt: "2024-01-01T00:00:00Z",
     };
 

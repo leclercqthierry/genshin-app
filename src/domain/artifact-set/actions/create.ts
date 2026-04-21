@@ -1,7 +1,7 @@
 "use server";
 
 import { artifactSetSchema } from "@/domain/artifact-set/schema";
-import { artifactSetService } from "@/services/supabase/artifact-set";
+import { makeArtifactSetAdminService } from "@/services/supabase/artifact-set";
 import type { ArtifactSetFormState } from "@/app/admin/artifact-sets/_components/types";
 import { createWithHistory } from "@/domain/admin-changes/create-with-history";
 
@@ -24,7 +24,8 @@ export async function handleCreate(
         },
         schema: artifactSetSchema,
         create: async (data) => {
-            await artifactSetService.create({
+            const artifactSetAdminService = await makeArtifactSetAdminService();
+            await artifactSetAdminService.create({
                 name: data.name,
                 icon_flower_url: data.iconFlowerUrl,
                 icon_plume_url: data.iconPlumeUrl,

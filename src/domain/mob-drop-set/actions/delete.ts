@@ -1,15 +1,16 @@
 "use server";
 
-import { mobDropSetService } from "@/services/supabase/mob-drop-set";
+import { makeMobDropSetAdminService } from "@/services/supabase/mob-drop-set";
 import { deleteWithHistory } from "@/domain/admin-changes/delete-with-history";
 
 export async function deleteMobDropSetAction(formData: FormData) {
     const id = Number(formData.get("id"));
+    const mobDropSetAdminService = await makeMobDropSetAdminService();
 
     return deleteWithHistory({
         id,
-        getExisting: mobDropSetService.getOne,
-        deleteEntity: mobDropSetService.remove,
+        getExisting: mobDropSetAdminService.getOne,
+        deleteEntity: mobDropSetAdminService.remove,
         entityType: "AptitudeDungeonDropSet",
         entityName: (e) => e.name,
         deleteFiles: (e) => [

@@ -40,7 +40,7 @@ export const adminSections = [
         description: "Gérer les sets de drops de donjon d'aptitude.",
     },
     {
-        href: "/admin/weapon-elevation-dungeon-drop-sets",
+        href: "/admin/weapon-elevation-sets",
         title: "Sets de drops de donjon d'élévation d'arme",
         description: "Gérer les sets de drops de donjon d'élévation d'arme.",
     },

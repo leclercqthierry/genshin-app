@@ -6,7 +6,7 @@ import EliteDropSetForm from "../../_components/elite-drop-set-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleUpdate } from "@/domain/elite-drop-set/actions/update";
-import { eliteDropSetService } from "@/services/supabase/elite-drop-set";
+import { makeEliteDropSetAdminService } from "@/services/supabase/elite-drop-set";
 
 
 type Props = {
@@ -18,7 +18,8 @@ export default async function EditEliteDropSetPage({ params }: Props) {
     if (redirect) return <Redirecting />;
 
     const { id } = await params;
-    const eliteDropSet = await eliteDropSetService.getOne(Number(id));
+    const eliteDropSetAdminService = await makeEliteDropSetAdminService();
+    const eliteDropSet = await eliteDropSetAdminService.getOne(Number(id));
 
     if (!eliteDropSet) {
         return <p>Set de drops de mobs elite introuvable.</p>;

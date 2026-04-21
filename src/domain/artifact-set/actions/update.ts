@@ -1,7 +1,7 @@
 "use server";
 
 import { artifactSetSchema } from "@/domain/artifact-set/schema";
-import { artifactSetService } from "@/services/supabase/artifact-set";
+import { makeArtifactSetAdminService } from "@/services/supabase/artifact-set";
 import type { ArtifactSetFormState } from "@/app/admin/artifact-sets/_components/types";
 import { updateWithHistory } from "@/domain/admin-changes/update-with-history";
 
@@ -10,6 +10,8 @@ export async function handleUpdate(
     _prev: ArtifactSetFormState,
     formData: FormData
 ): Promise<ArtifactSetFormState> {
+
+    const artifactSetAdminService = await makeArtifactSetAdminService();
     return updateWithHistory({
         id,
         raw: {
@@ -24,9 +26,9 @@ export async function handleUpdate(
             rarityMax: Number(formData.get("rarityMax")),
         },
         schema: artifactSetSchema,
-        getExisting: artifactSetService.getOne,
+        getExisting: artifactSetAdminService.getOne,
         update: async (id, data) => {
-            await artifactSetService.update(id, {
+            await artifactSetAdminService.update(id, {
                 name: data.name,
                 icon_flower_url: data.iconFlowerUrl,
                 icon_plume_url: data.iconPlumeUrl,

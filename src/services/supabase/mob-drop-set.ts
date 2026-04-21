@@ -1,78 +1,87 @@
-import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
-import { createSupabaseServiceClient } from "@/lib/supabase/service";
-
 import type { MobDropSet } from "@/domain/mob-drop-set/types";
 import type { MobDropSetRow, MobDropSetCreateRow, MobDropSetUpdateRow } from "@/domain/mob-drop-set/db";
 import { mapRowToMobDropSet } from "@/domain/mob-drop-set/mapper";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { createSupabaseServiceClient } from "@/lib/supabase/service";
+import { createSupabaseClientReadOnly } from "@/lib/supabase/client-read-only";
 
-export const mobDropSetService = {
-    async getAll(): Promise<MobDropSet[]> {
-        const supabase = await createSupabaseClientReadOnly();
-        const { data, error } = await supabase
-            .from("mob_drop_sets")
-            .select("*")
-            .order("name", { ascending: true });
+export function mobDropSetCrud(supabase: SupabaseClient) {
+    return {
+        async getAll(): Promise<MobDropSet[]> {
 
-        if (error) {
-            console.error("ERREUR LECTURE MOB DROP SETS :", error);
-            return [];
-        }
+            const { data, error } = await supabase
+                .from("mob_drop_sets")
+                .select("*")
+                .order("name", { ascending: true });
 
-        return (data ?? []).map(mapRowToMobDropSet);
-    },
+            if (error) {
+                console.error("ERREUR LECTURE MOB DROP SETS :", error);
+                return [];
+            }
 
-    async getOne(id: number): Promise<MobDropSet | null> {
-        const supabase = await createSupabaseClientReadOnly();
-        const { data, error } = await supabase
-            .from("mob_drop_sets")
-            .select("*")
-            .eq("id", id)
-            .single();
+            return (data ?? []).map(mapRowToMobDropSet);
+        },
 
-        if (error || !data) {
-            console.error(`ERREUR LECTURE MOB DROP SET ID=${id} :`, error);
-            return null;
-        }
+        async getOne(id: number): Promise<MobDropSet | null> {
+            const { data, error } = await supabase
+                .from("mob_drop_sets")
+                .select("*")
+                .eq("id", id)
+                .single();
 
-        return mapRowToMobDropSet(data as MobDropSetRow);
-    },
+            if (error || !data) {
+                console.error(`ERREUR LECTURE MOB DROP SET ID=${id} :`, error);
+                return null;
+            }
 
-    async create(payload: MobDropSetCreateRow): Promise<MobDropSet> {
-        const supabase = await createSupabaseServiceClient();
+            return mapRowToMobDropSet(data as MobDropSetRow);
+        },
 
-        const { data, error } = await supabase
-            .from("mob_drop_sets")
-            .insert(payload)
-            .select()
-            .single();
+        async create(payload: MobDropSetCreateRow): Promise<MobDropSet> {
 
-        if (error) throw error;
+            const { data, error } = await supabase
+                .from("mob_drop_sets")
+                .insert(payload)
+                .select()
+                .single();
 
-        return mapRowToMobDropSet(data as MobDropSetRow);
-    },
+            if (error) throw error;
 
-    async update(id: number, payload: MobDropSetUpdateRow): Promise<MobDropSet> {
-        const supabase = await createSupabaseServiceClient();
+            return mapRowToMobDropSet(data as MobDropSetRow);
+        },
 
-        const { data, error } = await supabase
-            .from("mob_drop_sets")
-            .update(payload)
-            .eq("id", id)
-            .select()
-            .single();
+        async update(id: number, payload: MobDropSetUpdateRow): Promise<MobDropSet> {
 
-        if (error) throw error;
+            const { data, error } = await supabase
+                .from("mob_drop_sets")
+                .update(payload)
+                .eq("id", id)
+                .select()
+                .single();
 
-        return mapRowToMobDropSet(data as MobDropSetRow);
-    },
+            if (error) throw error;
 
-    async remove(id: number): Promise<void> {
-        const supabase = await createSupabaseServiceClient();
-        const { error } = await supabase
-            .from("mob_drop_sets")
-            .delete()
-            .eq("id", id);
+            return mapRowToMobDropSet(data as MobDropSetRow);
+        },
 
-        if (error) throw error;
-    },
+        async remove(id: number): Promise<void> {
+
+            const { error } = await supabase
+                .from("mob_drop_sets")
+                .delete()
+                .eq("id", id);
+
+            if (error) throw error;
+        },
+    };
+};
+
+export async function makeMobDropSetAdminService() {
+    const supabase = await createSupabaseServiceClient();
+    return mobDropSetCrud(supabase);
+};
+
+export async function makeMobDropSetReadOnlyService() {
+    const supabase = await createSupabaseClientReadOnly();
+    return mobDropSetCrud(supabase);
 };

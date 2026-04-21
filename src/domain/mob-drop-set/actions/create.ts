@@ -1,7 +1,7 @@
 "use server";
 
 import { mobDropSetSchema } from "@/domain/mob-drop-set/schema";
-import { mobDropSetService } from "@/services/supabase/mob-drop-set";
+import { makeMobDropSetAdminService } from "@/services/supabase/mob-drop-set";
 import type { MobDropSetFormState } from "@/app/admin/mob-drop-sets/_components/types";
 import { createWithHistory } from "@/domain/admin-changes/create-with-history";
 import { z } from "zod";
@@ -19,7 +19,8 @@ export async function handleCreate(
         },
         schema: mobDropSetSchema,
         create: async (data) => {
-            await mobDropSetService.create({
+            const mobDropSetAdminService = await makeMobDropSetAdminService();
+            await mobDropSetAdminService.create({
                 name: data.name,
                 rarity1_url: data.rarity1Url,
                 rarity2_url: data.rarity2Url,

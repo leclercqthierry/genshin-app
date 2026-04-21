@@ -3,13 +3,14 @@
 import { EliteDropSetFormState } from "@/app/admin/elite-drop-sets/_components/types";
 import { updateWithHistory } from "@/domain/admin-changes/update-with-history";
 import { eliteDropSetSchema } from "../schema";
-import { eliteDropSetService } from '@/services/supabase/elite-drop-set';
+import { makeEliteDropSetAdminService } from '@/services/supabase/elite-drop-set';
 
 export async function handleUpdate(
     id: number,
     _prev: EliteDropSetFormState,
     formData: FormData
 ): Promise<EliteDropSetFormState> {
+    const eliteDropSetAdminService = await makeEliteDropSetAdminService();
     return updateWithHistory({
         id,
         raw: {
@@ -19,9 +20,9 @@ export async function handleUpdate(
             rarity4Url: formData.get("rarity4Url")?.toString() ?? "",
         },
         schema: eliteDropSetSchema,
-        getExisting: eliteDropSetService.getOne,
+        getExisting: eliteDropSetAdminService.getOne,
         update: async (id, data) => {
-            await eliteDropSetService.update(id, {
+            await eliteDropSetAdminService.update(id, {
                 name: data.name,
                 rarity2_url: data.rarity2Url,
                 rarity3_url: data.rarity3Url,

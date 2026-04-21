@@ -6,7 +6,7 @@ import WorldBossDropForm from "../../_components/world-boss-drop-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleUpdate } from "@/domain/world-boss-drop/actions/update";
-import { worldBossDropService } from "@/services/supabase/world-boss-drop";
+import { makeWorldBossDropAdminService } from '@/services/supabase/world-boss-drop';
 
 type Props = {
     params: Promise<{ id: string }>;
@@ -17,7 +17,8 @@ export default async function EditWorldBossDropPage({ params }: Props) {
     if (redirect) return <Redirecting />;
 
     const { id } = await params;
-    const worldBossDrop = await worldBossDropService.getOne(Number(id));
+    const worldBossDropAdminService = await makeWorldBossDropAdminService();
+    const worldBossDrop = await worldBossDropAdminService.getOne(Number(id));
 
     if (!worldBossDrop) {
         return <p>Drop de boss introuvable.</p>;

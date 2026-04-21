@@ -3,7 +3,7 @@
 import { localMaterialSchema } from "@/domain/local-material/schema";
 import type { LocalMaterialFormState } from "@/app/admin/local-materials/_components/types";
 import { createWithHistory } from "@/domain/admin-changes/create-with-history";
-import { localMaterialService } from "@/services/supabase/local-material";
+import { makeLocalMaterialAdminService } from "@/services/supabase/local-material";
 
 export async function handleCreate(
     _prevState: LocalMaterialFormState,
@@ -16,7 +16,8 @@ export async function handleCreate(
         },
         schema: localMaterialSchema,
         create: async (data) => {
-            await localMaterialService.create({
+            const localMaterialAdminService = await makeLocalMaterialAdminService();
+            await localMaterialAdminService.create({
                 name: data.name,
                 icon_url: data.iconUrl,
             });

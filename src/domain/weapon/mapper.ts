@@ -20,7 +20,7 @@ export function mapRowToWeapon(row: WeaponRow): Weapon {
         description: row.description,
         eliteDropSetId: row.elite_drop_set_id,
         mobDropSetId: row.mob_drop_set_id,
-        weaponElevationDungeonDropSetId: row.weapon_elevation_dungeon_drop_set_id,
+        weaponElevationSetId: row.weapon_elevation_set_id,
         createdAt: row.created_at
     };
 }
@@ -38,7 +38,7 @@ export function mapWeaponToRow(entity: Weapon): WeaponRow {
         description: entity.description,
         elite_drop_set_id: entity.eliteDropSetId,
         mob_drop_set_id: entity.mobDropSetId,
-        weapon_elevation_dungeon_drop_set_id: entity.weaponElevationDungeonDropSetId,
+        weapon_elevation_set_id: entity.weaponElevationSetId,
         created_at: entity.createdAt
     }
 }

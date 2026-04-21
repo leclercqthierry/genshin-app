@@ -16,7 +16,7 @@ describe("weaponSchema", () => {
         source: SOURCES[0],
         mobDropSetId: 1,
         eliteDropSetId: 1,
-        weaponElevationDungeonDropSetId: 1,
+        weaponElevationSetId: 1,
         description: "Une arme légendaire.",
     };
 

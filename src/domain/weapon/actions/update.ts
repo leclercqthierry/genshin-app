@@ -1,7 +1,7 @@
 "use server";
 
 import { weaponSchema } from "@/domain/weapon/schema";
-import { weaponService } from "@/services/supabase/weapon";
+import { makeWeaponAdminService } from "@/services/supabase/weapon";
 import type { WeaponFormState } from "@/app/admin/weapons/_components/types";
 import { updateWithHistory } from "@/domain/admin-changes/update-with-history";
 
@@ -10,6 +10,7 @@ export async function handleUpdate(
     _prev: WeaponFormState,
     formData: FormData
 ): Promise<WeaponFormState> {
+    const weaponAdminService = await makeWeaponAdminService();
     return updateWithHistory({
         id,
         raw: {
@@ -26,9 +27,9 @@ export async function handleUpdate(
             weaponElevationDungeonDropSetId: Number(formData.get("weaponElevationDungeonDropSetId")),
         },
         schema: weaponSchema,
-        getExisting: weaponService.getOne,
+        getExisting: weaponAdminService.getOne,
         update: async (id, data) => {
-            await weaponService.update(id, {
+            await weaponAdminService.update(id, {
                 name: data.name,
                 image_url: data.imageUrl,
                 mini_url: data.miniUrl,

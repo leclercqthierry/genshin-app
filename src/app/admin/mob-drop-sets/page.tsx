@@ -5,14 +5,15 @@ import AdminResourcePage from "@/components/admin/layout/resource-page";
 import MobDropSetCard from "@/domain/mob-drop-set/card";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { mobDropSetService } from "@/services/supabase/mob-drop-set";
+import { makeMobDropSetAdminService } from "@/services/supabase/mob-drop-set";
 import { deleteMobDropSetAction } from "@/domain/mob-drop-set/actions/delete";
 
 export default async function MobDropSetsPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    const mobDropSets = await mobDropSetService.getAll();
+    const mobDropSetAdminService = await makeMobDropSetAdminService();
+    const mobDropSets = await mobDropSetAdminService.getAll();
     const numberOfMobDropSets = mobDropSets.length;
 
     return (

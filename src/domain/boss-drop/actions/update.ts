@@ -1,7 +1,7 @@
 "use server";
 
 import { bossDropSchema } from "@/domain/boss-drop/schema";
-import { bossDropService } from "@/services/supabase/boss-drop";
+import { makeBossDropAdminService } from "@/services/supabase/boss-drop";
 import type { BossDropFormState } from "@/app/admin/boss-drops/_components/types";
 import { updateWithHistory } from "@/domain/admin-changes/update-with-history";
 
@@ -10,6 +10,8 @@ export async function handleUpdate(
     _prev: BossDropFormState,
     formData: FormData
 ): Promise<BossDropFormState> {
+    const bossDropAdminService = await makeBossDropAdminService();
+
     return updateWithHistory({
         id,
         raw: {
@@ -17,9 +19,9 @@ export async function handleUpdate(
             iconUrl: formData.get("iconUrl")?.toString() ?? "",
         },
         schema: bossDropSchema,
-        getExisting: bossDropService.getOne,
+        getExisting: bossDropAdminService.getOne,
         update: async (id, data) => {
-            await bossDropService.update(id, {
+            await bossDropAdminService.update(id, {
                 name: data.name,
                 icon_url: data.iconUrl,
             });

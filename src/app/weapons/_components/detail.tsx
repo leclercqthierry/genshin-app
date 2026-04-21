@@ -4,17 +4,22 @@ import AppCard from "@/components/ui/card/app-card";
 import AppSection from "@/components/ui/layout/app-section";
 
 import type { Weapon } from "@/domain/weapon/types";
-import { weaponElevationDungeonDropSetService } from '@/services/supabase/weapon-elevation-dungeon-drop-set';
+import { makeWeaponElevationSetReadOnlyService } from '@/services/supabase/weapon-elevation-set';
 import { FARM_DAYS } from '@/constants/farm-days';
-import { eliteDropSetService } from "@/services/supabase/elite-drop-set";
-import { mobDropSetService } from '@/services/supabase/mob-drop-set';
+import { makeEliteDropSetReadOnlyService } from "@/services/supabase/elite-drop-set";
+import { makeMobDropSetReadOnlyService } from '@/services/supabase/mob-drop-set';
 import { WeaponAscensionTable } from "./ascension-table";
 
 export default async function WeaponDetail({ weapon }: { weapon: Weapon }) {
 
-    const elevationDropSet = await weaponElevationDungeonDropSetService.getOne(weapon.weaponElevationDungeonDropSetId);
-    const eliteDropSet = await eliteDropSetService.getOne(weapon.eliteDropSetId);
-    const mobDropSet = await mobDropSetService.getOne(weapon.mobDropSetId);
+    const elevationSetReadOnlyService = await makeWeaponElevationSetReadOnlyService();
+    const elevationDropSet = await elevationSetReadOnlyService.getOne(weapon.weaponElevationSetId);
+
+    const eliteDropSetReadOnlyService = await makeEliteDropSetReadOnlyService();
+    const eliteDropSet = await eliteDropSetReadOnlyService.getOne(weapon.eliteDropSetId);
+
+    const mobDropSetReadOnlyService = await makeMobDropSetReadOnlyService();
+    const mobDropSet = await mobDropSetReadOnlyService.getOne(weapon.mobDropSetId);
     const farmDays = elevationDropSet !== null ? FARM_DAYS[elevationDropSet.farmDaysIndex] : "inconnu";
 
     if (elevationDropSet !== null && eliteDropSet !== null && mobDropSet !== null) {

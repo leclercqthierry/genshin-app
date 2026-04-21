@@ -5,17 +5,20 @@ import AdminResourcePage from "@/components/admin/layout/resource-page";
 import CharJewelSetCard from "@/domain/char-jewel-set/card";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { charJewelSetService } from "@/services/supabase/char-jewel-set";
-import { elementService } from "@/services/supabase/element";
+import { makeCharJewelSetAdminService } from "@/services/supabase/char-jewel-set";
+import { makeElementAdminService } from "@/services/supabase/element";
 import { deleteCharJewelSetAction } from "@/domain/char-jewel-set/actions/delete";
 
 export default async function CharJewelSetsPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
+    const charJewelSetAdminService = await makeCharJewelSetAdminService();
+    const elementAdminService = await makeElementAdminService();
+
     const [charJewelSets, elements] = await Promise.all([
-        charJewelSetService.getAll(),
-        elementService.getAll(),
+        charJewelSetAdminService.getAll(),
+        elementAdminService.getAll(),
     ]);
 
     // Map optimisée : elementId → élément

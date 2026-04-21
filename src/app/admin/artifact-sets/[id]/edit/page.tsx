@@ -6,7 +6,7 @@ import ArtifactSetForm from "../../_components/artifact-set-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleUpdate } from "@/domain/artifact-set/actions/update";
-import { artifactSetService } from "@/services/supabase/artifact-set";
+import { makeArtifactSetAdminService } from "@/services/supabase/artifact-set";
 
 type Props = {
     params: Promise<{ id: string }>;
@@ -17,7 +17,8 @@ export default async function EditArtifactSetPage({ params }: Props) {
     if (redirect) return <Redirecting />;
 
     const { id } = await params;
-    const artifactSet = await artifactSetService.getOne(Number(id));
+    const artifactSetAdminService = await makeArtifactSetAdminService();
+    const artifactSet = await artifactSetAdminService.getOne(Number(id));
 
     if (!artifactSet) {
         return <p>Set d&apos;artéfacts introuvable</p>;

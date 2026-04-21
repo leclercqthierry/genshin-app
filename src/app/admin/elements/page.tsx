@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { elementService } from "@/services/supabase/element";
+import { makeElementAdminService } from "@/services/supabase/element";
 import { deleteElementAction } from "@/domain/element/actions/delete";
 
 import Redirecting from "@/components/ui/feedback/redirecting";
@@ -12,7 +12,8 @@ export default async function ElementsPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    const elements = await elementService.getAll();
+    const elementAdminService = await makeElementAdminService();
+    const elements = await elementAdminService.getAll();
     const numberOfElements = elements.length;
 
     return (

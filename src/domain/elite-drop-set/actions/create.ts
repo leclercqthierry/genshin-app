@@ -1,7 +1,7 @@
 "use server";
 
 import { eliteDropSetSchema } from "@/domain/elite-drop-set/schema";
-import { eliteDropSetService } from "@/services/supabase/elite-drop-set";
+import { makeEliteDropSetAdminService } from "@/services/supabase/elite-drop-set";
 import type { EliteDropSetFormState } from "@/app/admin/elite-drop-sets/_components/types";
 import { createWithHistory } from "@/domain/admin-changes/create-with-history";
 import { z } from "zod";
@@ -19,7 +19,8 @@ export async function handleCreate(
         },
         schema: eliteDropSetSchema,
         create: async (data) => {
-            await eliteDropSetService.create({
+            const eliteDropSetAdminService = await makeEliteDropSetAdminService();
+            await eliteDropSetAdminService.create({
                 name: data.name,
                 rarity2_url: data.rarity2Url,
                 rarity3_url: data.rarity3Url,

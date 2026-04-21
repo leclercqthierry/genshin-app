@@ -9,3 +9,5 @@ export type CharJewelSetCreateRow = BaseSetCreateRow & {
     rarity5_url: string;
     element_id: number;
 };
+
+export type CharJewelSetUpdateRow = Partial<CharJewelSetCreateRow>;

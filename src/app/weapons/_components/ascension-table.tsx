@@ -1,4 +1,4 @@
-import type { WeaponElevationDungeonDropSet } from "@/domain/weapon-elevation-dungeon-drop-set/types";
+import type { WeaponElevationSet } from "@/domain/weapon-elevation-set/types";
 import type { EliteDropSet } from "@/domain/elite-drop-set/types";
 import type { MobDropSet } from "@/domain/mob-drop-set/types";
 import { getWeaponAscensionRows, itemRarityByLevel } from "@/constants/weapon-ascension-data";
@@ -8,7 +8,7 @@ import AscensionCell from "./ascension-cell";
 
 type Props = {
     weaponRarity: number;
-    elevationSet: WeaponElevationDungeonDropSet;
+    elevationSet: WeaponElevationSet;
     eliteSet: EliteDropSet;
     mobSet: MobDropSet;
 };

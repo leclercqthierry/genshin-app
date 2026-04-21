@@ -10,7 +10,7 @@ export type WeaponRow = {
     description: string;
     elite_drop_set_id: number;
     mob_drop_set_id: number;
-    weapon_elevation_dungeon_drop_set_id: number;
+    weapon_elevation_set_id: number;
     created_at: string;
 };
 

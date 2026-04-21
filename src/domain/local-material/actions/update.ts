@@ -1,7 +1,7 @@
 "use server";
 
 import { localMaterialSchema } from "@/domain/local-material/schema";
-import { localMaterialService } from "@/services/supabase/local-material";
+import { makeLocalMaterialAdminService } from "@/services/supabase/local-material";
 import type { LocalMaterialFormState } from "@/app/admin/local-materials/_components/types";
 import { updateWithHistory } from "@/domain/admin-changes/update-with-history";
 
@@ -10,6 +10,8 @@ export async function handleUpdate(
     _prev: LocalMaterialFormState,
     formData: FormData
 ): Promise<LocalMaterialFormState> {
+
+    const localMaterialAdminService = await makeLocalMaterialAdminService();
     return updateWithHistory({
         id,
         raw: {
@@ -17,9 +19,9 @@ export async function handleUpdate(
             iconUrl: formData.get("iconUrl")?.toString() ?? "",
         },
         schema: localMaterialSchema,
-        getExisting: localMaterialService.getOne,
+        getExisting: localMaterialAdminService.getOne,
         update: async (id, data) => {
-            await localMaterialService.update(id, {
+            await localMaterialAdminService.update(id, {
                 name: data.name,
                 icon_url: data.iconUrl,
             });

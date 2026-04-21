@@ -21,7 +21,7 @@ import BaseItemUploaderField from "../../_shared/_components/base-item-uploader-
 import AppTextArea from "@/components/ui/form/app-textarea";
 import { MobDropSet } from "@/domain/mob-drop-set/types";
 import { EliteDropSet } from "@/domain/elite-drop-set/types";
-import { WeaponElevationDungeonDropSet } from "@/domain/weapon-elevation-dungeon-drop-set/types";
+import { WeaponElevationSet } from "@/domain/weapon-elevation-set/types";
 
 const initialState: WeaponFormState = {
     success: false,
@@ -39,7 +39,7 @@ type Props = {
     defaultValues?: Partial<WeaponSchema>;
     mobDropSets: MobDropSet[];
     eliteDropSets: EliteDropSet[];
-    weaponElevationDungeonDropSets: WeaponElevationDungeonDropSet[];
+    weaponElevationSets: WeaponElevationSet[];
 };
 
 export default function WeaponForm({
@@ -48,7 +48,7 @@ export default function WeaponForm({
     defaultValues,
     mobDropSets,
     eliteDropSets,
-    weaponElevationDungeonDropSets,
+    weaponElevationSets,
 }: Props) {
     const router = useRouter();
     const [state, formAction] = useActionState(action, initialState);
@@ -72,7 +72,7 @@ export default function WeaponForm({
             description: defaultValues?.description ?? "",
             mobDropSetId: defaultValues?.mobDropSetId ?? 1,
             eliteDropSetId: defaultValues?.eliteDropSetId ?? 1,
-            weaponElevationDungeonDropSetId: defaultValues?.weaponElevationDungeonDropSetId ?? 1,
+            weaponElevationSetId: defaultValues?.weaponElevationSetId ?? 1,
         },
     });
 
@@ -208,10 +208,10 @@ export default function WeaponForm({
                             required
                         >
                             <AppSelect
-                                {...register("weaponElevationDungeonDropSetId", { valueAsNumber: true })}
-                                options={weaponElevationDungeonDropSets.map((weaponElevationDungeonDropSet) => ({
-                                    value: weaponElevationDungeonDropSet.id.toString(),
-                                    label: weaponElevationDungeonDropSet.name,
+                                {...register("weaponElevationSetId", { valueAsNumber: true })}
+                                options={weaponElevationSets.map((weaponElevationSet) => ({
+                                    value: weaponElevationSet.id.toString(),
+                                    label: weaponElevationSet.name,
                                 }))}
                             >
                             </AppSelect>

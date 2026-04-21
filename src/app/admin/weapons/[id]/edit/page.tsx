@@ -6,10 +6,10 @@ import WeaponForm from "../../_components/weapon-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleUpdate } from "@/domain/weapon/actions/update";
-import { weaponService } from "@/services/supabase/weapon";
-import { mobDropSetService } from '@/services/supabase/mob-drop-set';
-import { eliteDropSetService } from "@/services/supabase/elite-drop-set";
-import { weaponElevationDungeonDropSetService } from "@/services/supabase/weapon-elevation-dungeon-drop-set";
+import { makeWeaponAdminService } from "@/services/supabase/weapon";
+import { makeMobDropSetAdminService } from '@/services/supabase/mob-drop-set';
+import { makeEliteDropSetAdminService } from "@/services/supabase/elite-drop-set";
+import { makeWeaponElevationSetAdminService } from "@/services/supabase/weapon-elevation-set";
 
 type Props = {
     params: Promise<{ id: string }>;
@@ -20,20 +20,20 @@ export default async function EditWeaponPage({ params }: Props) {
     if (redirect) return <Redirecting />;
 
     const { id } = await params;
-    const weapon = await weaponService.getOne(Number(id));
-    const mobDropSets = await mobDropSetService.getAll();
-    const eliteDropSets = await eliteDropSetService.getAll();
-    const weaponElevationDungeonDropSets = await weaponElevationDungeonDropSetService.getAll();
+
+    const weaponElevationSetAdminService = await makeWeaponElevationSetAdminService();
+    const eliteDropSetAdminService = await makeEliteDropSetAdminService();
+    const weaponAdminService = await makeWeaponAdminService();
+    const mobDropSetAdminService = await makeMobDropSetAdminService();
+
+    const weapon = await weaponAdminService.getOne(Number(id));
+    const mobDropSets = await mobDropSetAdminService.getAll();
+    const eliteDropSets = await eliteDropSetAdminService.getAll();
+    const weaponElevationSets = await weaponElevationSetAdminService.getAll();
 
     if (!weapon) {
         return <p>Arme introuvable</p>;
     }
-
-    console.log("mobDropSets =", mobDropSets);
-    console.log("weapon.mobDropSetId =", weapon.mobDropSetId);
-    console.log("mobDropSets IDs =", mobDropSets.map(s => s.id));
-
-
 
     return (
         <AdminResourceEditPage title="Modifier l'arme">
@@ -42,7 +42,7 @@ export default async function EditWeaponPage({ params }: Props) {
                 submitLabel="Mettre à jour"
                 mobDropSets={mobDropSets}
                 eliteDropSets={eliteDropSets}
-                weaponElevationDungeonDropSets={weaponElevationDungeonDropSets}
+                weaponElevationSets={weaponElevationSets}
                 defaultValues={{
                     name: weapon.name,
                     imageUrl: weapon.imageUrl,
@@ -54,7 +54,7 @@ export default async function EditWeaponPage({ params }: Props) {
                     description: weapon.description,
                     mobDropSetId: weapon.mobDropSetId,
                     eliteDropSetId: weapon.eliteDropSetId,
-                    weaponElevationDungeonDropSetId: weapon.weaponElevationDungeonDropSetId,
+                    weaponElevationSetId: weapon.weaponElevationSetId,
                 }}
             />
         </AdminResourceEditPage>

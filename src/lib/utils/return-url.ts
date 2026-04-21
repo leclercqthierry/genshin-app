@@ -1,4 +1,4 @@
-import type { WeaponElevationDungeonDropSet } from "@/domain/weapon-elevation-dungeon-drop-set/types";
+import type { WeaponElevationDungeonDropSet } from "@/domain/weapon-elevation-set/types";
 import type { MobDropSet } from "@/domain/mob-drop-set/types";
 import type { EliteDropSet } from "@/domain/elite-drop-set/types";
 

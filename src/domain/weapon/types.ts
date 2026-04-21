@@ -14,6 +14,6 @@ export type Weapon = {
     description: string;
     eliteDropSetId: number;
     mobDropSetId: number;
-    weaponElevationDungeonDropSetId: number;
+    weaponElevationSetId: number;
     createdAt: string;
 };

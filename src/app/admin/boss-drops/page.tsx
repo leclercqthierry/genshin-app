@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { requireAdmin } from "@/services/auth/require-admin";
-import { bossDropService } from "@/services/supabase/boss-drop";
+import { makeBossDropAdminService } from "@/services/supabase/boss-drop";
 import { deleteBossDropAction } from "@/domain/boss-drop/actions/delete";
 
 import Redirecting from "@/components/ui/feedback/redirecting";
@@ -12,7 +12,8 @@ export default async function BossDropsPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    const bossDrops = await bossDropService.getAll();
+    const bossDropAdminService = await makeBossDropAdminService();
+    const bossDrops = await bossDropAdminService.getAll();
     const numberOfBossDrops = bossDrops.length;
 
     return (

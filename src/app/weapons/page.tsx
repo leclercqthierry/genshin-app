@@ -1,10 +1,12 @@
 export const dynamic = "force-dynamic";
 
-import { weaponService } from "@/services/supabase/weapon";
+import { type WeaponReadOnlyService, makeWeaponReadOnlyService } from "@/services/supabase/weapon";
 import WeaponGalleryClient from "./_components/gallery-client";
 
 export default async function WeaponsGalleryPage() {
-    const weapons = await weaponService.getAll();
+
+    const weaponReadOnlyService: WeaponReadOnlyService = await makeWeaponReadOnlyService();
+    const weapons = await weaponReadOnlyService.getAll();
 
     return (
         <WeaponGalleryClient weapons={weapons} />

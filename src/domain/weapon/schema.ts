@@ -25,7 +25,7 @@ export const weaponSchema = z.object({
     source: z.enum(SOURCES),
     mobDropSetId: z.number().int().positive("Set de drops de mobs requis"),
     eliteDropSetId: z.number().int().positive("Set de drops élite requis"),
-    weaponElevationDungeonDropSetId: z.number().int().positive("Set de drops de donjon d'élévation d'arme requis"),
+    weaponElevationSetId: z.number().int().positive("Set de drops de donjon d'élévation d'arme requis"),
     description: z.string().min(1, "description requise").max(1000, "La description ne peut pas dépasser 1000 caractères"),
 });
 

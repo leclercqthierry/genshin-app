@@ -1,15 +1,16 @@
 "use server";
 
 import { weaponSchema } from "@/domain/weapon/schema";
-import { weaponService } from "@/services/supabase/weapon";
 import type { WeaponFormState } from "@/app/admin/weapons/_components/types";
 import { createWithHistory } from "@/domain/admin-changes/create-with-history";
 import { z } from "zod";
+import { makeWeaponAdminService } from "@/services/supabase/weapon";
 
 export async function handleCreate(
     _prevState: WeaponFormState,
     formData: FormData
 ): Promise<WeaponFormState> {
+    const weaponAdminService = await makeWeaponAdminService();
     return createWithHistory<z.infer<typeof weaponSchema>>({
         raw: {
             name: formData.get("name")?.toString() ?? "",
@@ -26,7 +27,7 @@ export async function handleCreate(
         },
         schema: weaponSchema,
         create: async (data) => {
-            await weaponService.create({
+            await weaponAdminService.create({
                 name: data.name,
                 image_url: data.imageUrl,
                 mini_url: data.miniUrl,
