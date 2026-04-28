@@ -42,6 +42,23 @@ export async function createProfile(
     }
 }
 
+export async function updateProfilePseudo(
+    supabase: ClientWrite,
+    userId: string,
+    pseudo: string
+): Promise<void> {
+    const { error } = await supabase
+        .from("profiles")
+        .update({ pseudo })
+        .eq("id", userId);
+
+    if (error) {
+        console.error("ERREUR DE MISE À JOUR DU PSEUDO", error);
+        throw error;
+    }
+}
+
+
 export async function deleteProfile(
     supabase: ClientWrite,
     userId: string

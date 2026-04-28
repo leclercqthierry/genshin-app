@@ -6,17 +6,22 @@ import WeaponForm from "../_components/weapon-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleCreate } from "@/domain/weapon/actions/create";
-import { mobDropSetService } from "@/services/supabase/mob-drop-set";
-import { eliteDropSetService } from "@/services/supabase/elite-drop-set";
-import { weaponElevationDungeonDropSetService } from '@/services/supabase/weapon-elevation-set';
+import { makeMobDropSetAdminService } from "@/services/supabase/mob-drop-set";
+import { makeEliteDropSetAdminService } from "@/services/supabase/elite-drop-set";
+import { makeWeaponElevationSetAdminService } from '@/services/supabase/weapon-elevation-set';
 
 export default async function NewWeaponPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    const mobDropSets = await mobDropSetService.getAll();
-    const eliteDropSets = await eliteDropSetService.getAll();
-    const weaponElevationDungeonDropSets = await weaponElevationDungeonDropSetService.getAll();
+    const mobDropSetAdminService = await makeMobDropSetAdminService();
+    const mobDropSets = await mobDropSetAdminService.getAll();
+
+    const eliteDropSetAdminService = await makeEliteDropSetAdminService();
+    const eliteDropSets = await eliteDropSetAdminService.getAll();
+
+    const weaponElevationSetAdminService = await makeWeaponElevationSetAdminService();
+    const weaponElevationDungeonDropSets = await weaponElevationSetAdminService.getAll();
 
     return (
         <AdminResourceCreatePage title="Nouvelle arme">
@@ -25,7 +30,7 @@ export default async function NewWeaponPage() {
                 submitLabel="Ajouter l'arme"
                 mobDropSets={mobDropSets}
                 eliteDropSets={eliteDropSets}
-                weaponElevationDungeonDropSets={weaponElevationDungeonDropSets}
+                weaponElevationSets={weaponElevationDungeonDropSets}
             />
         </AdminResourceCreatePage>
     );

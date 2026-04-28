@@ -1,7 +1,9 @@
 import { createProfile, getProfile, deleteProfile, deleteUser } from "@/services/supabase/user";
 import type { ClientWrite, ClientService } from "@/lib/supabase/ports";
+import { updateProfilePseudo } from "@/services/supabase/user";
 
-describe("User createProfile, getProfile, deleteProfile et deleteUser", () => {
+describe("User createProfile, getProfile, deleteProfile, deleteUser et updateProfilePseudo", () => {
+
     it("insère un profil", async () => {
         const insert = vi.fn().mockResolvedValue({ error: null });
         const from = vi.fn().mockReturnValue({ insert });
@@ -101,6 +103,34 @@ describe("User createProfile, getProfile, deleteProfile et deleteUser", () => {
         };
 
         await expect(deleteUser(client, "123")).rejects.toThrow();
+    });
+
+    it("met à jour le pseudo", async () => {
+        const eq = vi.fn().mockResolvedValue({ error: null });
+        const update = vi.fn().mockReturnValue({ eq });
+        const from = vi.fn().mockReturnValue({ update });
+
+        const client = { from } as const;
+
+        await updateProfilePseudo(client, "123", "NewPseudo");
+
+        expect(from).toHaveBeenCalledWith("profiles");
+        expect(update).toHaveBeenCalledWith({ pseudo: "NewPseudo" });
+        expect(eq).toHaveBeenCalledWith("id", "123");
+    });
+
+    it("throw une erreur si Supabase renvoie une erreur", async () => {
+        const eq = vi.fn().mockResolvedValue({
+            error: { message: "RLS error" },
+        });
+        const update = vi.fn().mockReturnValue({ eq });
+        const from = vi.fn().mockReturnValue({ update });
+
+        const client = { from } as const;
+
+        await expect(
+            updateProfilePseudo(client, "123", "NewPseudo")
+        ).rejects.toThrow();
     });
 
 });

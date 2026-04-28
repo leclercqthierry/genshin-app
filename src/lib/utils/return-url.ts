@@ -1,21 +1,21 @@
-import type { WeaponElevationDungeonDropSet } from "@/domain/weapon-elevation-set/types";
+import type { WeaponElevationSet } from "@/domain/weapon-elevation-set/types";
 import type { MobDropSet } from "@/domain/mob-drop-set/types";
 import type { EliteDropSet } from "@/domain/elite-drop-set/types";
 
 function isMobDropSet(
-    set: MobDropSet | EliteDropSet | WeaponElevationDungeonDropSet
+    set: MobDropSet | EliteDropSet | WeaponElevationSet
 ): set is MobDropSet {
     return "rarity1Url" in set;
 }
 
-function isWeaponElevationDungeonDropSet(
-    set: MobDropSet | EliteDropSet | WeaponElevationDungeonDropSet
-): set is WeaponElevationDungeonDropSet {
+function isWeaponElevationSet(
+    set: MobDropSet | EliteDropSet | WeaponElevationSet
+): set is WeaponElevationSet {
     return "rarity5Url" in set;
 }
 
 export function returnUrl(
-    set: WeaponElevationDungeonDropSet | MobDropSet | EliteDropSet,
+    set: WeaponElevationSet | MobDropSet | EliteDropSet,
     rarity: 1 | 2 | 3 | 4 | 5
 ): string {
 
@@ -30,7 +30,7 @@ export function returnUrl(
         return set.rarity4Url;
     }
 
-    if (rarity === 5 && isWeaponElevationDungeonDropSet(set)) {
+    if (rarity === 5 && isWeaponElevationSet(set)) {
         return set.rarity5Url;
     }
 

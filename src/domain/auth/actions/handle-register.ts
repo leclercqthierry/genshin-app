@@ -3,10 +3,7 @@
 import { redirect } from "next/navigation";
 import { parseRegisterForm } from "@/domain/auth/logic/parse-register";
 import { registerUser } from "@/domain/auth/logic/register-user";
-
 import { createSupabaseServiceClient } from "@/lib/supabase/service";
-import { createSupabaseClient } from "@/lib/supabase/client";
-
 import { createProfile, deleteUser } from "@/services/supabase/user";
 import type { RegisterFormState } from "@/app/auth/register/types";
 import { zodFieldErrorsSimple } from "@/lib/utils/zod-field-errors-simple";
@@ -48,8 +45,7 @@ export async function handleRegister(
 
             createProfile: async (userId, pseudo) => {
                 try {
-                    const writeClient = await createSupabaseClient(); // 🔥 session présente
-                    await createProfile(writeClient, userId, pseudo);
+                    await createProfile(serviceClient, userId, pseudo);
                     return "ok";
                 } catch {
                     return "error";

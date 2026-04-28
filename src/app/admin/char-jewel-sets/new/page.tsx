@@ -6,13 +6,14 @@ import CharJewelSetForm from "../_components/char-jewel-set-form";
 
 import { requireAdmin } from "@/services/auth/require-admin";
 import { handleCreate } from "@/domain/char-jewel-set/actions/create";
-import { elementService } from "@/services/supabase/element";
+import { makeElementAdminService } from "@/services/supabase/element";
 
 export default async function NewCharJewelSetPage() {
     const { redirect } = await requireAdmin();
     if (redirect) return <Redirecting />;
 
-    const elements = await elementService.getAll();
+    const elementAdminService = await makeElementAdminService();
+    const elements = await elementAdminService.getAll();
 
     return (
         <AdminResourceCreatePage title="Nouveau set de joyaux de personnage">

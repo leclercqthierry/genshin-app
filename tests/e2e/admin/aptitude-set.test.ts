@@ -1,7 +1,7 @@
 import { test, expect, Page } from "@playwright/test";
 import { createAdminContext } from "../helpers/create-admin-context";
 
-test.describe("Admin - WeaponElevationDungeonDropSetForm", () => {
+test.describe("Admin - AptitudeSetForm", () => {
     let page: Page;
     let cleanup: () => Promise<void>;
 
@@ -15,20 +15,20 @@ test.describe("Admin - WeaponElevationDungeonDropSetForm", () => {
         await cleanup();
     });
 
-    test("affiche correctement le formulaire de création de set de drop de donjon d'élévation d'arme", async () => {
-        await page.goto("/admin/weapon-elevation-dungeon-drop-sets/new");
+    test("affiche correctement le formulaire de création de set de drop de donjon d'aptitude", async () => {
+        await page.goto("/admin/aptitude-sets/new");
 
-        await expect(page.getByRole("heading", { name: /Nouveau set de drops de donjon d'élévation d'arme/i })).toBeVisible();
+        await expect(page.getByRole("heading", { name: /Nouveau set de drops de donjon d'aptitude/i })).toBeVisible();
 
         await expect(page.getByLabel(/Nom du set/i)).toBeVisible();
 
         const buttons = await page.getByRole("button", { name: "Importer une icône" }).all();
-        expect(buttons.length).toBe(4);
+        expect(buttons.length).toBe(3);
 
         for (const button of buttons) {
             await expect(button).toBeVisible();
         }
 
-        await expect(page.getByRole("button", { name: /Ajouter le set de drops de donjon d'élévation d'arme/i })).toBeVisible();
+        await expect(page.getByRole("button", { name: /Ajouter le set de drops de donjon d'aptitude/i })).toBeVisible();
     });
 });

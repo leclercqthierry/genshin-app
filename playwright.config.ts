@@ -18,6 +18,7 @@ export default defineConfig({
         testIdAttribute: "data-testid",
         // 👇 et surtout ceci :
         launchOptions: {},
+        headless: true,
     },
 
     projects: [
@@ -28,7 +29,7 @@ export default defineConfig({
     ],
 
     webServer: {
-        command: "npm run dev",
+        command: "npm run start",
         url: "http://localhost:3000",
         reuseExistingServer: true
     },

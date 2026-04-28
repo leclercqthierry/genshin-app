@@ -11,7 +11,7 @@ export default function AppUploader({ onUpload }: Props) {
     const { startUpload } = useUploadThing("imageUploader", {
         onClientUploadComplete: (files) => {
             if (files && files.length > 0) {
-                onUpload(files[0].ufsUrl);
+                onUpload(files[0].url);
             }
         },
         onUploadError: (error) => {

@@ -23,7 +23,7 @@ export async function handleCreate(
             description: formData.get("description")?.toString() ?? "",
             eliteDropSetId: Number(formData.get("eliteDropSetId")),
             mobDropSetId: Number(formData.get("mobDropSetId")),
-            weaponElevationDungeonDropSetId: Number(formData.get("weaponElevationDungeonDropSetId")),
+            weaponElevationSetId: Number(formData.get("weaponElevationSetId")),
         },
         schema: weaponSchema,
         create: async (data) => {
@@ -38,7 +38,7 @@ export async function handleCreate(
                 description: data.description,
                 elite_drop_set_id: data.eliteDropSetId,
                 mob_drop_set_id: data.mobDropSetId,
-                weapon_elevation_dungeon_drop_set_id: data.weaponElevationDungeonDropSetId
+                weapon_elevation_set_id: data.weaponElevationSetId
             });
         },
         entityType: "Weapon",

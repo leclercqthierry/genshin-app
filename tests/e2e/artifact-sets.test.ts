@@ -13,11 +13,15 @@ test.describe("Artifact Sets – Galerie → Détail", () => {
         // cibler uniquement les liens de sets
         const firstCard = page.locator('a[href^="/artifact-sets/"]').first();
 
+        // récupérer l'URL exacte du set
+        const setUrl = (await firstCard.getAttribute("href"))!;
+
         // récupérer le nom du set dans la carte
         const setName = await firstCard.locator("h2, h3, p").first().innerText();
 
         // clic
         await firstCard.click();
+        await page.waitForURL(setUrl);
 
         // vérifier que le Hero affiche le bon nom
         await expect(

@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import AuthPageLayout from "@/components/ui/layout/auth-page-layout";
 import RegisterForm from "./_components/register-form";

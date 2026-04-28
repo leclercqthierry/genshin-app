@@ -14,7 +14,9 @@ test.describe("Admin - WeaponForm", async () => {
     });
 
     test.afterAll(async () => {
-        await cleanup();
+        if (cleanup) {
+            await cleanup();
+        }
     });
 
     test("un admin peut accéder à la page de création d'arme", async () => {
@@ -25,7 +27,7 @@ test.describe("Admin - WeaponForm", async () => {
             page.getByRole("heading", { name: "Nouvelle arme" })
         ).toBeVisible();
 
-        await cleanup();
+        // await cleanup();
     });
 
     test("un admin peut accéder à la page d'édition d'une arme", async () => {
@@ -36,7 +38,7 @@ test.describe("Admin - WeaponForm", async () => {
             page.getByRole("heading", { name: "Modifier l'arme" })
         ).toBeVisible();
 
-        await cleanup();
+        // await cleanup();
     });
 
 

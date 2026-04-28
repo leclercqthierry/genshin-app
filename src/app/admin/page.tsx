@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { requireAdmin } from "@/services/auth/require-admin";
 import { adminSections } from "@/domain/admin/sections";
 
